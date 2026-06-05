@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Request private access | I-Ops</title>
+<script>document.documentElement.classList.add("js");</script>
+<link rel="stylesheet" href="styles.css" />
+<style>
+  body.waitlist-page {
+    min-height: 100vh;
+    background: #cfe0ee url("assets/waitlist-sky.png") center top / cover no-repeat;
+  }
+  .waitlist-shell {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .waitlist-nav {
+    padding: 28px 0;
+  }
+  .waitlist-nav .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .waitlist-main {
+    flex: 1;
+    display: grid;
+    place-items: center;
+    padding: 70px var(--gutter) 90px;
+  }
+  .waitlist-panel {
+    width: min(820px, 100%);
+    text-align: center;
+    padding: clamp(38px, 6vw, 70px);
+    border-radius: var(--r-xl);
+    background: rgba(255,255,255,.68);
+    box-shadow: 0 30px 90px rgba(20,21,26,.14), inset 0 0 0 1px rgba(255,255,255,.7);
+    backdrop-filter: saturate(160%) blur(18px);
+  }
+  .waitlist-panel .lead {
+    max-width: 56ch;
+    margin: 22px auto 0;
+    color: #3a4150;
+  }
+  .waitlist-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px 16px;
+    margin: 36px auto 0;
+    max-width: 660px;
+  }
+  .field {
+    display: grid;
+    gap: 8px;
+  }
+  .field.full {
+    grid-column: 1 / -1;
+  }
+  .waitlist-form label {
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-2);
+  }
+  .waitlist-form input,
+  .waitlist-form textarea {
+    width: 100%;
+    min-height: 54px;
+    border: 1px solid rgba(20,21,26,.1);
+    border-radius: 20px;
+    padding: 14px 18px;
+    font: inherit;
+    color: var(--ink);
+    background: rgba(255,255,255,.82);
+    outline: none;
+    resize: vertical;
+  }
+  .waitlist-form input {
+    border-radius: var(--r-pill);
+  }
+  .waitlist-form textarea {
+    min-height: 112px;
+    line-height: 1.45;
+  }
+  .waitlist-form input:focus,
+  .waitlist-form textarea:focus {
+    border-color: rgba(47,111,237,.45);
+    box-shadow: 0 0 0 4px rgba(47,111,237,.12);
+  }
+  .waitlist-form .btn {
+    grid-column: 1 / -1;
+    min-height: 56px;
+    width: 100%;
+  }
+  .waitlist-note {
+    min-height: 22px;
+    margin-top: 16px;
+    color: var(--green);
+    font-weight: 600;
+    font-size: 15px;
+  }
+  @media (max-width: 600px) {
+    .waitlist-main {
+      padding-inline: var(--gutter);
+    }
+    .waitlist-form {
+      grid-template-columns: 1fr;
+    }
+    .waitlist-nav .wrap {
+      gap: 18px;
+    }
+    .waitlist-nav .btn {
+      padding-inline: 18px;
+    }
+  }
+</style>
+</head>
+<body class="waitlist-page">
+  <div class="waitlist-shell">
+    <header class="waitlist-nav">
+      <div class="wrap">
+        <a href="Dreelio.html" class="brand">i-Ops</a>
+        <a href="Dreelio.html" class="btn btn-light">Back to home</a>
+      </div>
+    </header>
+
+    <main class="waitlist-main">
+      <section class="waitlist-panel" aria-labelledby="waitlistTitle">
+        <span class="eyebrow">Early access</span>
+        <h1 class="h-display" id="waitlistTitle" style="margin-top:20px;">Request private access</h1>
+        <p class="lead">Get early access to our pre-production builds and test I-Ops locally for your internal operations. The Mac version will be available first, and we will share it as soon as it is ready.</p>
+        <form class="waitlist-form" id="waitlistForm">
+          <div class="field">
+            <label for="name">Name</label>
+            <input id="name" name="name" autocomplete="name" placeholder="Your name" required />
+          </div>
+          <div class="field">
+            <label for="email">Work email</label>
+            <input id="email" name="email" type="email" autocomplete="email" placeholder="you@company.com" required />
+          </div>
+          <div class="field full">
+            <label for="linkedin">LinkedIn profile <span class="muted">(optional)</span></label>
+            <input id="linkedin" name="linkedin" type="url" autocomplete="url" placeholder="https://www.linkedin.com/in/your-profile" />
+          </div>
+          <div class="field">
+            <label for="role">Role</label>
+            <input id="role" name="role" autocomplete="organization-title" placeholder="Operations lead" required />
+          </div>
+          <div class="field">
+            <label for="company">Company</label>
+            <input id="company" name="company" autocomplete="organization" placeholder="Company name" required />
+          </div>
+          <div class="field full">
+            <label for="location">Location</label>
+            <input id="location" name="location" autocomplete="address-level2" placeholder="City, state, or country" required />
+          </div>
+          <div class="field full">
+            <label for="expectedFeatures">What features are you expecting from the pre-production version of I-Ops? <span class="muted">(optional)</span></label>
+            <textarea id="expectedFeatures" name="expectedFeatures" placeholder="File search, local reports, approvals, audit logs, integrations..."></textarea>
+          </div>
+          <div class="field full">
+            <label for="customRequirements">Suggestions and customizations specific to your requirements <span class="muted">(optional)</span></label>
+            <textarea id="customRequirements" name="customRequirements" placeholder="Share anything specific to your workflows, compliance needs, or team setup."></textarea>
+          </div>
+          <button class="btn btn-dark" type="submit">Request Private Access</button>
+        </form>
+        <p class="waitlist-note" id="waitlistNote" aria-live="polite" hidden></p>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      var form = document.getElementById("waitlistForm");
+      var note = document.getElementById("waitlistNote");
+      if (!form || !note) return;
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        var data = Object.fromEntries(new FormData(form).entries());
+        try {
+          var saved = JSON.parse(localStorage.getItem("iopsWaitlistResponses") || "[]");
+          saved.push(Object.assign({ submittedAt: new Date().toISOString() }, data));
+          localStorage.setItem("iopsWaitlistResponses", JSON.stringify(saved));
+        } catch (error) {
+          // Storage is a prototype convenience until a form endpoint is connected.
+        }
+        note.textContent = "Thank you for your interest! We will send a confirmation email shortly to let you know your response was saved.";
+        note.hidden = false;
+        form.reset();
+      });
+    })();
+  </script>
+</body>
+</html>
