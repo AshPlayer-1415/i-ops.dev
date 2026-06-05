@@ -213,17 +213,127 @@
 <section class="section" id="how-it-works">
   <div class="wrap center">
     <span class="eyebrow reveal">How it works</span>
-    <h2 class="h2 reveal" style="--d:.05s; margin-top:22px;">Runs on your machine.<br/>Data never leaves.</h2>
-    <div class="reveal" style="--d:.1s; position:relative; margin-top:48px;">
-      <div class="device-hero" style="position:relative; border-radius:var(--r-lg); overflow:hidden; aspect-ratio:1.78;">
-        <div class="dev-stage">
-          <div class="ph show" id="devMobile" data-label="app preview" style="height:100%"></div>
-          <div class="ph" id="devWeb" data-label="agent view" style="height:100%"></div>
+    <h2 class="h2 reveal" style="--d:.05s; margin-top:22px;">The control layer between you<br/>and your private AI agents.</h2>
+    <p class="lead how-lead reveal" style="--d:.08s">I-Ops gives local AI agents a structured environment to work inside. It controls what they can access, coordinates how they collaborate, applies guardrails, and keeps every important action visible and reviewable.</p>
+    <div class="how-process control-plane reveal" style="--d:.1s;" aria-label="I-Ops private AI agent control architecture">
+      <div class="stage-grid" aria-label="I-Ops control stages">
+        <article class="stage-card">
+          <span class="stage-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M8 8h8v8H8z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 3v5M12 16v5M3 12h5M16 12h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>
+          <span class="stage-kicker">01 Connect</span>
+          <h3>Connect local agents and private infrastructure</h3>
+          <p>Bring agents running on your Mac, workstation, private server, or approved internal environment into one operating layer.</p>
+        </article>
+        <article class="stage-card">
+          <span class="stage-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.4-2.8 8.4-7 10-4.2-1.6-7-5.6-7-10V6z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 12h6M12 9v6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>
+          <span class="stage-kicker">02 Control</span>
+          <h3>Define permissions and safety boundaries</h3>
+          <p>Choose which files, folders, tools, and servers each agent can access. Destructive or sensitive actions stay restricted.</p>
+        </article>
+        <article class="stage-card">
+          <span class="stage-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM17 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM7 22a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor" stroke-width="1.7"/><path d="M9.6 6.5l4.8 3M14.4 14.5l-4.8 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>
+          <span class="stage-kicker">03 Coordinate</span>
+          <h3>Let Vinci orchestrate specialized agents</h3>
+          <p>Vinci routes context and work between approved agents so they can complete multi-step tasks without operating outside their assigned roles.</p>
+        </article>
+        <article class="stage-card">
+          <span class="stage-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 4h14v16H5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8.5 12.2l2 2 5-5M8 17h8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="stage-kicker">04 Approve</span>
+          <h3>Review actions and keep a complete record</h3>
+          <p>High-impact actions require human approval, and every agent run, file move, output, and decision is logged.</p>
+        </article>
+      </div>
+
+      <div class="control-diagram" aria-label="I-Ops control-plane diagram">
+        <svg class="control-lines" viewBox="0 0 1000 620" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <marker id="controlArrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+              <path d="M0 0L8 4L0 8Z" fill="rgba(47,111,237,.42)"/>
+            </marker>
+          </defs>
+          <path class="control-path path-human" d="M500 76 C500 118 500 142 500 184"/>
+          <path class="control-path path-agents" d="M610 286 C680 276 725 276 785 286"/>
+          <path class="control-path path-resources" d="M785 338 C650 420 350 420 215 338"/>
+          <path class="control-path path-outputs" d="M215 398 C300 530 404 548 500 548"/>
+        </svg>
+
+        <div class="diagram-node human-node">
+          <span class="node-kicker">Human control</span>
+          <div class="node-pills">
+            <span>Approve</span>
+            <span>Restrict</span>
+            <span>Monitor</span>
+          </div>
         </div>
-        <div class="dev-toggle" id="devToggle">
-          <button class="on" data-dev="devMobile">App Preview</button>
-          <button data-dev="devWeb">Agent View</button>
+
+        <div class="diagram-node resources-node">
+          <span class="node-kicker">Authorized resources</span>
+          <ul class="node-list">
+            <li>Local Files</li>
+            <li>Approved Folders</li>
+            <li>Private Server</li>
+            <li>Internal Tools</li>
+            <li>Databases</li>
+          </ul>
+          <p class="access-note">Agents only access approved resources.</p>
         </div>
+
+        <div class="control-core" aria-label="I-Ops Agent Control Layer">
+          <span class="core-brand">I-Ops</span>
+          <strong>Agent Control Layer</strong>
+          <div class="core-modules">
+            <span class="core-module vinci-module">Vinci Orchestrator</span>
+            <span class="core-module">Permissions</span>
+            <span class="core-module">Guardrails</span>
+            <span class="core-module approval-module">Approval Queue</span>
+            <span class="core-module">Audit Log</span>
+          </div>
+        </div>
+
+        <div class="diagram-node agents-node">
+          <span class="node-kicker">Specialized agents</span>
+          <ul class="node-list">
+            <li>Reporting Agent</li>
+            <li>Finance Review Agent</li>
+            <li>Knowledge Agent</li>
+            <li>SOP Agent</li>
+            <li>Document Agent</li>
+          </ul>
+        </div>
+
+        <div class="diagram-node outputs-node">
+          <span class="node-kicker">Approved outputs</span>
+          <div class="output-pills">
+            <span>Reports</span>
+            <span>Handoffs</span>
+            <span>Organized Files</span>
+            <span>Drafts</span>
+            <span>Completed Workflows</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="route-strip" aria-label="Control-plane execution path">
+        <span>Human</span><i aria-hidden="true"></i><span>I-Ops Control Layer</span><i aria-hidden="true"></i><span>Vinci</span><i aria-hidden="true"></i><span>Specialized Agents</span><i aria-hidden="true"></i><span>Approved Resources</span><i aria-hidden="true"></i><span>Human-reviewed Outputs</span>
+      </div>
+
+      <div class="guardrail-example" aria-label="Deletion guardrail example">
+        <span class="guardrail-kicker">Guardrail example</span>
+        <div class="guardrail-flow">
+          <span><strong>Permanent file deletion</strong><em>Blocked</em></span>
+          <i aria-hidden="true"></i>
+          <span><strong>Move to Review Folder</strong><em>Approval required</em></span>
+          <i aria-hidden="true"></i>
+          <span><strong>Permanent removal</strong><em>Human action only</em></span>
+        </div>
+      </div>
+
+      <div class="process-trust" aria-label="I-Ops control-plane trust principles">
+        <span>Scoped access</span>
+        <span>Agent isolation</span>
+        <span>Approval gates</span>
+        <span>Complete audit trail</span>
+        <span>No silent deletion</span>
+        <span>Local or private-server execution</span>
       </div>
     </div>
   </div>
@@ -234,50 +344,84 @@
   <div class="wrap">
     <div class="vinci-grid">
       <div class="vinci-copy reveal">
-        <span class="eyebrow">VINCI AI</span>
-        <h2 class="h2">Private intelligence, built into I-Ops.</h2>
-        <p class="vinci-lead">Vinci helps teams find context, explain operational issues, prepare reports, and coordinate approved workflows without sending routine work to external AI services.</p>
+        <span class="eyebrow">INTRODUCING VINCI AI</span>
+        <h2 class="h2">Meet Vinci AI,<br/>the intelligence behind your private agent workforce.</h2>
+        <div class="vinci-lead">
+          <p>Vinci is the private intelligence layer inside I-Ops.</p>
+          <p>It understands your approved workspace, coordinates specialized local agents, routes context between tasks, applies your permissions and guardrails, and keeps important actions visible until you approve them.</p>
+          <p>Vinci can work with agents running on your Mac, private workstation, local server, or company-controlled infrastructure without giving any agent unrestricted access.</p>
+        </div>
         <div class="vinci-capabilities">
           <div class="vinci-item">
-            <h3>Understand</h3>
-            <p>Find relevant context and explain what needs attention.</p>
+            <h3>Understand the environment</h3>
+            <p>Interpret approved files, folders, tools, workflows, and internal context.</p>
           </div>
           <div class="vinci-item">
-            <h3>Prepare</h3>
-            <p>Create summaries, handoffs, reports, and internal documentation.</p>
+            <h3>Assign the right agent</h3>
+            <p>Route work based on each agent's role, permissions, and capabilities.</p>
           </div>
           <div class="vinci-item">
-            <h3>Coordinate</h3>
-            <p>Recommend the next action or route work to approved agents.</p>
+            <h3>Coordinate multi-step work</h3>
+            <p>Let specialized agents collaborate through Vinci without bypassing I-Ops controls.</p>
+          </div>
+          <div class="vinci-item">
+            <h3>Return control to you</h3>
+            <p>Keep sensitive actions, file movements, and external connections visible and approval-based.</p>
           </div>
         </div>
         <div class="vinci-trust-strip" aria-label="Vinci trust principles">
-          <span>Local by default</span>
-          <span>Permission-aware</span>
-          <span>Human-approved</span>
+          <span>Scoped permissions</span>
+          <span>Agent coordination</span>
+          <span>Human approval</span>
           <span>No silent deletion</span>
         </div>
-        <a href="#agents" class="btn btn-dark vinci-cta">See Vinci-powered agents →</a>
+        <a href="#agents" class="btn btn-dark vinci-cta">See how Vinci coordinates agents →</a>
       </div>
       <div class="vinci-visual reveal" style="--d:.08s">
-        <div class="vinci-panel">
+        <div class="vinci-panel vinci-orchestration-panel" aria-label="Vinci orchestration panel">
           <div class="vinci-panel-top">
             <div>
-              <span class="vinci-panel-kicker">ASK VINCI</span>
-              <h3>Operations handoff</h3>
+              <span class="vinci-panel-kicker">VINCI ORCHESTRATION</span>
+              <h3>Prepare the weekly operations review</h3>
             </div>
           </div>
-          <div class="vinci-prompt">“Prepare a manager handoff from the latest sales export.”</div>
-          <div class="vinci-response">
-            <p>Results</p>
-            <ul>
-              <li>3 related files found</li>
-              <li>Readiness review complete</li>
-              <li>2 fields need clarification</li>
-              <li>Draft handoff prepared</li>
-            </ul>
+          <div class="orchestration-grid">
+            <div class="orchestration-group selected-agents">
+              <span class="orch-label">Selected agents</span>
+              <ul>
+                <li>File Intelligence Agent</li>
+                <li>Reporting Agent</li>
+                <li>Knowledge Agent</li>
+              </ul>
+            </div>
+            <div class="orchestration-group approved-resources">
+              <span class="orch-label">Approved resources</span>
+              <ul>
+                <li>Sales workspace</li>
+                <li>Reporting folder</li>
+                <li>Private model runtime</li>
+              </ul>
+            </div>
+            <div class="orchestration-group guardrails">
+              <span class="orch-label">Guardrails</span>
+              <ul>
+                <li>Read access only</li>
+                <li>No permanent deletion</li>
+                <li>External APIs blocked</li>
+                <li>Manager approval required</li>
+              </ul>
+            </div>
+            <div class="orchestration-group progress">
+              <span class="orch-label">Progress</span>
+              <ul>
+                <li>Files located</li>
+                <li>Context prepared</li>
+                <li>Report draft generated</li>
+                <li class="waiting">Waiting for approval</li>
+              </ul>
+            </div>
           </div>
-          <a href="#agents" class="vinci-panel-action">Review proposed actions</a>
+          <span class="vinci-panel-action" role="button" aria-disabled="true">Review proposed actions</span>
         </div>
       </div>
     </div>
@@ -316,11 +460,11 @@
         <span class="eyebrow">Agents</span>
         <h2 class="h2">Agents that act with your approval</h2>
         <p class="lead"><b>Ask Vinci to find files, run analyses, or generate reports.</b> It searches your workspace, confirms every action before running, and logs every step automatically. No surprises.</p>
-        <div class="tabs" data-tabs="pm">
-          <button class="tab" aria-selected="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" style="vertical-align:-2px"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> File Analysis</button>
-          <button class="tab"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" style="vertical-align:-2px"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="2"/><path d="M12 8v4l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Report Generation</button>
-          <button class="tab"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" style="vertical-align:-2px"><path d="M5 4h14v16H5z" stroke="currentColor" stroke-width="2"/><path d="M9 9h6M9 13h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Document Q&A</button>
-          <button class="tab"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" style="vertical-align:-2px"><path d="M6 3h9l3 3v15H6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg> Agent History</button>
+        <div class="tabs" aria-label="Agent examples">
+          <span class="tab"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="vertical-align:-2px"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> File Analysis</span>
+          <span class="tab"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="vertical-align:-2px"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="2"/><path d="M12 8v4l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Report Generation</span>
+          <span class="tab"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="vertical-align:-2px"><path d="M5 4h14v16H5z" stroke="currentColor" stroke-width="2"/><path d="M9 9h6M9 13h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Document Q&A</span>
+          <span class="tab"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="vertical-align:-2px"><path d="M6 3h9l3 3v15H6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg> Agent History</span>
         </div>
       </div>
     </div>
@@ -363,11 +507,11 @@
         <span class="eyebrow">file intelligence</span>
         <h2 class="h2">Find any file. Understand it instantly.</h2>
         <p class="lead"><b>Vinci searches your entire workspace</b>, surfaces the right documents, and returns structured summaries without ever sending your data to an external API. Confirm before every read.</p>
-        <div class="tabs" data-tabs="fin">
-          <button class="tab" aria-selected="true">CRM Exports</button>
-          <button class="tab">SOPs & Policies</button>
-          <button class="tab">Finance Reports</button>
-          <button class="tab">HR Documents</button>
+        <div class="tabs" aria-label="File intelligence examples">
+          <span class="tab">CRM Exports</span>
+          <span class="tab">SOPs & Policies</span>
+          <span class="tab">Finance Reports</span>
+          <span class="tab">HR Documents</span>
         </div>
       </div>
     </div>

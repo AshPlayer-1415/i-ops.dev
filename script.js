@@ -181,16 +181,6 @@
     intGrid.innerHTML = ih;
   }
 
-  /* ---------- Tabs (decorative active state) ---------- */
-  document.querySelectorAll("[data-tabs]").forEach(function (group) {
-    group.querySelectorAll(".tab").forEach(function (tab) {
-      tab.addEventListener("click", function () {
-        group.querySelectorAll(".tab").forEach(function (t) { t.setAttribute("aria-selected", "false"); });
-        tab.setAttribute("aria-selected", "true");
-      });
-    });
-  });
-
   /* ---------- Pricing toggle (only if present) ---------- */
   var toggle = document.getElementById("priceToggle");
   var knob = document.getElementById("priceKnob");
@@ -223,20 +213,6 @@
   var checkDark = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="rgba(255,255,255,.16)"/><path d="M8 12.5l2.6 2.6L16 9.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   document.querySelectorAll("[data-li]").forEach(function (li) { li.insertAdjacentHTML("afterbegin", checkLight); });
   document.querySelectorAll("[data-li-d]").forEach(function (li) { li.insertAdjacentHTML("afterbegin", checkDark); });
-
-  /* ---------- Device toggle ---------- */
-  var devToggle = document.getElementById("devToggle");
-  if (devToggle) {
-    devToggle.addEventListener("click", function (e) {
-      if (e.target.tagName !== "BUTTON") return;
-      devToggle.querySelectorAll("button").forEach(function (b) { b.classList.remove("on"); });
-      e.target.classList.add("on");
-      var target = e.target.getAttribute("data-dev");
-      document.querySelectorAll(".dev-stage .ph").forEach(function (p) {
-        p.classList.toggle("show", p.id === target);
-      });
-    });
-  }
 
   /* ---------- Count-up (stat deltas already static; animate stat numbers) ---------- */
   function countUp(el, target, suffix, dur) {
