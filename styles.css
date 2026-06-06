@@ -1055,6 +1055,14 @@ body.menu-open .mobile-menu { opacity: 1; transform: none; pointer-events: auto;
 .feature-body .h2 { margin-top: 22px; }
 .feature-body .lead { margin-top: 20px; }
 .feature-body .lead b { color: var(--ink); font-weight: 600; }
+.feature-body .lead + .file-intel-copy { margin-top: 12px; }
+.file-intel-trust {
+  margin-top: 18px;
+  color: var(--ink-3);
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.45;
+}
 .feature-cta { margin-top: 30px; display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap; }
 
 /* Tab pills */

@@ -94,12 +94,39 @@
     min-height: 56px;
     width: 100%;
   }
+  .waitlist-form .btn:disabled {
+    opacity: .68;
+    cursor: wait;
+    transform: none;
+    box-shadow: none;
+  }
+  .honeypot-field {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
   .waitlist-note {
-    min-height: 22px;
-    margin-top: 16px;
-    color: var(--green);
+    min-height: 1.5rem;
+    margin-top: .875rem;
+    text-align: center;
+    color: #5f6774;
     font-weight: 600;
-    font-size: 15px;
+    font-size: .9rem;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+  .waitlist-note.is-loading {
+    color: #5f6774;
+  }
+  .waitlist-note.is-success {
+    color: #117a4b;
+  }
+  .waitlist-note.is-error {
+    color: #b42318;
   }
   @media (max-width: 600px) {
     .waitlist-main {
@@ -131,18 +158,22 @@
         <span class="eyebrow">Early access</span>
         <h1 class="h-display" id="waitlistTitle" style="margin-top:20px;">Request private access</h1>
         <p class="lead">Get early access to our pre-production builds and test I-Ops locally for your internal operations. The Mac version will be available first, and we will share it as soon as it is ready.</p>
-        <form class="waitlist-form" id="waitlistForm">
+        <form class="waitlist-form" id="private-access-form">
+          <div class="honeypot-field">
+            <label for="website">Website</label>
+            <input id="website" name="website" tabindex="-1" autocomplete="off" />
+          </div>
           <div class="field">
             <label for="name">Name</label>
             <input id="name" name="name" autocomplete="name" placeholder="Your name" required />
           </div>
           <div class="field">
-            <label for="email">Work email</label>
-            <input id="email" name="email" type="email" autocomplete="email" placeholder="you@company.com" required />
+            <label for="workEmail">Work email</label>
+            <input id="workEmail" name="workEmail" type="email" autocomplete="email" placeholder="you@company.com" required />
           </div>
           <div class="field full">
-            <label for="linkedin">LinkedIn profile <span class="muted">(optional)</span></label>
-            <input id="linkedin" name="linkedin" type="url" autocomplete="url" placeholder="https://www.linkedin.com/in/your-profile" />
+            <label for="linkedinProfile">LinkedIn profile <span class="muted">(optional)</span></label>
+            <input id="linkedinProfile" name="linkedinProfile" type="url" autocomplete="url" placeholder="https://www.linkedin.com/in/your-profile" />
           </div>
           <div class="field">
             <label for="role">Role</label>
@@ -157,38 +188,126 @@
             <input id="location" name="location" autocomplete="address-level2" placeholder="City, state, or country" required />
           </div>
           <div class="field full">
-            <label for="expectedFeatures">What features are you expecting from the pre-production version of I-Ops? <span class="muted">(optional)</span></label>
+            <label for="expectedFeatures">What features are you expecting from the pre-production version of i-Ops? <span class="muted">(optional)</span></label>
             <textarea id="expectedFeatures" name="expectedFeatures" placeholder="File search, local reports, approvals, audit logs, integrations..."></textarea>
           </div>
           <div class="field full">
-            <label for="customRequirements">Suggestions and customizations specific to your requirements <span class="muted">(optional)</span></label>
-            <textarea id="customRequirements" name="customRequirements" placeholder="Share anything specific to your workflows, compliance needs, or team setup."></textarea>
+            <label for="requirements">Suggestions and customizations specific to your requirements <span class="muted">(optional)</span></label>
+            <textarea id="requirements" name="requirements" placeholder="Share anything specific to your workflows, compliance needs, or team setup."></textarea>
           </div>
-          <button class="btn btn-dark" type="submit">Request Private Access</button>
+          <button class="btn btn-dark" id="private-access-submit" type="submit" aria-busy="false">Request Private Access</button>
         </form>
-        <p class="waitlist-note" id="waitlistNote" aria-live="polite" hidden></p>
+        <p class="waitlist-note" id="private-access-status" aria-live="polite" hidden></p>
       </section>
     </main>
   </div>
 
   <script>
     (function () {
-      var form = document.getElementById("waitlistForm");
-      var note = document.getElementById("waitlistNote");
-      if (!form || !note) return;
-      form.addEventListener("submit", function (event) {
+      const PRIVATE_ACCESS_ENDPOINT =
+        "https://script.google.com/macros/s/AKfycbw7XgSmH1OQxBDuXb0hwkNxurBc_TQHYX87nQ1uMVbNeiFFXWx-v6C7y6B1tZFm8PRcdw/exec";
+
+      var form = document.getElementById("private-access-form");
+      var submitButton = document.getElementById("private-access-submit");
+      var statusElement = document.getElementById("private-access-status");
+      var defaultButtonText = submitButton ? submitButton.textContent : "Request Private Access";
+      var submissionInProgress = false;
+      if (!form || !submitButton || !statusElement) return;
+
+      function endpointIsConfigured() {
+        return PRIVATE_ACCESS_ENDPOINT &&
+          PRIVATE_ACCESS_ENDPOINT.indexOf("https://script.google.com/macros/s/") === 0 &&
+          PRIVATE_ACCESS_ENDPOINT.slice(-5) === "/exec";
+      }
+
+      function getPayload(formData) {
+        return {
+          name: String(formData.get("name") || "").trim(),
+          workEmail: String(formData.get("workEmail") || "").trim().toLowerCase(),
+          linkedinProfile: String(formData.get("linkedinProfile") || "").trim(),
+          role: String(formData.get("role") || "").trim(),
+          company: String(formData.get("company") || "").trim(),
+          location: String(formData.get("location") || "").trim(),
+          expectedFeatures: String(formData.get("expectedFeatures") || "").trim(),
+          requirements: String(formData.get("requirements") || "").trim(),
+          website: String(formData.get("website") || "").trim()
+        };
+      }
+
+      function showStatus(message, state) {
+        statusElement.textContent = message;
+        statusElement.hidden = false;
+        statusElement.classList.remove("is-loading", "is-success", "is-error");
+        if (state) statusElement.classList.add("is-" + state);
+      }
+
+      function setSubmitting(submitting) {
+        submissionInProgress = submitting;
+        submitButton.disabled = submitting;
+        submitButton.setAttribute("aria-busy", submitting ? "true" : "false");
+        submitButton.textContent = submitting ? "Submitting request…" : defaultButtonText;
+      }
+
+      form.addEventListener("submit", async function (event) {
         event.preventDefault();
-        var data = Object.fromEntries(new FormData(form).entries());
-        try {
-          var saved = JSON.parse(localStorage.getItem("iopsWaitlistResponses") || "[]");
-          saved.push(Object.assign({ submittedAt: new Date().toISOString() }, data));
-          localStorage.setItem("iopsWaitlistResponses", JSON.stringify(saved));
-        } catch (error) {
-          // Storage is a prototype convenience until a form endpoint is connected.
+        if (submissionInProgress) return;
+
+        if (!form.reportValidity()) return;
+
+        var payload = getPayload(new FormData(form));
+
+        if (!payload.name) {
+          showStatus("Please enter your name.", "error");
+          document.getElementById("name")?.focus();
+          return;
         }
-        note.textContent = "Thank you for your interest! We will send a confirmation email shortly to let you know your response was saved.";
-        note.hidden = false;
-        form.reset();
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.workEmail)) {
+          showStatus("Please enter a valid work email.", "error");
+          document.getElementById("workEmail")?.focus();
+          return;
+        }
+
+        if (payload.linkedinProfile) {
+          try {
+            var linkedinUrl = new URL(payload.linkedinProfile);
+            if (linkedinUrl.protocol !== "http:" && linkedinUrl.protocol !== "https:") {
+              throw new Error("Invalid protocol");
+            }
+          } catch (error) {
+            showStatus("Please enter a valid LinkedIn profile URL.", "error");
+            document.getElementById("linkedinProfile")?.focus();
+            return;
+          }
+        }
+
+        if (!endpointIsConfigured()) {
+          showStatus("The request form is temporarily unavailable. Please try again later.", "error");
+          return;
+        }
+
+        setSubmitting(true);
+        showStatus("Submitting your request…", "loading");
+
+        try {
+          await fetch(PRIVATE_ACCESS_ENDPOINT, {
+            method: "POST",
+            mode: "no-cors",
+            cache: "no-store",
+            redirect: "follow",
+            headers: {
+              "Content-Type": "text/plain;charset=utf-8"
+            },
+            body: JSON.stringify(payload)
+          });
+
+          form.reset();
+          showStatus("Your request was sent. We’ll review it and contact you by email.", "success");
+        } catch (error) {
+          showStatus("We couldn’t send your request. Please check your connection and try again.", "error");
+        } finally {
+          setSubmitting(false);
+        }
       });
     })();
   </script>
