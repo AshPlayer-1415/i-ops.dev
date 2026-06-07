@@ -1976,6 +1976,22 @@ body.menu-open .mobile-menu { opacity: 1; transform: none; pointer-events: auto;
     border-radius: 20px;
   }
 }
+@media (max-width: 768px) {
+  .footer-preview-image {
+    width: 100%;
+    height: clamp(520px, 74vw, 620px);
+    overflow: hidden;
+    border-radius: clamp(18px, 4vw, 24px);
+  }
+  .footer-preview-image img {
+    width: 900px;
+    max-width: none;
+    height: auto;
+    transform: none;
+    transform-origin: left top;
+    object-position: left top;
+  }
+}
 @media (max-width: 600px) {
   :root { --gutter: 20px; }
   .section { padding: 76px 0; }
@@ -2000,9 +2016,9 @@ body.menu-open .mobile-menu { opacity: 1; transform: none; pointer-events: auto;
     padding-top: 76px;
   }
   .footer-preview-image {
-    width: min(92vw, 560px);
+    width: 100%;
     margin-top: 34px;
-    height: clamp(260px, 72vw, 380px);
+    height: clamp(480px, 122vw, 560px);
     overflow: hidden;
     filter: drop-shadow(0 26px 42px rgba(20,21,26,.2));
   }
@@ -2010,9 +2026,11 @@ body.menu-open .mobile-menu { opacity: 1; transform: none; pointer-events: auto;
     height: 38%;
   }
   .footer-preview-image img {
-    width: 720px;
+    width: clamp(780px, 210vw, 860px);
     max-width: none;
-    transform: translateX(-24px);
+    height: auto;
+    transform: none;
+    object-position: left top;
   }
   .bento-bottom { grid-template-columns: 1fr; }
   .how-process {
