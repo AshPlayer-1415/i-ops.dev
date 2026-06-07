@@ -80,7 +80,7 @@
     <rect x="724" y="552" width="92" height="64" rx="10" fill="#f5f5f3"/>
   </svg>
 </template>
-<link rel="stylesheet" href="styles.css?v=20260606-footer-mobile-crop" />
+<link rel="stylesheet" href="styles.css?v=20260606-product-preview-modal" />
 <link rel="stylesheet" href="components.css" />
 </head>
 <body>
@@ -722,9 +722,14 @@
       <h2 class="h2">Local AI for ops is here. Get early access.</h2>
       <p class="lead">I-Ops runs on Apple Silicon today. As AI hardware scales, it gets more powerful. Request private access to be among the first teams to use private local AI for internal operations.</p>
       <a href="join-waitlist.html" class="btn btn-dark">Request Private Access</a>
-      <figure class="footer-preview-image" aria-label="I-Ops dashboard preview">
-        <img src="assets/footer_image2.png" alt="I-Ops dashboard preview" loading="lazy" draggable="false" />
-      </figure>
+      <button
+        class="footer-preview-image product-preview-trigger"
+        aria-label="Open full I-Ops product preview"
+        type="button"
+      >
+        <img src="assets/footer_image2.png" alt="I-Ops Agent Office showing local AI agents and live activity" loading="lazy" draggable="false" />
+        <span class="preview-hint">Tap to view full preview</span>
+      </button>
       <div class="cta-trust">
         <p class="trusted-label reveal">Purpose-built for every operations team</p>
         <div class="marquee reveal" id="logoMarquee"><div class="marquee-track"></div></div>
@@ -732,6 +737,26 @@
     </div>
   </div>
 </section>
+
+<div
+  class="product-preview-modal"
+  role="dialog"
+  aria-modal="true"
+  aria-label="I-Ops product preview"
+  hidden
+>
+  <div class="product-preview-backdrop" data-preview-close></div>
+  <button
+    class="product-preview-close"
+    type="button"
+    aria-label="Close preview"
+  >
+    ×
+  </button>
+  <div class="product-preview-content">
+    <img src="assets/footer_image2.png" alt="Expanded I-Ops Agent Office interface" draggable="false" />
+  </div>
+</div>
 
 <!-- ========================== FOOTER ========================== -->
 <footer class="footer">

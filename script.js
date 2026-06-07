@@ -214,6 +214,70 @@
   document.querySelectorAll("[data-li]").forEach(function (li) { li.insertAdjacentHTML("afterbegin", checkLight); });
   document.querySelectorAll("[data-li-d]").forEach(function (li) { li.insertAdjacentHTML("afterbegin", checkDark); });
 
+  /* ---------- Product preview modal ---------- */
+  var previewTrigger = document.querySelector(".product-preview-trigger");
+  var previewModal = document.querySelector(".product-preview-modal");
+  var previewClose = document.querySelector(".product-preview-close");
+  var previewBackdrop = document.querySelector(".product-preview-backdrop");
+  var savedScrollY = 0;
+  var lastPreviewFocus = null;
+  var closeTimer = null;
+
+  function lockPreviewScroll() {
+    savedScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+    document.body.classList.add("preview-open");
+    document.body.style.position = "fixed";
+    document.body.style.top = "-" + savedScrollY + "px";
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+    document.body.style.width = "100%";
+  }
+
+  function unlockPreviewScroll() {
+    document.body.classList.remove("preview-open");
+    document.body.style.position = "";
+    document.body.style.top = "";
+    document.body.style.left = "";
+    document.body.style.right = "";
+    document.body.style.width = "";
+    window.scrollTo(0, savedScrollY);
+  }
+
+  function openPreviewModal() {
+    if (!previewModal || !previewTrigger) return;
+    if (closeTimer) window.clearTimeout(closeTimer);
+    lastPreviewFocus = document.activeElement;
+    previewModal.hidden = false;
+    lockPreviewScroll();
+    requestAnimationFrame(function () {
+      previewModal.classList.add("is-open");
+      if (previewClose) previewClose.focus({ preventScroll: true });
+    });
+  }
+
+  function closePreviewModal() {
+    if (!previewModal || previewModal.hidden) return;
+    previewModal.classList.remove("is-open");
+    unlockPreviewScroll();
+    closeTimer = window.setTimeout(function () {
+      previewModal.hidden = true;
+      if (lastPreviewFocus && typeof lastPreviewFocus.focus === "function") {
+        lastPreviewFocus.focus({ preventScroll: true });
+      } else if (previewTrigger) {
+        previewTrigger.focus({ preventScroll: true });
+      }
+    }, reduce ? 0 : 220);
+  }
+
+  if (previewTrigger && previewModal) {
+    previewTrigger.addEventListener("click", openPreviewModal);
+    if (previewClose) previewClose.addEventListener("click", closePreviewModal);
+    if (previewBackdrop) previewBackdrop.addEventListener("click", closePreviewModal);
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !previewModal.hidden) closePreviewModal();
+    });
+  }
+
   /* ---------- Count-up (stat deltas already static; animate stat numbers) ---------- */
   function countUp(el, target, suffix, dur) {
     var start = 0, t0 = null;
