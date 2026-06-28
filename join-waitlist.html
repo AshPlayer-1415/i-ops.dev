@@ -109,6 +109,20 @@
     transform: none;
     box-shadow: none;
   }
+  .release-access-link {
+    grid-column: 1 / -1;
+    margin: -2px 0 0;
+    text-align: center;
+    color: #5f6774;
+    font-size: .92rem;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  .release-access-link a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
   .honeypot-field {
     position: absolute;
     left: -9999px;
@@ -205,6 +219,7 @@
             <textarea id="requirements" name="requirements" placeholder="Share anything specific to your workflows, compliance needs, or team setup."></textarea>
           </div>
           <button class="btn btn-dark" id="private-access-submit" type="submit" aria-busy="false">Request Private Access</button>
+          <p class="release-access-link">Already got the email and codes to download? <a href="early-release-private-access/">Click here</a>.</p>
         </form>
         <p class="waitlist-note" id="private-access-status" aria-live="polite" hidden></p>
       </section>
