@@ -376,7 +376,7 @@
             showInvalid();
           }
         } catch (error) {
-          showStatus("We could not verify that code right now. Please check your connection and try again.", "error");
+          showInvalid();
         } finally {
           setSubmitting(false);
         }
