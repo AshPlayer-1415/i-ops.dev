@@ -232,9 +232,6 @@
 .stat .stat-h .si { display: none; }
 .stat .stat-b { display: flex; align-items: baseline; justify-content: space-between; margin-top: 14px; gap: 10px; }
 .stat .stat-b b { font-size: 34px; line-height: 1; font-weight: 800; letter-spacing: 0; color: #0f172a; }
-.stat .delta { font-size: 14px; font-weight: 800; white-space: nowrap; }
-.delta.up { color: var(--green); }
-.delta.down { color: var(--red); }
 .mini-bars { display: flex; align-items: flex-end; gap: 7px; height: 32px; margin-top: 10px; }
 .mini-bars i { width: 8px; height: 6px; border-radius: 8px; background: #dce5f1; }
 .mini-bars i:nth-child(2) { height: 12px; }

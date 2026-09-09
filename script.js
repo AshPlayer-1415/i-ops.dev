@@ -49,31 +49,6 @@
     [120, 400, 900].forEach(function (t) { setTimeout(revealCheck, t); });
   }
 
-  var statB = document.querySelectorAll(".dash-stats .stat-b b");
-  if (statB.length && !reduce) {
-    var counted = false;
-    var statEl = document.querySelector(".dash-stats");
-    var checkStats = function () {
-      if (counted) return;
-      var r = statEl.getBoundingClientRect();
-      var vh = window.innerHeight || document.documentElement.clientHeight;
-      if (r.top < vh * 0.85 && r.bottom > 0) {
-        counted = true;
-        countUp(statB[0], 455, "", 1100);
-        countUp(statB[1], 55, "", 1100);
-        countUp(statB[2], 400, "", 1100);
-        countUp(statB[3], 600, "hrs", 1100);
-        window.removeEventListener("scroll", checkStats);
-      }
-    };
-    window.addEventListener("scroll", checkStats, { passive: true });
-    setTimeout(checkStats, 80);
-  }
-
-  /* ---------- Clouds: layer kept for parallax-able overlays (none by default) ---------- */
-  var cloudWrap = document.getElementById("clouds");
-  var clouds = [];
-
   /* ---------- Container scroll animation ---------- */
   var heroScrollWrap = document.getElementById("heroContainerScroll");
   var heroDash = document.getElementById("heroDash");
@@ -112,11 +87,6 @@
       heroScrollWrap.style.setProperty("--scroll-rotate", rotate.toFixed(2) + "deg");
       heroScrollWrap.style.setProperty("--scroll-scale", scale.toFixed(3));
       heroScrollWrap.style.setProperty("--scroll-title-y", translate.toFixed(1) + "px");
-    }
-    if (!reduce) {
-      clouds.forEach(function (c) {
-        c.el.style.transform = "translateY(" + (y * c.s).toFixed(1) + "px)";
-      });
     }
   }
   if (reduce && heroScrollWrap) {
@@ -276,18 +246,5 @@
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && !previewModal.hidden) closePreviewModal();
     });
-  }
-
-  /* ---------- Count-up (stat deltas already static; animate stat numbers) ---------- */
-  function countUp(el, target, suffix, dur) {
-    var start = 0, t0 = null;
-    function step(ts) {
-      if (!t0) t0 = ts;
-      var p = Math.min((ts - t0) / dur, 1);
-      var eased = 1 - Math.pow(1 - p, 3);
-      el.textContent = Math.round(start + (target - start) * eased) + (suffix || "");
-      if (p < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
   }
 })();
