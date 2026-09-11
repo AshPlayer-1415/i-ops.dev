@@ -130,7 +130,15 @@ p { margin: 16px 0 0; max-width: 68ch; }
 .brand { font-size: var(--step-0); letter-spacing: -0.01em; text-decoration: none; }
 .nav-links { display: flex; align-items: center; gap: 28px; }
 .nav-links a { font-size: var(--step--1); color: var(--ink-2); text-decoration: none; transition: color 0.15s ease; }
-.nav-links a:hover { color: var(--ink); }
+
+/* Every other item lights red instead of white. The nav is identical on every
+   page for this reason: the pattern is positional, so a page that dropped a
+   link would recolour a different set and the detail would stop being a detail.
+   Even positions are Governance, What it does, Partner. */
+.nav-links a:hover,
+.nav-links a:focus-visible { color: var(--ink); }
+.nav-links a:nth-child(even):hover,
+.nav-links a:nth-child(even):focus-visible { color: var(--red); }
 
 .btn {
   display: inline-flex; align-items: center; justify-content: center;
@@ -400,7 +408,10 @@ p { margin: 16px 0 0; max-width: 68ch; }
   body.menu-open { overflow: hidden; }
   body.menu-open .mobile-menu { display: block; }
   .mobile-menu { position: fixed; inset: 66px 0 0; background: var(--ground); z-index: 55; padding: 12px var(--gutter) 32px; border-top: 1px solid var(--line); overflow-y: auto; }
-  .mobile-menu a { display: block; padding: 18px 0; text-decoration: none; border-bottom: 1px solid var(--line); font-size: var(--step-1); }
+  .mobile-menu a { display: block; padding: 18px 0; text-decoration: none; border-bottom: 1px solid var(--line); font-size: var(--step-1); transition: color 0.15s ease; }
+  .mobile-menu a:hover, .mobile-menu a:focus-visible { color: var(--ink); }
+  .mobile-menu a:nth-child(even):hover,
+  .mobile-menu a:nth-child(even):focus-visible { color: var(--red); }
 
   /* Two buttons of different widths stacked left read as a mistake. */
   .hero-actions { flex-direction: column; align-items: stretch; gap: 12px; margin-top: 32px; }
@@ -413,9 +424,15 @@ p { margin: 16px 0 0; max-width: 68ch; }
   .check-steps button { padding: 14px 0; min-height: 48px; border-bottom: 1px solid var(--line); margin-bottom: 0; }
   .check-steps button[aria-selected="true"] { border-bottom-color: var(--red); }
   .check-body { padding: 20px 18px 26px; min-height: 0; }
-  .check-bar { padding: 12px 16px; }
-  /* The task line is context, not content. It may shrink; it may not push. */
-  .check-task { font-size: 0.78rem; }
+  /* Stacked, and the task wraps. It was one nowrap line with an ellipsis, so a
+     phone showed "summarise the Q3 renewal position for e\2026" and the reader
+     never learned what the task actually was, which is the whole setup for the
+     three panels underneath it. */
+  .check-bar { flex-direction: column; align-items: flex-start; gap: 6px; padding: 13px 16px; }
+  .check-task {
+    font-size: 0.8rem; line-height: 1.5;
+    white-space: normal; overflow: visible; text-overflow: clip;
+  }
 
   /* A 12ch label column against a 375px screen leaves the value no room. */
   .ledger .k { min-width: 9.5ch; }
