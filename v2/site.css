@@ -293,6 +293,46 @@ p { margin: 16px 0 0; max-width: 68ch; }
 }
 .field-canvas canvas { display: block; }
 
+/* ---------- legal page ---------------------------------------------------
+   These lived inline in the old privacy and terms pages. Those are redirects
+   now, so the rules live here or nowhere.
+   ---------------------------------------------------------------------- */
+.legal { max-width: 74ch; margin-top: 8px; }
+.legal h3 {
+  font-size: var(--step-1); margin-top: 44px; color: var(--ink);
+}
+.legal h3::before {
+  content: ""; display: block; width: 28px; height: 1px;
+  background: var(--line-2); margin-bottom: 16px;
+}
+.legal h3:first-of-type { margin-top: 34px; }
+.legal p { color: var(--ink-2); margin-top: 14px; }
+.legal ul { margin: 14px 0 0; padding-left: 20px; color: var(--ink-2); }
+.legal li { margin-top: 9px; }
+.legal a { color: var(--ink); }
+.legal strong { color: var(--ink); font-weight: 400; box-shadow: inset 0 -1px 0 var(--line-2); }
+.legal .lede { color: var(--ink-2); }
+
+.toc { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 34px; }
+.toc a {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 11px 18px; min-height: 44px;
+  border: 1px solid var(--line); border-radius: 999px;
+  color: var(--ink-2); text-decoration: none; font-size: var(--step--1);
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.toc a:hover { color: var(--ink); border-color: var(--line-2); }
+.toc .mono { color: var(--ink-3); }
+
+/* Deliberately loud. This marks a clause that is not finished, and it is styled
+   so that shipping the page with it still in is a decision rather than an
+   oversight. Delete the class with the bracket. */
+.fill-in {
+  border: 1px dashed var(--red); border-radius: 10px;
+  padding: 14px 16px; color: var(--ink);
+}
+.fill-in strong { color: var(--red); }
+
 /* ---------- footer ------------------------------------------------------- */
 .footer { border-top: 1px solid var(--line); padding: 56px 0 72px; }
 .footer-inner { display: flex; flex-wrap: wrap; gap: 32px; justify-content: space-between; }
