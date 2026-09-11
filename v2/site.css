@@ -224,8 +224,31 @@ p { margin: 16px 0 0; max-width: 68ch; }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
 .form-status { font-family: var(--mono); font-size: var(--step--1); margin-top: 18px; color: var(--ink-2); }
+
+/* Shown only when the visitor is not on a Mac. It is a statement of fact about
+   the file, not a warning, so it is bordered rather than coloured. */
+.platform-notice {
+  margin: 0 0 26px; padding: 14px 16px; max-width: 56ch;
+  border: 1px solid var(--line-2); border-left: 2px solid var(--red);
+  border-radius: 10px; color: var(--ink-2); font-size: var(--step--1);
+}
 .form-status.is-error { color: var(--red); }
 .form-status.is-success { color: var(--ink); }
+
+/* ---------- the block field ---------------------------------------------
+   Sits beside the early access form. Sticky on desktop so it stays with the
+   reader down a long form; a short banner above the form on a phone, where a
+   tall decorative panel would just push the fields off the screen.
+   ---------------------------------------------------------------------- */
+.access-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.78fr); gap: clamp(32px, 5vw, 72px); align-items: start; }
+.field-panel { position: sticky; top: 100px; }
+.field-canvas {
+  width: 100%; height: min(560px, 62vh);
+  border: 1px solid var(--line); border-radius: 16px;
+  background: var(--ground-2); overflow: hidden;
+  touch-action: pan-y;            /* the page still scrolls over it on a phone */
+}
+.field-canvas canvas { display: block; }
 
 /* ---------- footer ------------------------------------------------------- */
 .footer { border-top: 1px solid var(--line); padding: 56px 0 72px; }
@@ -233,6 +256,18 @@ p { margin: 16px 0 0; max-width: 68ch; }
 .footer a { color: var(--ink-3); text-decoration: none; font-size: var(--step--1); }
 .footer a:hover { color: var(--ink); }
 .footer-links { display: flex; flex-wrap: wrap; gap: 22px; }
+
+/* GitHub, LinkedIn and mail. The mail mark is an envelope rather than Gmail's
+   own logo, because that logo is Google's and we do not get to wear it. */
+.social { display: flex; gap: 8px; margin-top: 18px; }
+.social a {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; margin-left: -11px;
+  border-radius: 999px; color: var(--ink-3);
+  transition: color 0.15s ease, background 0.15s ease;
+}
+.social a:first-child { margin-left: -11px; }
+.social a:hover { color: var(--ink); background: var(--ground-2); }
 
 /* ---------- reveal ------------------------------------------------------- */
 .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.6s ease, transform 0.6s ease; }
@@ -315,6 +350,13 @@ p { margin: 16px 0 0; max-width: 68ch; }
 
   .field { margin-top: 16px; }
   form .btn { width: 100%; }
+
+  /* One column, and the field goes ABOVE the form as a short banner. A 560px
+     decorative panel between the heading and the first input would cost the
+     reader a whole screen of scrolling to reach the thing they came for. */
+  .access-grid { grid-template-columns: 1fr; gap: 28px; }
+  .field-panel { position: static; order: -1; }
+  .field-canvas { height: 150px; border-radius: 14px; }
 }
 
 @media (max-width: 380px) {
