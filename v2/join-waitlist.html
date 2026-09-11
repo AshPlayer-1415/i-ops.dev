@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Request private access — I-Ops</title>
+<meta name="description" content="Early access to I-Ops. Signed macOS builds today, and a conversation rather than a download queue." />
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400&family=Anonymous+Pro:wght@400&display=swap" />
+<link rel="stylesheet" href="site.css" />
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html">I&#8209;Ops</a>
+    <nav class="nav-links">
+      <a href="index.html#problem">The problem</a>
+      <a href="index.html#governance">Governance</a>
+      <a href="index.html#features">What it does</a>
+      <a href="partner.html">Partner</a>
+    </nav>
+    <a class="btn btn-ghost" href="index.html">Back</a>
+    <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html#problem">The problem</a>
+    <a href="index.html#governance">Governance</a>
+    <a href="index.html#features">What it does</a>
+    <a href="partner.html">Partner</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <span class="label">/ &nbsp; early access</span>
+      <h1>Request private access.</h1>
+      <p class="lede">
+        Signed, notarised macOS builds run today. Early access is a conversation rather than a
+        download queue, because the version worth having is the one shaped around work you
+        actually do. Windows and Linux are not available yet, and we would rather say so than
+        imply otherwise.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <form class="reveal in" id="private-access-form" data-sheet-form data-type="waitlist"
+            data-status="private-access-status" data-busy="Submitting your request…"
+            data-success="Your request was sent. We’ll review it and contact you by email."
+            style="max-width:640px;">
+        <div class="hp">
+          <label for="website">Website</label>
+          <input id="website" name="website" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <label class="field" for="name"><span>Name</span>
+          <input id="name" name="name" type="text" autocomplete="name" placeholder="Your name" required />
+        </label>
+
+        <label class="field" for="workEmail"><span>Work email</span>
+          <input id="workEmail" name="workEmail" type="email" autocomplete="email" placeholder="you@company.com" required />
+        </label>
+
+        <label class="field" for="linkedinProfile"><span>LinkedIn profile, optional</span>
+          <input id="linkedinProfile" name="linkedinProfile" type="url" autocomplete="url" placeholder="https://www.linkedin.com/in/your-profile" />
+        </label>
+
+        <label class="field" for="role"><span>Role</span>
+          <input id="role" name="role" type="text" autocomplete="organization-title" placeholder="Operations lead" required />
+        </label>
+
+        <label class="field" for="company"><span>Company</span>
+          <input id="company" name="company" type="text" autocomplete="organization" placeholder="Company name" required />
+        </label>
+
+        <label class="field" for="location"><span>Location</span>
+          <input id="location" name="location" type="text" autocomplete="address-level2" placeholder="City, state, or country" required />
+        </label>
+
+        <label class="field" for="expectedFeatures"><span>What would you want from a pre-production build, optional</span>
+          <textarea id="expectedFeatures" name="expectedFeatures" placeholder="Worker workflows, model policy, approvals, outcome verification, integrations"></textarea>
+        </label>
+
+        <label class="field" for="requirements"><span>Anything specific to how your team works, optional</span>
+          <textarea id="requirements" name="requirements" placeholder="Workflows, compliance needs, model preferences, or how your teams want to use AI workers."></textarea>
+        </label>
+
+        <button class="btn btn-lg" type="submit" aria-busy="false" style="margin-top:28px;">Request private access</button>
+      </form>
+      <p class="form-status" id="private-access-status" aria-live="polite" hidden></p>
+      <p class="dim" style="font-size:var(--step--1); margin-top:28px;">
+        Already have the email and your codes?
+        <a href="early-release-private-access/" style="color:var(--ink);">Download here</a>.
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div>
+      <div class="brand">I&#8209;Ops</div>
+      <p class="dim" style="font-size:var(--step--1); margin-top:8px;">Operations Intelligence LLC</p>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="partner.html">Partner</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="mailto:hello@i-ops.dev">hello@i-ops.dev</a>
+    </div>
+  </div>
+</footer>
+
+<script src="site.js"></script>
+<script src="forms.js"></script>
+</body>
+</html>

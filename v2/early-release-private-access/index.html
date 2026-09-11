@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Private access — I-Ops</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400&family=Anonymous+Pro:wght@400&display=swap" />
+<link rel="stylesheet" href="../site.css" />
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../index.html">I&#8209;Ops</a>
+    <a class="btn btn-ghost" href="../index.html">Back to site</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <span class="label">/ &nbsp; private access</span>
+      <h1>Enter your access code.</h1>
+      <p class="lede">Codes go out by email with the early access invitation. One code, one machine, and it expires.</p>
+    </div>
+  </section>
+  <section class="section" style="border-top:0; padding-top:0;">
+    <div class="wrap">
+      <form id="release-access-form" style="max-width:480px;">
+        <label class="field" for="releaseCode"><span>Access code</span>
+          <input id="releaseCode" name="releaseCode" type="text" inputmode="text"
+                 autocomplete="off" spellcheck="false" placeholder="IOPS-XXXX-XXXX" required />
+        </label>
+        <button class="btn btn-lg" id="release-access-submit" type="submit" aria-busy="false" style="margin-top:26px;">Unlock download</button>
+      </form>
+      <p class="form-status" id="release-access-status" aria-live="polite" hidden></p>
+      <p class="dim" style="font-size:var(--step--1); margin-top:28px;">
+        No code yet? <a href="../join-waitlist.html" style="color:var(--ink);">Request private access</a>.
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div>
+      <div class="brand">I&#8209;Ops</div>
+      <p class="dim" style="font-size:var(--step--1); margin-top:8px;">Operations Intelligence LLC</p>
+    </div>
+    <div class="footer-links">
+      <a href="../index.html">Home</a>
+      <a href="../privacy.html">Privacy</a>
+      <a href="../terms.html">Terms</a>
+      <a href="mailto:hello@i-ops.dev">hello@i-ops.dev</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+    (function () {
+      var ACCESS_ENDPOINT = "https://catalog.i-ops.dev/access";
+      var LOCAL_DEMO_CODE = "IOPS-DEMO-2026";
+      var SESSION_KEY = "iopsEarlyReleaseAccess";
+
+      var form = document.getElementById("release-access-form");
+      var input = document.getElementById("releaseCode");
+      var submitButton = document.getElementById("release-access-submit");
+      var statusElement = document.getElementById("release-access-status");
+      var defaultButtonText = submitButton ? submitButton.textContent : "Continue";
+      var requestInProgress = false;
+
+      if (!form || !input || !submitButton || !statusElement) return;
+
+      function showStatus(message, state) {
+        statusElement.textContent = message;
+        statusElement.hidden = false;
+        statusElement.classList.remove("is-loading", "is-success", "is-error");
+        if (state) statusElement.classList.add("is-" + state);
+      }
+
+      function hideStatus() {
+        statusElement.textContent = "";
+        statusElement.hidden = true;
+        statusElement.classList.remove("is-loading", "is-success", "is-error");
+      }
+
+      function setSubmitting(submitting) {
+        requestInProgress = submitting;
+        submitButton.disabled = submitting;
+        submitButton.setAttribute("aria-busy", submitting ? "true" : "false");
+        submitButton.textContent = submitting ? "Checking..." : defaultButtonText;
+      }
+
+      function localDemoIsAvailable() {
+        return location.protocol === "file:" ||
+          location.hostname === "localhost" ||
+          location.hostname === "127.0.0.1";
+      }
+
+      function getLocalDemoAccess(code) {
+        if (!localDemoIsAvailable() || code.toUpperCase() !== LOCAL_DEMO_CODE) return null;
+        return {
+          ok: true,
+          name: "ABCD",
+          note: "Your private reviewer access is ready for local macOS testing. Please use this build to explore the core flows and share anything that would make i-Ops fit your daily operations better."
+        };
+      }
+
+      function rememberAccess(data, code) {
+        try {
+          sessionStorage.setItem(SESSION_KEY, JSON.stringify({
+            code: code,
+            name: String(data.name || "").trim(),
+            note: String(data.note || "").trim(),
+            verifiedAt: Date.now()
+          }));
+        } catch (error) {
+          // The download page can re-check the code if session storage is unavailable.
+        }
+      }
+
+      function openDownloadPage(data, code) {
+        rememberAccess(data, code);
+        showStatus("Access verified. Opening your download page...", "success");
+        window.location.href = "download/index.html?code=" + encodeURIComponent(code);
+      }
+
+      function showInvalid() {
+        statusElement.textContent = "";
+        statusElement.hidden = false;
+        statusElement.classList.remove("is-loading", "is-success", "is-error");
+        statusElement.classList.add("is-error");
+        statusElement.append(
+          "Sorry, we couldn't verify your code. Please reply to the email you received with the codes, or join the waitlist ",
+          Object.assign(document.createElement("a"), {
+            href: "../join-waitlist.html",
+            textContent: "here"
+          }),
+          "."
+        );
+      }
+
+      form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        if (requestInProgress) return;
+
+        var code = input.value.trim();
+        if (!code) {
+          showStatus("Please enter your access code.", "error");
+          input.focus();
+          return;
+        }
+
+        setSubmitting(true);
+        hideStatus();
+        showStatus("Checking your code...", "loading");
+
+        try {
+          var localDemoAccess = getLocalDemoAccess(code);
+          if (localDemoAccess) {
+            openDownloadPage(localDemoAccess, code);
+            return;
+          }
+
+          var response = await fetch(ACCESS_ENDPOINT + "?code=" + encodeURIComponent(code), {
+            method: "GET",
+            cache: "no-store",
+            headers: {
+              "Accept": "application/json"
+            }
+          });
+
+          if (!response.ok) {
+            throw new Error("Access service returned " + response.status);
+          }
+
+          var data = await response.json();
+          if (data && data.ok === true) {
+            openDownloadPage(data, code);
+          } else {
+            showInvalid();
+          }
+        } catch (error) {
+          showInvalid();
+        } finally {
+          setSubmitting(false);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

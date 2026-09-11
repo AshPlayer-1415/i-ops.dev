@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Download — I-Ops</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400&family=Anonymous+Pro:wght@400&display=swap" />
+<link rel="stylesheet" href="../../site.css" />
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../../index.html">I&#8209;Ops</a>
+    <a class="btn btn-ghost" href="../../index.html">Back to site</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <span class="label">/ &nbsp; download</span>
+      <h1>Your build.</h1>
+      <p class="lede">Signed and notarised. Open it once and macOS remembers it.</p>
+    </div>
+  </section>
+  <section class="section" style="border-top:0; padding-top:0;">
+    <div class="wrap">
+      <p class="form-status" id="downloadStatus" aria-live="polite"></p>
+      <p class="form-status is-error" id="downloadError" hidden></p>
+
+      <div id="downloadContent" hidden>
+        <p class="lede" id="downloadGreeting"></p>
+
+        <div class="rows" style="margin-top:36px;">
+          <div class="row" style="grid-template-columns: 8ch 1fr auto;">
+            <span class="n">/01</span>
+            <div>
+              <h3>macOS</h3>
+              <p>Apple silicon. Signed and notarised.</p>
+            </div>
+            <a class="btn" id="macDownload" href="#" download>Download</a>
+          </div>
+          <div class="row" style="grid-template-columns: 8ch 1fr auto;">
+            <span class="n">/02</span>
+            <div>
+              <h3 class="dim">Windows</h3>
+              <p>Not available yet. We would rather say so than ship something half working.</p>
+            </div>
+            <!-- The id is load-bearing: the access script assigns to `.href` unconditionally, so
+                 removing this element throws and takes the macOS download down with it. -->
+            <a class="btn btn-ghost" id="windowsDownload" href="#" rel="noopener"
+               aria-disabled="true" tabindex="-1" style="opacity:.45; pointer-events:none;">Coming soon</a>
+          </div>
+        </div>
+
+        <p class="dim" style="font-size:var(--step--1); margin-top:28px; max-width:60ch;">
+          Your access code is attached to the download request. Please do not share this page or
+          your code publicly.
+        </p>
+
+        <div id="downloadNoteBlock" hidden style="margin-top:32px;">
+          <span class="label">note</span>
+          <p id="downloadNote" class="muted"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div>
+      <div class="brand">I&#8209;Ops</div>
+      <p class="dim" style="font-size:var(--step--1); margin-top:8px;">Operations Intelligence LLC</p>
+    </div>
+    <div class="footer-links">
+      <a href="../../index.html">Home</a>
+      <a href="../../privacy.html">Privacy</a>
+      <a href="../../terms.html">Terms</a>
+      <a href="mailto:hello@i-ops.dev">hello@i-ops.dev</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+    (function () {
+      var ACCESS_ENDPOINT = "https://catalog.i-ops.dev/access";
+      var DOWNLOAD_BASE = "https://catalog.i-ops.dev/download";
+      var LOCAL_DEMO_CODE = "IOPS-DEMO-2026";
+      var SESSION_KEY = "iopsEarlyReleaseAccess";
+
+      var statusElement = document.getElementById("downloadStatus");
+      var contentElement = document.getElementById("downloadContent");
+      var errorElement = document.getElementById("downloadError");
+      var greetingElement = document.getElementById("downloadGreeting");
+      var noteBlock = document.getElementById("downloadNoteBlock");
+      var noteElement = document.getElementById("downloadNote");
+      var macDownload = document.getElementById("macDownload");
+      var windowsDownload = document.getElementById("windowsDownload");
+      var currentVerifiedCode = "";
+
+      if (!statusElement || !contentElement || !errorElement) return;
+
+      function getCodeFromUrl() {
+        return new URLSearchParams(window.location.search).get("code") || "";
+      }
+
+      function localDemoIsAvailable() {
+        return location.protocol === "file:" ||
+          location.hostname === "localhost" ||
+          location.hostname === "127.0.0.1";
+      }
+
+      function getLocalDemoAccess(code) {
+        if (!localDemoIsAvailable() || code.toUpperCase() !== LOCAL_DEMO_CODE) return null;
+        return {
+          ok: true,
+          name: "ABCD",
+          note: "Your private reviewer access is ready for local macOS testing. Please use this build to explore the core flows and share anything that would make i-Ops fit your daily operations better."
+        };
+      }
+
+      function getStoredAccess(code) {
+        try {
+          var stored = JSON.parse(sessionStorage.getItem(SESSION_KEY) || "null");
+          if (stored && stored.code === code) return stored;
+        } catch (error) {
+          return null;
+        }
+        return null;
+      }
+
+      function setStatus(message, state) {
+        statusElement.textContent = message;
+        statusElement.classList.remove("is-loading", "is-success", "is-error");
+        if (state) statusElement.classList.add("is-" + state);
+      }
+
+      function setDownloadLinks(code) {
+        var encodedCode = encodeURIComponent(code);
+        macDownload.href = DOWNLOAD_BASE + "/mac?code=" + encodedCode;
+        windowsDownload.href = DOWNLOAD_BASE + "/windows?code=" + encodedCode;
+      }
+
+      function showDownload(data, code) {
+        var name = String(data.name || "").trim() || "there";
+        var note = String(data.note || "").trim();
+        currentVerifiedCode = code;
+
+        greetingElement.textContent = "Thank you, " + name + "!";
+        if (note) {
+          noteElement.textContent = note;
+          noteBlock.hidden = false;
+        } else {
+          noteElement.textContent = "";
+          noteBlock.hidden = true;
+        }
+
+        setDownloadLinks(code);
+        setStatus("Access verified. Download is ready.", "success");
+        errorElement.hidden = true;
+        contentElement.hidden = false;
+      }
+
+      function showError() {
+        setStatus("Access could not be verified.", "error");
+        contentElement.hidden = true;
+        errorElement.hidden = false;
+      }
+
+      function redirectToUnlock() {
+        window.location.replace("../");
+      }
+
+      function setDownloadChecking(checking) {
+        macDownload.setAttribute("aria-busy", checking ? "true" : "false");
+        macDownload.textContent = checking ? "Checking download..." : "Download macOS .dmg";
+      }
+
+      function downloadNotReady() {
+        setStatus("The macOS .dmg is not uploaded yet. Please check back soon or contact us if you need help.", "error");
+      }
+
+      async function handleMacDownload(event) {
+        event.preventDefault();
+
+        if (!currentVerifiedCode || macDownload.getAttribute("href") === "#") {
+          redirectToUnlock();
+          return;
+        }
+
+        if (localDemoIsAvailable() && currentVerifiedCode.toUpperCase() === LOCAL_DEMO_CODE) {
+          downloadNotReady();
+          return;
+        }
+
+        setDownloadChecking(true);
+        setStatus("Checking macOS build availability...", "loading");
+
+        try {
+          var response = await fetch(macDownload.href, {
+            method: "HEAD",
+            cache: "no-store"
+          });
+
+          if (response.ok) {
+            window.location.href = macDownload.href;
+            return;
+          }
+
+          if (response.status === 404) {
+            downloadNotReady();
+            return;
+          }
+
+          if (response.status === 403 || response.status === 401) {
+            setStatus("This access code is not authorized for the macOS download. Please enter your code again.", "error");
+            return;
+          }
+
+          setStatus("The macOS download is not available right now. Please try again shortly.", "error");
+        } catch (error) {
+          window.location.href = macDownload.href;
+        } finally {
+          setDownloadChecking(false);
+        }
+      }
+
+      async function verifyAndRender() {
+        var code = getCodeFromUrl().trim();
+        if (!code) {
+          redirectToUnlock();
+          return;
+        }
+
+        var localDemoAccess = getLocalDemoAccess(code);
+        if (localDemoAccess) {
+          showDownload(localDemoAccess, code);
+          return;
+        }
+
+        var storedAccess = getStoredAccess(code);
+        if (storedAccess) {
+          showDownload(storedAccess, code);
+          return;
+        }
+
+        try {
+          var response = await fetch(ACCESS_ENDPOINT + "?code=" + encodeURIComponent(code), {
+            method: "GET",
+            cache: "no-store",
+            headers: {
+              "Accept": "application/json"
+            }
+          });
+
+          if (!response.ok) throw new Error("Access service returned " + response.status);
+
+          var data = await response.json();
+          if (data && data.ok === true) {
+            showDownload(data, code);
+          } else {
+            showError();
+          }
+        } catch (error) {
+          showError();
+        }
+      }
+
+      verifyAndRender();
+      if (macDownload) macDownload.addEventListener("click", handleMacDownload);
+    })();
+  </script>
+</body>
+</html>

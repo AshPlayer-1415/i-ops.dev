@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>I-Ops — the runtime that checks what AI workers actually did</title>
+<meta name="description" content="AI workers finish the work. I-Ops ensures they do it right. A runtime that decides what a task needs, governs what it may change, and verifies the result against conditions the worker never got to write." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400&family=Anonymous+Pro:wght@400&display=swap" />
+<link rel="stylesheet" href="site.css" />
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top">I&#8209;Ops</a>
+    <nav class="nav-links">
+      <a href="#problem">The problem</a>
+      <a href="#governance">Governance</a>
+      <a href="#vinci">Vinci</a>
+      <a href="#features">What it does</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="partner.html">Partner</a>
+    </nav>
+    <a class="btn" href="join-waitlist.html">Early access</a>
+    <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#problem">The problem</a>
+    <a href="#governance">Governance</a>
+    <a href="#vinci">Vinci</a>
+    <a href="#features">What it does</a>
+    <a href="#how-it-works">How it works</a>
+    <a href="partner.html">Partner</a>
+    <a href="join-waitlist.html">Early access</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="wrap">
+      <h1>AI workers finish the work. I&#8209;Ops ensures they do it right.</h1>
+      <p class="lede">
+        A runtime that works out what a task needs before it starts, governs anything
+        consequential it tries to do, and then checks the result against conditions written
+        before the run by something that is not the worker. It runs on your machine by default.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-lg" href="join-waitlist.html">Request early access</a>
+        <a class="btn btn-ghost btn-lg" href="#governance">Why this matters</a>
+      </div>
+
+      <!-- The one interactive thing on the page. It is the product in ten seconds. -->
+      <div class="check" id="check">
+        <div class="check-bar">
+          <span class="check-task">task &middot; summarise the Q3 renewal position for every account in Contracts</span>
+          <span class="dim">illustration</span>
+        </div>
+        <div class="check-body">
+          <ul class="check-steps" role="tablist" aria-label="What happens to one task">
+            <li role="presentation"><button role="tab" id="tab-0" aria-controls="panel-0" aria-selected="true">/01 &nbsp;declared</button></li>
+            <li role="presentation"><button role="tab" id="tab-1" aria-controls="panel-1" aria-selected="false">/02 &nbsp;worker reports</button></li>
+            <li role="presentation"><button role="tab" id="tab-2" aria-controls="panel-2" aria-selected="false">/03 &nbsp;checked</button></li>
+          </ul>
+
+          <div class="check-panel" role="tabpanel" id="panel-0" aria-labelledby="tab-0">
+            <p class="check-claim">Before anything runs, the conditions are written down.</p>
+            <p class="check-note">Not by the worker. Conditions it cannot see and cannot edit are the only kind worth checking against afterwards.</p>
+            <ul class="ledger">
+              <li><span class="k">must cover</span><span class="v">every account in the granted folder</span></li>
+              <li><span class="k">must trace</span><span class="v">every figure back to a named file</span></li>
+              <li><span class="k">must not</span><span class="v">write anything outside the granted folder</span></li>
+            </ul>
+          </div>
+
+          <div class="check-panel" role="tabpanel" id="panel-1" aria-labelledby="tab-1" hidden>
+            <p class="check-claim">&ldquo;Done. Summary written, twelve accounts covered.&rdquo;</p>
+            <p class="check-note">This is the sentence nearly every tool stops at. It is the worker grading its own paper, and it is usually true enough to be believed.</p>
+            <ul class="ledger">
+              <li><span class="k">status</span><span class="v">completed without error</span></li>
+              <li><span class="k">output</span><span class="v">1 file written</span></li>
+              <li><span class="k">reported by</span><span class="v">the worker</span></li>
+            </ul>
+          </div>
+
+          <div class="check-panel" role="tabpanel" id="panel-2" aria-labelledby="tab-2" hidden>
+            <p class="check-claim">Three accounts were never opened. The summary did not mention it.</p>
+            <p class="check-note">The check reads the world back rather than the worker&rsquo;s account of it, and it is computed by code. Swap the model and the same shortfall is found.</p>
+            <ul class="ledger">
+              <li><span class="k">in folder</span><span class="v">14 accounts</span></li>
+              <li><span class="k">opened</span><span class="v">11 accounts</span></li>
+              <li><span class="k">never opened</span><span class="v miss">3 accounts</span></li>
+              <li><span class="k">figures traced</span><span class="v">11 of 11</span></li>
+              <li><span class="k">written outside</span><span class="v">0 files</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= /01 THE PROBLEM ================= -->
+  <section class="section" id="problem">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="label">/01 &nbsp; the problem</span>
+          <h2 class="reveal">More capable is not more accountable.</h2>
+        </div>
+      </div>
+      <p class="lede reveal">
+        Model capability has moved faster than anyone&rsquo;s ability to show that a piece of work was
+        actually done. Those are two different problems, and only one of them is being solved.
+      </p>
+
+      <div class="pair reveal">
+        <div>
+          <h3>What got better</h3>
+          <ul class="points">
+            <li>Reasoning, tool use, and how long a model can stay on a task without losing the thread.</li>
+            <li>How much a single run can produce before anyone looks at it.</li>
+            <li>How confidently the finished work reads, whether or not it is right.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>What did not</h3>
+          <ul class="points">
+            <li>Whether the work can be shown to be complete, by anything other than the thing that did it.</li>
+            <li>Whether a person can tell a finished task from a task that merely stopped.</li>
+            <li>What happens when it is wrong, which is no longer a bug in a file nobody shipped.</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="lede reveal" style="margin-top:48px;">
+        Two years ago a person read what the model produced, and the worst case was a bad draft.
+        Now a single run writes more than anyone reads. Guardrails went up. So did the size of the
+        mistake. <span class="red">Those are not the same axis.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= /02 GOVERNANCE ================= -->
+  <section class="section" id="governance">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="label">/02 &nbsp; why governance</span>
+          <h2 class="reveal">The work is the easy half.</h2>
+        </div>
+      </div>
+      <p class="lede reveal">
+        Access is not assurance. Neither is a run that finished without an error. A task can touch
+        the right systems, take every step it was asked to take, report success, and still have
+        left out the part that mattered.
+      </p>
+
+      <p class="reveal" style="font-size:var(--step-2); line-height:1.15; letter-spacing:-0.02em; max-width:22ch; margin-top:52px;">
+        The worker does not get to declare its own work finished.
+      </p>
+
+      <div class="pair reveal">
+        <div>
+          <h3>What that means in practice</h3>
+          <ul class="points">
+            <li>The conditions for done are written before the run, by code the worker never sees.</li>
+            <li>The check re&#8209;reads the world afterwards. It never asks the worker how it went.</li>
+            <li>Evidence is counted, not claimed. What was opened is a fact, not a summary.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Why it holds</h3>
+          <ul class="points">
+            <li>Every check is arithmetic over what happened, so it does not depend on which model ran.</li>
+            <li>A better model makes the work better. It does not make the guarantee weaker or stronger.</li>
+            <li>Limits are enforced by code rather than instructions, because a limit a model can talk its way past is a suggestion.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= /03 VINCI ================= -->
+  <section class="section" id="vinci">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="label">/03 &nbsp; the worker</span>
+          <h2 class="reveal">Vinci works inside the runtime, not beside it.</h2>
+        </div>
+      </div>
+      <p class="lede reveal">
+        Vinci is the AI worker we ship. It runs on your machine, reads only the folders you grant,
+        proposes before it changes anything, and leaves a record you can read afterwards. It is
+        also replaceable, which is the point.
+      </p>
+
+      <div class="grid reveal">
+        <div class="cell">
+          <span class="label">on your machine</span>
+          <p>The model runs locally by default. Files stay where they are unless you point the runtime somewhere else, and every run records the setting it ran under.</p>
+        </div>
+        <div class="cell">
+          <span class="label">folders, not systems</span>
+          <p>You grant a folder. That is the boundary. Nothing widens it quietly, and a run that needed more says so rather than guessing.</p>
+        </div>
+        <div class="cell">
+          <span class="label">proposes, then acts</span>
+          <p>Anything that changes the world is shown first as a diff, held for approval, and recorded in a way that can be undone.</p>
+        </div>
+        <div class="cell">
+          <span class="label">not the only worker</span>
+          <p>The guarantees are computed outside the worker, so they apply to a local model, a frontier model, or someone else&rsquo;s agent entirely.</p>
+        </div>
+        <div class="cell">
+          <span class="label">honest about depth</span>
+          <p>How much can be guaranteed depends on how deeply the worker is integrated. The runtime says which guarantees it can hold rather than claiming all of them.</p>
+        </div>
+        <div class="cell">
+          <span class="label">nothing is sent</span>
+          <p>No content leaves the machine except to endpoints you configure. There is no default&#8209;on telemetry carrying your work.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= /04 AUTHORITY ================= -->
+  <section class="section" id="authority">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="label">/04 &nbsp; authority</span>
+          <h2 class="reveal">Workers act inside your rules.</h2>
+        </div>
+      </div>
+      <p class="lede reveal">
+        Most of what goes wrong with an agent is not a wrong answer. It is a correct answer
+        assembled out of things the person asking was never allowed to see.
+      </p>
+
+      <div class="pair reveal">
+        <div>
+          <h3>The rule that cannot bend</h3>
+          <p class="muted">
+            Gathering context must never raise the permission of whoever started the task. Not
+            through another worker, not through a colleague, not through a summary, and not through
+            an answer derived from any of them.
+          </p>
+          <p class="muted">
+            When a task genuinely needs something out of reach, the task moves to someone who can
+            own it. The answer does not quietly come back anyway.
+          </p>
+        </div>
+        <div>
+          <h3>What that prevents</h3>
+          <ul class="points">
+            <li>An agent turning a narrow permission into a broad one by asking the right question twice.</li>
+            <li>A summary laundering a confidential source into a sentence anybody may read.</li>
+            <li>A budget, retry cap or spending ceiling being negotiated away in conversation.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= /05 FEATURES ================= -->
+  <section class="section" id="features">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="label">/05 &nbsp; what it does</span>
+          <h2 class="reveal">Six things, and none of them is the model.</h2>
+        </div>
+      </div>
+      <p class="lede reveal">
+        Every one of these is computed by code. That is what makes them survive a change of model,
+        and it is the difference between a feature and a guarantee.
+      </p>
+
+      <div class="grid reveal">
+        <div class="cell">
+          <span class="label">/01 &nbsp; context sufficiency</span>
+          <h3>Know what is missing before you start.</h3>
+          <p>The runtime works out what the task needs, names what it does not have, and says which permission would close the gap. A run that cannot be done properly says so at the start rather than at the end.</p>
+        </div>
+        <div class="cell">
+          <span class="label">/02 &nbsp; evidence coverage</span>
+          <h3>What was actually read.</h3>
+          <p>Not what the worker says it read. Coverage reports observations rather than conclusions, so it will tell you a file was never opened and will not tell you the file was missing.</p>
+        </div>
+        <div class="cell">
+          <span class="label">/03 &nbsp; consequence gates</span>
+          <h3>Nothing consequential happens quietly.</h3>
+          <p>Anything outward facing is predicted as a diff, held behind one approval, and made reversible before it runs. Nothing in the product can send on your behalf.</p>
+        </div>
+        <div class="cell">
+          <span class="label">/04 &nbsp; independent verification</span>
+          <h3>The world is re&#8209;read afterwards.</h3>
+          <p>Conditions declared before the run are checked against the world after it, by something that never spoke to the worker. A condition nobody could check is reported as unchecked, not as passed.</p>
+        </div>
+        <div class="cell">
+          <span class="label">/05 &nbsp; enforced budgets</span>
+          <h3>Limits that cannot be argued with.</h3>
+          <p>Steps, retries, spend and wall clock are enforced by code. A model may reason about a budget. Only code gets to hold one.</p>
+        </div>
+        <div class="cell">
+          <span class="label">/06 &nbsp; the record</span>
+          <h3>Afterwards, you can read what happened.</h3>
+          <p>Every decision, every refusal, every approval and the posture the run executed under. Durable, because an incident is the definition of something read back later.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= /06 HOW IT WORKS ================= -->
+  <section class="section" id="how-it-works">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="label">/06 &nbsp; how it works</span>
+          <h2 class="reveal">One task, six moments.</h2>
+        </div>
+      </div>
+
+      <div class="rows reveal">
+        <div class="row">
+          <span class="n">/01</span>
+          <h3>Declare</h3>
+          <p>What would count as done is written down before the first step, by code rather than by the worker. Nothing else in the run gets to edit it.</p>
+        </div>
+        <div class="row">
+          <span class="n">/02</span>
+          <h3>Assess</h3>
+          <p>The runtime works out what the task needs and what is not available. Gaps are named in plain language, with the permission that would close each one.</p>
+        </div>
+        <div class="row">
+          <span class="n">/03</span>
+          <h3>Acquire</h3>
+          <p>Missing context is gathered under the permissions of whoever asked, never under anyone else&rsquo;s. When that is not enough, the task escalates rather than the answer.</p>
+        </div>
+        <div class="row">
+          <span class="n">/04</span>
+          <h3>Execute</h3>
+          <p>The worker does the work inside enforced limits. Anything that would change the world is predicted, held, and made reversible before it happens.</p>
+        </div>
+        <div class="row">
+          <span class="n">/05</span>
+          <h3>Verify</h3>
+          <p>The world is read back and compared to what was declared in step one. The worker is not consulted, and its own report is not evidence.</p>
+        </div>
+        <div class="row">
+          <span class="n">/06</span>
+          <h3>Report</h3>
+          <p>You get a state, not a score. Complete, incomplete, refused, or waiting on an authority that is not yours to give, and the evidence behind whichever one it is.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= /07 EARLY ACCESS ================= -->
+  <section class="section" id="join">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="label">/07 &nbsp; early access</span>
+          <h2 class="reveal">It is early, and it is real.</h2>
+        </div>
+      </div>
+      <p class="lede reveal">
+        Signed, notarised builds run on macOS today. Early access is a conversation rather than a
+        download queue, because the useful version of this is the one shaped around work you
+        actually have.
+      </p>
+      <div class="hero-actions reveal">
+        <a class="btn btn-lg" href="join-waitlist.html">Request early access</a>
+        <a class="btn btn-ghost btn-lg" href="partner.html">Build with us</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div>
+      <div class="brand">I&#8209;Ops</div>
+      <p class="dim" style="font-size:var(--step--1); margin-top:8px;">Operations Intelligence LLC</p>
+    </div>
+    <div class="footer-links">
+      <a href="join-waitlist.html">Early access</a>
+      <a href="partner.html">Partner</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="mailto:hello@i-ops.dev">hello@i-ops.dev</a>
+    </div>
+  </div>
+</footer>
+
+<script src="site.js"></script>
+</body>
+</html>
