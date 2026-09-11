@@ -1,2 +1,9 @@
 .DS_Store
 Thumbs.db
+
+# Old site media. Kept on disk, out of the published repo.
+# `.gitignore` alone would not have done this: both were already tracked, so
+# they needed `git rm -r --cached` first. Ignore rules only stop files that are
+# not already tracked.
+assets/
+uploads/
