@@ -21,7 +21,11 @@
   --sans: "Bricolage Grotesque", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   --mono: "Anonymous Pro", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
-  --page: 1180px;
+  /* Fluid rather than fixed. Unchanged up to roughly a 1480px window, then it
+     grows with the screen and stops at 1480 so an ultrawide gets a wider grid
+     instead of two enormous empty margins. Line length is capped separately on
+     the text itself, so widening the page never widens a paragraph. */
+  --page: clamp(1180px, 58vw + 320px, 1480px);
   --gutter: 32px;
 
   /* Buttons are pills; inputs take a softer radius so the two read as one
@@ -35,8 +39,18 @@
   --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.09rem);
   --step-1: clamp(1.2rem, 1.1rem + 0.5vw, 1.45rem);
   --step-2: clamp(1.6rem, 1.35rem + 1.2vw, 2.3rem);
-  --step-3: clamp(2.1rem, 1.6rem + 2.4vw, 3.6rem);
-  --step-4: clamp(2.6rem, 1.8rem + 3.6vw, 4.9rem);
+  /* The upper bounds sit high enough that the scale keeps climbing past a
+     1378px window rather than freezing there. Nothing below that point moves. */
+  --step-3: clamp(2.1rem, 1.6rem + 2.4vw, 4.15rem);
+  --step-4: clamp(2.6rem, 1.8rem + 3.6vw, 5.9rem);
+}
+
+:root {
+  /* Without this, every native control the page does not draw itself renders
+     light on a black page: the select on the partner form, scrollbars, date
+     pickers, and the browser's own autofill styling. One line, and it is the
+     difference between a dark site and a dark site with white holes in it. */
+  color-scheme: dark;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -54,6 +68,7 @@ body {
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overflow-wrap: break-word;
 }
 
 img { max-width: 100%; }
@@ -105,6 +120,7 @@ p { margin: 16px 0 0; max-width: 68ch; }
 .nav {
   position: sticky; top: 0; z-index: 60;
   background: rgba(0,0,0,0.82);
+  -webkit-backdrop-filter: saturate(140%) blur(12px);
   backdrop-filter: saturate(140%) blur(12px);
   border-bottom: 1px solid transparent;
   transition: border-color 0.2s ease;
@@ -184,7 +200,7 @@ p { margin: 16px 0 0; max-width: 68ch; }
 .ledger .v.miss { color: var(--red); }
 
 /* ---------- two-column comparison (the deck's shape) --------------------- */
-.pair { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 72px); margin-top: clamp(36px, 5vw, 64px); }
+.pair { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 72px); margin-top: clamp(36px, 5vw, 64px); }
 .pair > div { border-top: 1px solid var(--line); padding-top: 22px; }
 .pair h3 { margin-bottom: 8px; }
 
@@ -205,7 +221,7 @@ p { margin: 16px 0 0; max-width: 68ch; }
 .row p { margin: 0; color: var(--ink-2); }
 
 /* ---------- feature grid ------------------------------------------------- */
-.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); margin-top: clamp(32px, 4vw, 56px); }
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); margin-top: clamp(32px, 4vw, 56px); }
 .cell { background: var(--ground); padding: clamp(24px, 3vw, 36px); }
 .cell .label { margin-bottom: 14px; }
 .cell p { margin-top: 10px; color: var(--ink-2); font-size: var(--step--1); line-height: 1.6; }
@@ -221,6 +237,29 @@ p { margin: 16px 0 0; max-width: 68ch; }
 }
 .field textarea { min-height: 108px; resize: vertical; }
 .field input:focus, .field textarea:focus, .field select:focus { outline: none; border-color: var(--ink-2); }
+
+/* Chrome paints autofilled fields with its own background and ignores the one
+   we set, so a filled form goes pale blue on a black page. The inset shadow is
+   the only reliable way to cover it. */
+.field input:-webkit-autofill,
+.field input:-webkit-autofill:hover,
+.field input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--ink);
+  -webkit-box-shadow: 0 0 0 1000px var(--ground-2) inset;
+  box-shadow: 0 0 0 1000px var(--ground-2) inset;
+  caret-color: var(--ink);
+}
+
+/* Safari renders a select's own arrow in its own colours. Ours, drawn as a
+   background, keeps the control looking like the inputs beside it. */
+.field select {
+  -webkit-appearance: none; appearance: none;
+  padding-right: 42px;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath fill='none' stroke='%23a7a7a7' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' d='m1 1.5 5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 12px 8px;
+}
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
 .form-status { font-family: var(--mono); font-size: var(--step--1); margin-top: 18px; color: var(--ink-2); }
@@ -240,6 +279,10 @@ p { margin: 16px 0 0; max-width: 68ch; }
    reader down a long form; a short banner above the form on a phone, where a
    tall decorative panel would just push the fields off the screen.
    ---------------------------------------------------------------------- */
+/* `is-single` collapses the two-column early access layout while the block
+   field is halted, so the form is not stranded in a narrow left column with
+   an empty gap beside it. */
+.access-grid.is-single { display: block; }
 .access-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.78fr); gap: clamp(32px, 5vw, 72px); align-items: start; }
 .field-panel { position: sticky; top: 100px; }
 .field-canvas {
@@ -279,11 +322,11 @@ p { margin: 16px 0 0; max-width: 68ch; }
    so the grid steps 3 -> 2 -> 1 rather than falling straight to one column and
    leaving half a tablet empty. */
 @media (max-width: 1000px) {
-  .grid { grid-template-columns: repeat(2, 1fr); }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 860px) {
-  .row { grid-template-columns: 4ch 1fr; }
+  .row { grid-template-columns: 4ch minmax(0, 1fr); }
   .row p { grid-column: 2; }
   .marker { display: none; }
 }

@@ -51,7 +51,7 @@
   </section>
 
   <section class="section">
-    <div class="wrap access-grid">
+    <div class="wrap access-grid is-single">
       <div>
       <form class="reveal in" id="private-access-form" data-sheet-form data-type="waitlist"
             data-status="private-access-status" data-busy="Submitting your request…"
@@ -103,9 +103,15 @@
       </p>
       </div>
 
-      <aside class="field-panel" aria-hidden="true">
-        <div class="field-canvas" data-field></div>
-      </aside>
+      <!-- HALTED 2026-09-11, Ashwinth: the block field works but is not the right
+           component yet. The code is intact in site.css (.field-panel) and in
+           site.js (the [data-field] block). To bring it back, restore the two
+           lines below and nothing else. Left in place rather than deleted so
+           the next attempt starts from something that already ran.
+        <aside class="field-panel" aria-hidden="true">
+          <div class="field-canvas" data-field></div>
+        </aside>
+      -->
     </div>
   </section>
 </main>
