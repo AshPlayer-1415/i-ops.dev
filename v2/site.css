@@ -24,6 +24,13 @@
   --page: 1180px;
   --gutter: 32px;
 
+  /* Buttons are pills; inputs take a softer radius so the two read as one
+     system. The hairline grid and the panels stay square, because the
+     structure is what the geometry is doing and rounding it would blur it. */
+  --radius-btn: 999px;
+  --radius-field: 12px;
+  --tap: 46px;
+
   --step--1: clamp(0.82rem, 0.79rem + 0.15vw, 0.9rem);
   --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.09rem);
   --step-1: clamp(1.2rem, 1.1rem + 0.5vw, 1.45rem);
@@ -112,7 +119,8 @@ p { margin: 16px 0 0; max-width: 68ch; }
 .btn {
   display: inline-flex; align-items: center; justify-content: center;
   font-family: var(--sans); font-size: var(--step--1);
-  padding: 11px 20px; border-radius: 2px;
+  padding: 11px 22px; border-radius: var(--radius-btn);
+  min-height: var(--tap);
   text-decoration: none; cursor: pointer; border: 1px solid var(--ink);
   background: var(--ink); color: var(--ground);
   transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
@@ -120,9 +128,9 @@ p { margin: 16px 0 0; max-width: 68ch; }
 .btn:hover { background: transparent; color: var(--ink); }
 .btn-ghost { background: transparent; color: var(--ink); border-color: var(--line-2); }
 .btn-ghost:hover { background: transparent; border-color: var(--ink); color: var(--ink); }
-.btn-lg { padding: 15px 28px; font-size: var(--step-0); }
+.btn-lg { padding: 15px 30px; font-size: var(--step-0); min-height: 54px; }
 
-.burger { display: none; background: none; border: 0; color: var(--ink); padding: 8px; cursor: pointer; }
+.burger { display: none; background: none; border: 0; color: var(--ink); padding: 11px; cursor: pointer; min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
 .mobile-menu { display: none; }
 
 /* ---------- hero --------------------------------------------------------- */
@@ -135,7 +143,9 @@ p { margin: 16px 0 0; max-width: 68ch; }
 .check {
   margin-top: clamp(48px, 6vw, 84px);
   border: 1px solid var(--line);
+  border-radius: 16px;
   background: var(--ground-2);
+  overflow: hidden;
 }
 .check-bar {
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
@@ -205,8 +215,9 @@ p { margin: 16px 0 0; max-width: 68ch; }
 .field > span { display: block; font-family: var(--mono); font-size: var(--step--1); color: var(--ink-3); margin-bottom: 8px; }
 .field input, .field textarea, .field select {
   width: 100%; background: var(--ground-2); color: var(--ink);
-  border: 1px solid var(--line); border-radius: 2px;
-  font-family: var(--sans); font-size: var(--step-0); padding: 12px 14px;
+  border: 1px solid var(--line); border-radius: var(--radius-field);
+  font-family: var(--sans); font-size: var(--step-0); padding: 13px 15px;
+  min-height: var(--tap);
 }
 .field textarea { min-height: 108px; resize: vertical; }
 .field input:focus, .field textarea:focus, .field select:focus { outline: none; border-color: var(--ink-2); }
@@ -229,19 +240,85 @@ p { margin: 16px 0 0; max-width: 68ch; }
 @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
 
 /* ---------- responsive --------------------------------------------------- */
+/* Tablet and small laptop. Three columns get cramped before they get narrow,
+   so the grid steps 3 -> 2 -> 1 rather than falling straight to one column and
+   leaving half a tablet empty. */
+@media (max-width: 1000px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
+
 @media (max-width: 860px) {
-  .pair { grid-template-columns: 1fr; }
-  .grid { grid-template-columns: 1fr; }
   .row { grid-template-columns: 4ch 1fr; }
   .row p { grid-column: 2; }
   .marker { display: none; }
 }
+
+/* ---------- phone -------------------------------------------------------
+   Most of the traffic is here. Everything below was measured at 375px wide
+   rather than guessed: no rule in this block exists because it sounded right.
+   ---------------------------------------------------------------------- */
 @media (max-width: 720px) {
+  .pair { grid-template-columns: 1fr; }
+  .grid { grid-template-columns: 1fr; }
+
+  :root {
+    --gutter: 20px;
+    /* The desktop clamp floors at 2.6rem, which sets a 42px headline in a
+       311px column and spends the whole first screen on four lines of title.
+       The phone gets its own ceiling. */
+    --step-4: clamp(2rem, 1.5rem + 3.4vw, 2.45rem);
+    --step-3: clamp(1.72rem, 1.3rem + 2.4vw, 2.1rem);
+    --step-2: clamp(1.38rem, 1.15rem + 1.4vw, 1.7rem);
+    --step-1: clamp(1.08rem, 1rem + 0.5vw, 1.2rem);
+  }
+
+  /* brand left, then the call to action and the burger together on the right.
+     With .nav-links hidden, space-between strands the button mid-bar. */
   .nav-links { display: none; }
-  .burger { display: block; }
+  .nav-inner > .btn { margin-left: auto; padding: 9px 16px; min-height: 44px; }
+  .burger { display: inline-flex; margin-left: 2px; }
+  .brand { padding: 10px 0; }
+
+  body.menu-open { overflow: hidden; }
   body.menu-open .mobile-menu { display: block; }
-  .mobile-menu { position: fixed; inset: 66px 0 0; background: var(--ground); z-index: 55; padding: 24px var(--gutter); border-top: 1px solid var(--line); }
-  .mobile-menu a { display: block; padding: 16px 0; text-decoration: none; border-bottom: 1px solid var(--line); font-size: var(--step-1); }
-  .check-steps { flex-direction: column; border-bottom: 0; }
-  .check-steps button { padding: 12px 0; border-bottom: 1px solid var(--line); margin-bottom: 0; }
+  .mobile-menu { position: fixed; inset: 66px 0 0; background: var(--ground); z-index: 55; padding: 12px var(--gutter) 32px; border-top: 1px solid var(--line); overflow-y: auto; }
+  .mobile-menu a { display: block; padding: 18px 0; text-decoration: none; border-bottom: 1px solid var(--line); font-size: var(--step-1); }
+
+  /* Two buttons of different widths stacked left read as a mistake. */
+  .hero-actions { flex-direction: column; align-items: stretch; gap: 12px; margin-top: 32px; }
+  .hero-actions .btn { width: 100%; }
+  .hero { padding-top: 44px; }
+  .hero .lede, .lede { font-size: var(--step-0); margin-top: 20px; }
+
+  /* Tabs become rows, and each row is a 48px target. */
+  .check-steps { flex-direction: column; border-bottom: 0; margin-bottom: 20px; }
+  .check-steps button { padding: 14px 0; min-height: 48px; border-bottom: 1px solid var(--line); margin-bottom: 0; }
+  .check-steps button[aria-selected="true"] { border-bottom-color: var(--red); }
+  .check-body { padding: 20px 18px 26px; min-height: 0; }
+  .check-bar { padding: 12px 16px; }
+  /* The task line is context, not content. It may shrink; it may not push. */
+  .check-task { font-size: 0.78rem; }
+
+  /* A 12ch label column against a 375px screen leaves the value no room. */
+  .ledger .k { min-width: 9.5ch; }
+  .ledger li { gap: 10px; font-size: 0.86rem; padding: 12px 0; }
+
+  .section { padding: 56px 0; }
+  .pair { gap: 32px; margin-top: 30px; }
+  .points li { margin-top: 10px; }
+
+  /* Footer links were 20px tall. Thumbs are not 20px. */
+  .footer { padding: 44px 0 56px; }
+  .footer-inner { gap: 24px; }
+  .footer-links { flex-direction: column; gap: 0; width: 100%; }
+  .footer-links a { display: block; padding: 13px 0; border-bottom: 1px solid var(--line); }
+
+  .field { margin-top: 16px; }
+  form .btn { width: 100%; }
+}
+
+@media (max-width: 380px) {
+  /* iPhone SE and the narrow end of Android. */
+  :root { --gutter: 16px; }
+  .nav-inner > .btn { padding: 9px 13px; font-size: 0.78rem; }
 }
