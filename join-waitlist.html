@@ -1,339 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Request Private Access | I-Ops</title>
-<meta
-  name="description"
-  content="Request early access to I-Ops, the AI worker operating layer for governed enterprise execution on the models and infrastructure your company chooses."
->
-<link
-  rel="canonical"
-  href="https://i-ops.dev/join-waitlist.html"
->
-<meta name="robots" content="index, follow">
-<script>document.documentElement.classList.add("js");</script>
-<link rel="stylesheet" href="styles.css" />
-<style>
-  body.waitlist-page {
-    min-height: 100vh;
-    background: #cfe0ee url("assets/waitlist-sky.png") center top / cover no-repeat;
-  }
-  .waitlist-shell {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-  .waitlist-nav {
-    padding: 28px 0;
-  }
-  .waitlist-nav .wrap {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .waitlist-main {
-    flex: 1;
-    display: grid;
-    place-items: center;
-    padding: 70px var(--gutter) 90px;
-  }
-  .waitlist-panel {
-    width: min(820px, 100%);
-    text-align: center;
-    padding: clamp(38px, 6vw, 70px);
-    border-radius: var(--r-xl);
-    background: rgba(255,255,255,.68);
-    box-shadow: 0 30px 90px rgba(20,21,26,.14), inset 0 0 0 1px rgba(255,255,255,.7);
-    backdrop-filter: saturate(160%) blur(18px);
-  }
-  .waitlist-panel .lead {
-    max-width: 56ch;
-    margin: 22px auto 0;
-    color: #3a4150;
-  }
-  .waitlist-form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px 16px;
-    margin: 36px auto 0;
-    max-width: 660px;
-  }
-  .field {
-    display: grid;
-    gap: 8px;
-  }
-  .field.full {
-    grid-column: 1 / -1;
-  }
-  .waitlist-form label {
-    text-align: left;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--ink-2);
-  }
-  .waitlist-form input,
-  .waitlist-form textarea {
-    width: 100%;
-    min-height: 54px;
-    border: 1px solid rgba(20,21,26,.1);
-    border-radius: 20px;
-    padding: 14px 18px;
-    font: inherit;
-    color: var(--ink);
-    background: rgba(255,255,255,.82);
-    outline: none;
-    resize: vertical;
-  }
-  .waitlist-form input {
-    border-radius: var(--r-pill);
-  }
-  .waitlist-form textarea {
-    min-height: 112px;
-    line-height: 1.45;
-  }
-  .waitlist-form input:focus,
-  .waitlist-form textarea:focus {
-    border-color: rgba(47,111,237,.45);
-    box-shadow: 0 0 0 4px rgba(47,111,237,.12);
-  }
-  .waitlist-form .btn {
-    grid-column: 1 / -1;
-    min-height: 56px;
-    width: 100%;
-  }
-  .waitlist-form .btn:disabled {
-    opacity: .68;
-    cursor: wait;
-    transform: none;
-    box-shadow: none;
-  }
-  .release-access-link {
-    grid-column: 1 / -1;
-    margin: -2px 0 0;
-    text-align: center;
-    color: #5f6774;
-    font-size: .92rem;
-    font-weight: 600;
-    line-height: 1.5;
-  }
-  .release-access-link a {
-    color: var(--ink);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-  .honeypot-field {
-    position: absolute;
-    left: -9999px;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    opacity: 0;
-    pointer-events: none;
-  }
-  .waitlist-note {
-    min-height: 1.5rem;
-    margin-top: .875rem;
-    text-align: center;
-    color: #5f6774;
-    font-weight: 600;
-    font-size: .9rem;
-    line-height: 1.5;
-    overflow-wrap: anywhere;
-  }
-  .waitlist-note.is-loading {
-    color: #5f6774;
-  }
-  .waitlist-note.is-success {
-    color: #117a4b;
-  }
-  .waitlist-note.is-error {
-    color: #b42318;
-  }
-  @media (max-width: 600px) {
-    .waitlist-main {
-      padding-inline: var(--gutter);
-    }
-    .waitlist-form {
-      grid-template-columns: 1fr;
-    }
-    .waitlist-nav .wrap {
-      gap: 18px;
-    }
-    .waitlist-nav .btn {
-      padding-inline: 18px;
-    }
-  }
-</style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Request private access — I-Ops</title>
+<meta name="description" content="Early access to I-Ops. Signed macOS builds today, and a conversation rather than a download queue." />
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400&family=Anonymous+Pro:wght@400&display=swap" />
+<link rel="stylesheet" href="site.css?v=20260911" />
 </head>
-<body class="waitlist-page">
-  <div class="waitlist-shell">
-    <header class="waitlist-nav">
-      <div class="wrap">
-        <a href="./" class="brand">i-Ops</a>
-        <a href="./" class="btn btn-light">Back to home</a>
-      </div>
-    </header>
+<body>
 
-    <main class="waitlist-main">
-      <section class="waitlist-panel" aria-labelledby="waitlistTitle">
-        <span class="eyebrow">Early access</span>
-        <h1 class="h-display" id="waitlistTitle" style="margin-top:20px;">Request private access</h1>
-        <p class="lead">Get early access to I-Ops and put AI workers to work across your business without turning your teams into AI engineers. Early access begins with our macOS build and will expand as the platform evolves.</p>
-        <form class="waitlist-form" id="private-access-form">
-          <div class="honeypot-field">
-            <label for="website">Website</label>
-            <input id="website" name="website" tabindex="-1" autocomplete="off" />
-          </div>
-          <div class="field">
-            <label for="name">Name</label>
-            <input id="name" name="name" autocomplete="name" placeholder="Your name" required />
-          </div>
-          <div class="field">
-            <label for="workEmail">Work email</label>
-            <input id="workEmail" name="workEmail" type="email" autocomplete="email" placeholder="you@company.com" required />
-          </div>
-          <div class="field full">
-            <label for="linkedinProfile">LinkedIn profile <span class="muted">(optional)</span></label>
-            <input id="linkedinProfile" name="linkedinProfile" type="url" autocomplete="url" placeholder="https://www.linkedin.com/in/your-profile" />
-          </div>
-          <div class="field">
-            <label for="role">Role</label>
-            <input id="role" name="role" autocomplete="organization-title" placeholder="Operations lead" required />
-          </div>
-          <div class="field">
-            <label for="company">Company</label>
-            <input id="company" name="company" autocomplete="organization" placeholder="Company name" required />
-          </div>
-          <div class="field full">
-            <label for="location">Location</label>
-            <input id="location" name="location" autocomplete="address-level2" placeholder="City, state, or country" required />
-          </div>
-          <div class="field full">
-            <label for="expectedFeatures">What features are you expecting from the pre-production version of i-Ops? <span class="muted">(optional)</span></label>
-            <textarea id="expectedFeatures" name="expectedFeatures" placeholder="Worker workflows, model policy, approvals, outcome verification, integrations..."></textarea>
-          </div>
-          <div class="field full">
-            <label for="requirements">Suggestions and customizations specific to your requirements <span class="muted">(optional)</span></label>
-            <textarea id="requirements" name="requirements" placeholder="Share workflows, compliance needs, model preferences, or how your teams want to use AI workers."></textarea>
-          </div>
-          <button class="btn btn-dark" id="private-access-submit" type="submit" aria-busy="false">Request Private Access</button>
-          <p class="release-access-link">Already got the email and codes to download? <a href="early-release-private-access/">Click here</a>.</p>
-        </form>
-        <p class="waitlist-note" id="private-access-status" aria-live="polite" hidden></p>
-      </section>
-    </main>
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html">I&#8209;Ops</a>
+    <nav class="nav-links">
+      <a href="index.html#problem">The problem</a>
+      <a href="index.html#governance">Governance</a>
+      <a href="index.html#vinci">Vinci</a>
+      <a href="index.html#features">What it does</a>
+      <a href="index.html#how-it-works">How it works</a>
+      <a href="partner.html">Partner</a>
+    </nav>
+    <a class="btn btn-ghost" href="index.html">Back</a>
+    <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+    </button>
+  </div>
+</header>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html#problem">The problem</a>
+    <a href="index.html#governance">Governance</a>
+    <a href="index.html#features">What it does</a>
+    <a href="partner.html">Partner</a>
   </div>
 
-  <script>
-    (function () {
-      const PRIVATE_ACCESS_ENDPOINT =
-        "https://script.google.com/macros/s/AKfycbw7XgSmH1OQxBDuXb0hwkNxurBc_TQHYX87nQ1uMVbNeiFFXWx-v6C7y6B1tZFm8PRcdw/exec";
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <span class="label">/ &nbsp; early access</span>
+      <h1>Request private access.</h1>
+      <p class="lede">
+        Signed, notarised macOS builds run today. Early access is a conversation rather than a
+        download queue, because the version worth having is the one shaped around work you
+        actually do. Windows and Linux are not available yet, and we would rather say so than
+        imply otherwise.
+      </p>
+    </div>
+  </section>
 
-      var form = document.getElementById("private-access-form");
-      var submitButton = document.getElementById("private-access-submit");
-      var statusElement = document.getElementById("private-access-status");
-      var defaultButtonText = submitButton ? submitButton.textContent : "Request Private Access";
-      var submissionInProgress = false;
-      if (!form || !submitButton || !statusElement) return;
+  <section class="section">
+    <div class="wrap access-grid is-single">
+      <div>
+      <form class="reveal in" id="private-access-form" data-sheet-form data-type="waitlist"
+            data-status="private-access-status" data-busy="Submitting your request…"
+            data-success="Your request was sent. We’ll review it and contact you by email."
+            style="max-width:640px;">
+        <div class="hp">
+          <label for="website">Website</label>
+          <input id="website" name="website" tabindex="-1" autocomplete="off" />
+        </div>
 
-      function endpointIsConfigured() {
-        return PRIVATE_ACCESS_ENDPOINT &&
-          PRIVATE_ACCESS_ENDPOINT.indexOf("https://script.google.com/macros/s/") === 0 &&
-          PRIVATE_ACCESS_ENDPOINT.slice(-5) === "/exec";
-      }
+        <label class="field" for="name"><span>Name</span>
+          <input id="name" name="name" type="text" autocomplete="name" placeholder="Your name" required />
+        </label>
 
-      function getPayload(formData) {
-        return {
-          name: String(formData.get("name") || "").trim(),
-          workEmail: String(formData.get("workEmail") || "").trim().toLowerCase(),
-          linkedinProfile: String(formData.get("linkedinProfile") || "").trim(),
-          role: String(formData.get("role") || "").trim(),
-          company: String(formData.get("company") || "").trim(),
-          location: String(formData.get("location") || "").trim(),
-          expectedFeatures: String(formData.get("expectedFeatures") || "").trim(),
-          requirements: String(formData.get("requirements") || "").trim(),
-          website: String(formData.get("website") || "").trim()
-        };
-      }
+        <label class="field" for="workEmail"><span>Work email</span>
+          <input id="workEmail" name="workEmail" type="email" autocomplete="email" placeholder="you@company.com" required />
+        </label>
 
-      function showStatus(message, state) {
-        statusElement.textContent = message;
-        statusElement.hidden = false;
-        statusElement.classList.remove("is-loading", "is-success", "is-error");
-        if (state) statusElement.classList.add("is-" + state);
-      }
+        <label class="field" for="linkedinProfile"><span>LinkedIn profile, optional</span>
+          <input id="linkedinProfile" name="linkedinProfile" type="url" autocomplete="url" placeholder="https://www.linkedin.com/in/your-profile" />
+        </label>
 
-      function setSubmitting(submitting) {
-        submissionInProgress = submitting;
-        submitButton.disabled = submitting;
-        submitButton.setAttribute("aria-busy", submitting ? "true" : "false");
-        submitButton.textContent = submitting ? "Submitting request…" : defaultButtonText;
-      }
+        <label class="field" for="role"><span>Role</span>
+          <input id="role" name="role" type="text" autocomplete="organization-title" placeholder="Operations lead" required />
+        </label>
 
-      form.addEventListener("submit", async function (event) {
-        event.preventDefault();
-        if (submissionInProgress) return;
+        <label class="field" for="company"><span>Company</span>
+          <input id="company" name="company" type="text" autocomplete="organization" placeholder="Company name" required />
+        </label>
 
-        if (!form.reportValidity()) return;
+        <label class="field" for="location"><span>Location</span>
+          <input id="location" name="location" type="text" autocomplete="address-level2" placeholder="City, state, or country" required />
+        </label>
 
-        var payload = getPayload(new FormData(form));
+        <label class="field" for="expectedFeatures"><span>What would you want from a pre-production build, optional</span>
+          <textarea id="expectedFeatures" name="expectedFeatures" placeholder="Worker workflows, model policy, approvals, outcome verification, integrations"></textarea>
+        </label>
 
-        if (!payload.name) {
-          showStatus("Please enter your name.", "error");
-          document.getElementById("name")?.focus();
-          return;
-        }
+        <label class="field" for="requirements"><span>Anything specific to how your team works, optional</span>
+          <textarea id="requirements" name="requirements" placeholder="Workflows, compliance needs, model preferences, or how your teams want to use AI workers."></textarea>
+        </label>
 
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.workEmail)) {
-          showStatus("Please enter a valid work email.", "error");
-          document.getElementById("workEmail")?.focus();
-          return;
-        }
+        <button class="btn btn-lg" type="submit" aria-busy="false" style="margin-top:28px;">Request private access</button>
+      </form>
+      <p class="form-status" id="private-access-status" aria-live="polite" hidden></p>
+      <p class="collect-note">
+        What you send here is stored and used to reply to you, and to tell you about I&#8209;Ops and
+        what we release. We do not sell it and we do not share it for advertising. Ask us and we
+        will delete it. <a href="legal.html#privacy">How we handle information</a>.
+      </p>
+      <p class="dim" style="font-size:var(--step--1); margin-top:28px;">
+        Already have the email and your codes?
+        <a href="early-release-private-access/" style="color:var(--ink);">Download here</a>.
+      </p>
+      </div>
 
-        if (payload.linkedinProfile) {
-          try {
-            var linkedinUrl = new URL(payload.linkedinProfile);
-            if (linkedinUrl.protocol !== "http:" && linkedinUrl.protocol !== "https:") {
-              throw new Error("Invalid protocol");
-            }
-          } catch (error) {
-            showStatus("Please enter a valid LinkedIn profile URL.", "error");
-            document.getElementById("linkedinProfile")?.focus();
-            return;
-          }
-        }
+      <!-- HALTED 2026-09-11, Ashwinth: the block field works but is not the right
+           component yet. The code is intact in site.css (.field-panel) and in
+           site.js (the [data-field] block). To bring it back, restore the two
+           lines below and nothing else. Left in place rather than deleted so
+           the next attempt starts from something that already ran.
+        <aside class="field-panel" aria-hidden="true">
+          <div class="field-canvas" data-field></div>
+        </aside>
+      -->
+    </div>
+  </section>
+</main>
 
-        if (!endpointIsConfigured()) {
-          showStatus("The request form is temporarily unavailable. Please try again later.", "error");
-          return;
-        }
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div>
+      <div class="brand">I&#8209;Ops</div>
+      <p class="dim" style="font-size:var(--step--1); margin-top:8px;">Operations Intelligence LLC</p>
+      <div class="social">
+        <a href="https://github.com/i-ops-hq" target="_blank" rel="noopener noreferrer" aria-label="I-Ops on GitHub" title="Open source">
+          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.24 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/company/i-ops-llc/" target="_blank" rel="noopener noreferrer" aria-label="I-Ops on LinkedIn" title="LinkedIn">
+          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05a3.74 3.74 0 0 1 3.37-1.85c3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13ZM7.12 20.45H3.55V9h3.57v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0Z"/></svg>
+        </a>
+        <a href="mailto:hello@i-ops.dev" aria-label="Email hello@i-ops.dev" title="hello@i-ops.dev">
+          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M3 5.75h18v12.5H3z"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="m3.4 6.4 8.6 6.6 8.6-6.6"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="partner.html">Partner</a>
+      <a href="legal.html">Legal</a>
+    </div>
+  </div>
+</footer>
 
-        setSubmitting(true);
-        showStatus("Submitting your request…", "loading");
-
-        try {
-          await fetch(PRIVATE_ACCESS_ENDPOINT, {
-            method: "POST",
-            mode: "no-cors",
-            cache: "no-store",
-            redirect: "follow",
-            headers: {
-              "Content-Type": "text/plain;charset=utf-8"
-            },
-            body: JSON.stringify(payload)
-          });
-
-          form.reset();
-          showStatus("Your request was sent. We’ll review it and contact you by email.", "success");
-        } catch (error) {
-          showStatus("We couldn’t send your request. Please check your connection and try again.", "error");
-        } finally {
-          setSubmitting(false);
-        }
-      });
-    })();
-  </script>
+<script src="site.js?v=20260911"></script>
+<script src="forms.js?v=20260911"></script>
 </body>
 </html>

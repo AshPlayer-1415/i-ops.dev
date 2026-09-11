@@ -270,6 +270,16 @@ p { margin: 16px 0 0; max-width: 68ch; }
 }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
+/* Notice at collection. Sits under the submit button because that is where the
+   information is actually handed over, which is more use to a reader than a
+   banner on a page that sets no cookies. */
+.collect-note {
+  margin-top: 18px; max-width: 56ch;
+  color: var(--ink-3); font-size: var(--step--1); line-height: 1.55;
+}
+.collect-note a { color: var(--ink-2); }
+.collect-note a:hover { color: var(--ink); }
+
 .form-status { font-family: var(--mono); font-size: var(--step--1); margin-top: 18px; color: var(--ink-2); }
 
 /* Shown only when the visitor is not on a Mac. It is a statement of fact about

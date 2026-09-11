@@ -1,194 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Download i-Ops Early Release | i-Ops</title>
-<meta
-  name="description"
-  content="Download the I-Ops macOS early release, the governed AI worker operating layer, after validating your access code."
->
-<link
-  rel="canonical"
-  href="https://i-ops.dev/early-release-private-access/download/"
->
-<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Download — I-Ops</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400&family=Anonymous+Pro:wght@400&display=swap" />
+<link rel="stylesheet" href="../../site.css?v=20260911" />
 <script>document.documentElement.classList.add("js");</script>
-<link rel="stylesheet" href="../../styles.css" />
-<style>
-  body.download-page {
-    min-height: 100vh;
-    background: #cfe0ee url("../../assets/waitlist-sky.png") center top / cover no-repeat;
-  }
-  .download-shell {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-  .download-nav {
-    padding: 28px 0;
-  }
-  .download-nav .wrap {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .download-main {
-    flex: 1;
-    display: grid;
-    place-items: center;
-    padding: 64px var(--gutter) 90px;
-  }
-  .download-panel {
-    width: min(920px, 100%);
-    padding: clamp(34px, 5.6vw, 66px);
-    border-radius: var(--r-xl);
-    background: rgba(255,255,255,.68);
-    box-shadow: 0 30px 90px rgba(20,21,26,.14), inset 0 0 0 1px rgba(255,255,255,.7);
-    backdrop-filter: saturate(160%) blur(18px);
-  }
-  .download-panel .lead {
-    margin-top: 18px;
-    color: #3a4150;
-  }
-  .download-status {
-    min-height: 1.5rem;
-    margin-top: 16px;
-    color: #5f6774;
-    font-weight: 600;
-    font-size: .92rem;
-    line-height: 1.5;
-    overflow-wrap: anywhere;
-  }
-  .download-status.is-success {
-    color: #117a4b;
-  }
-  .download-status.is-loading {
-    color: #5f6774;
-  }
-  .download-status.is-error {
-    color: #b42318;
-  }
-  .download-content {
-    display: grid;
-    gap: 22px;
-    margin-top: 30px;
-  }
-  .download-content[hidden] {
-    display: none;
-  }
-  .personal-note {
-    border-radius: 24px;
-    padding: 20px 22px;
-    background: rgba(255,255,255,.74);
-    box-shadow: inset 0 0 0 1px rgba(20,21,26,.08);
-    color: #3a4150;
-    line-height: 1.55;
-  }
-  .personal-note strong {
-    display: block;
-    margin-bottom: 7px;
-    color: var(--ink);
-    font-size: 14px;
-  }
-  .release-copy {
-    color: var(--ink-2);
-    font-size: 16px;
-    line-height: 1.65;
-  }
-  .release-copy a {
-    color: var(--ink);
-    font-weight: 600;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-  .download-actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-top: 4px;
-  }
-  .download-actions .btn {
-    min-height: 58px;
-    width: 100%;
-  }
-  .download-actions .btn[aria-busy="true"] {
-    opacity: .72;
-    cursor: wait;
-    transform: none;
-    box-shadow: none;
-  }
-  .download-footnote {
-    color: var(--ink-3);
-    font-size: 13px;
-    line-height: 1.5;
-  }
-  .download-error {
-    display: grid;
-    gap: 18px;
-    margin-top: 30px;
-  }
-  .download-error[hidden] {
-    display: none;
-  }
-  @media (max-width: 720px) {
-    .download-main {
-      align-items: start;
-      padding-top: 42px;
-      padding-bottom: 64px;
-    }
-    .download-actions {
-      grid-template-columns: 1fr;
-    }
-    .download-nav .wrap {
-      gap: 18px;
-    }
-    .download-nav .btn {
-      padding-inline: 18px;
-    }
-  }
-</style>
 </head>
-<body class="download-page">
-  <div class="download-shell">
-    <header class="download-nav">
-      <div class="wrap">
-        <a href="../../" class="brand">i-Ops</a>
-        <a href="../" class="btn btn-light">Enter another code</a>
-      </div>
-    </header>
+<body>
 
-    <main class="download-main">
-      <section class="download-panel" aria-labelledby="downloadTitle">
-        <span class="eyebrow">Access unlocked</span>
-        <h1 class="h2" id="downloadTitle" style="margin-top:18px;">Preparing your early release</h1>
-        <p class="lead">Your access has been verified. The macOS build is available below for your assigned code.</p>
-        <p class="download-status" id="downloadStatus" aria-live="polite">Checking your access...</p>
-
-        <div class="download-content" id="downloadContent" hidden>
-          <h2 class="h3" id="downloadGreeting">Thank you!</h2>
-          <div class="personal-note" id="downloadNoteBlock" hidden>
-            <strong>Personal note</strong>
-            <span id="downloadNote"></span>
-          </div>
-          <p class="release-copy">Thank you for your interest in I-Ops. This is still a very early-stage product, so we are releasing only a few core capabilities for governed AI worker execution, currently in review and constantly evolving. You will be among the first to know when improved builds are ready for broader access.</p>
-          <p class="release-copy">If you have suggestions, requests, or feedback, please feel free to write to us at <a href="mailto:hello@i-ops.dev">hello@i-ops.dev</a> or <a href="mailto:ashwinth@i-ops.dev">ashwinth@i-ops.dev</a>. Please do not hesitate to reach out. We will try our best to get things sorted.</p>
-          <div class="download-actions">
-            <a class="btn btn-dark" id="macDownload" href="#" rel="noopener">Download macOS .dmg</a>
-            <a class="btn btn-light" id="windowsDownload" href="#" rel="noopener">Windows, coming soon</a>
-          </div>
-          <p class="download-footnote">Your access code is attached to the download request. Please do not share this page or your code publicly.</p>
-        </div>
-
-        <div class="download-error" id="downloadError" hidden>
-          <p class="release-copy">We could not verify this download session. Please return to the access page and enter your code again.</p>
-          <a href="../" class="btn btn-dark">Enter access code</a>
-        </div>
-      </section>
-    </main>
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../../index.html">I&#8209;Ops</a>
+    <a class="btn btn-ghost" href="../../index.html">Back to site</a>
   </div>
+</header>
 
-  <script>
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <span class="label">/ &nbsp; download</span>
+      <h1>Your build.</h1>
+      <p class="lede">Signed and notarised. Open it once and macOS remembers it.</p>
+    </div>
+  </section>
+  <section class="section" style="border-top:0; padding-top:0;">
+    <div class="wrap">
+      <p class="platform-notice" data-platform-notice hidden></p>
+      <p class="form-status" id="downloadStatus" aria-live="polite"></p>
+      <p class="form-status is-error" id="downloadError" hidden></p>
+
+      <div id="downloadContent" hidden>
+        <p class="lede" id="downloadGreeting"></p>
+
+        <div class="rows" style="margin-top:36px;">
+          <div class="row" style="grid-template-columns: 8ch 1fr auto;">
+            <span class="n">/01</span>
+            <div>
+              <h3>macOS</h3>
+              <p>Apple silicon. Signed and notarised.</p>
+            </div>
+            <a class="btn" id="macDownload" href="#" download>Download</a>
+          </div>
+          <div class="row" style="grid-template-columns: 8ch 1fr auto;">
+            <span class="n">/02</span>
+            <div>
+              <h3 class="dim">Windows</h3>
+              <p>Not available yet. We would rather say so than ship something half working.</p>
+            </div>
+            <!-- The id is load-bearing: the access script assigns to `.href` unconditionally, so
+                 removing this element throws and takes the macOS download down with it. -->
+            <a class="btn btn-ghost" id="windowsDownload" href="#" rel="noopener"
+               aria-disabled="true" tabindex="-1" style="opacity:.45; pointer-events:none;">Coming soon</a>
+          </div>
+        </div>
+
+        <p class="dim" style="font-size:var(--step--1); margin-top:28px; max-width:60ch;">
+          Your access code is attached to the download request. Please do not share this page or
+          your code publicly.
+        </p>
+
+        <div id="downloadNoteBlock" hidden style="margin-top:32px;">
+          <span class="label">note</span>
+          <p id="downloadNote" class="muted"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div>
+      <div class="brand">I&#8209;Ops</div>
+      <p class="dim" style="font-size:var(--step--1); margin-top:8px;">Operations Intelligence LLC</p>
+      <div class="social">
+        <a href="https://github.com/i-ops-hq" target="_blank" rel="noopener noreferrer" aria-label="I-Ops on GitHub" title="Open source">
+          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.24 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/company/i-ops-llc/" target="_blank" rel="noopener noreferrer" aria-label="I-Ops on LinkedIn" title="LinkedIn">
+          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05a3.74 3.74 0 0 1 3.37-1.85c3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13ZM7.12 20.45H3.55V9h3.57v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0Z"/></svg>
+        </a>
+        <a href="mailto:hello@i-ops.dev" aria-label="Email hello@i-ops.dev" title="hello@i-ops.dev">
+          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M3 5.75h18v12.5H3z"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="m3.4 6.4 8.6 6.6 8.6-6.6"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <a href="../../index.html">Home</a>
+      <a href="../../legal.html">Legal</a>
+    </div>
+  </div>
+</footer>
+
+<script src="../../site.js?v=20260911"></script>
+<script>
     (function () {
       var ACCESS_ENDPOINT = "https://catalog.i-ops.dev/access";
       var DOWNLOAD_BASE = "https://catalog.i-ops.dev/download";
