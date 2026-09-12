@@ -324,3 +324,47 @@
     slot.hidden = false;
   });
 })();
+
+
+/* ============================================================
+   Clean paths for the home page's sections.
+
+   The nav uses in-page anchors so a click scrolls instantly instead of loading
+   a page. That is the right behaviour and it is also what puts "/#governance"
+   in the address bar. Each section has a real directory that redirects here, so
+   the tidy path can simply replace the hash once the scroll has happened, and a
+   reload or a shared link still resolves.
+
+   replaceState rather than pushState: the browser already added a history entry
+   for the hash, and adding a second one would make Back need two presses.
+   ============================================================ */
+(function () {
+  "use strict";
+  if (location.pathname !== "/" && !/\/index\.html$/.test(location.pathname)) return;
+  if (!window.history || !history.replaceState) return;
+
+  var PATHS = {
+    "#problem": "/the-problem/",
+    "#governance": "/governance/",
+    "#vinci": "/vinci/",
+    "#features": "/what-it-does/",
+    "#how-it-works": "/how-it-works/"
+  };
+
+  function tidy(hash) {
+    var clean = PATHS[hash];
+    if (clean) { try { history.replaceState(null, "", clean); } catch (e) {} }
+    else if (hash === "#top") { try { history.replaceState(null, "", "/"); } catch (e) {} }
+  }
+
+  // Arriving from /governance/, which bounced us to /#governance.
+  if (location.hash) window.setTimeout(function () { tidy(location.hash); }, 60);
+
+  document.addEventListener("click", function (e) {
+    var link = e.target.closest ? e.target.closest('a[href^="#"]') : null;
+    if (!link) return;
+    var hash = link.getAttribute("href");
+    // Let the browser do the scrolling, then tidy what it wrote.
+    window.setTimeout(function () { tidy(hash); }, 60);
+  });
+})();

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="I-Ops">
+  <title>I-Ops</title>
+  <!-- Drawn twice: a wider black pass underneath is the outline, a narrower red
+       pass on top is the interior, so the mark reads as one outlined stroke. -->
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <g stroke="#000000" stroke-width="7.6">
+      <path d="M9 17 L18 47 L26.5 17 L35 47 L43.5 17" />
+      <path d="M54 17 L54 36" />
+    </g>
+    <g stroke="#ff2d20" stroke-width="5.2">
+      <path d="M9 17 L18 47 L26.5 17 L35 47 L43.5 17" />
+      <path d="M54 17 L54 36" />
+    </g>
+  </g>
+  <circle cx="54" cy="45.5" r="5" fill="#000000" />
+  <circle cx="54" cy="45.5" r="3.4" fill="#ff2d20" />
+</svg>

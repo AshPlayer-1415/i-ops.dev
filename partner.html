@@ -4,189 +4,20 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Partner — I-Ops</title>
-<meta name="description" content="Build with I-Ops. For companies with a real workflow to govern, engineers who want to work on the runtime, and anyone who thinks the check matters more than the model." />
-<link rel="stylesheet" href="site.css?v=20260911" />
+<link rel="canonical" href="https://i-ops.dev/partner/" />
+<meta http-equiv="refresh" content="0; url=/partner/" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="/site.css?v=20260911" />
+<script>location.replace("/partner/");</script>
 </head>
 <body>
-
-<header class="nav" id="nav">
-  <div class="wrap nav-inner">
-    <a class="brand" href="index.html">I&#8209;Ops</a>
-    <nav class="nav-links">
-      <a href="index.html#problem">The problem</a>
-      <a href="index.html#governance">Governance</a>
-      <a href="index.html#vinci">Vinci</a>
-      <a href="index.html#features">What it does</a>
-      <a href="index.html#how-it-works">How it works</a>
-      <a href="partner.html">Partner</a>
-    </nav>
-    <a class="btn" href="join-waitlist.html">Early access</a>
-    <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
-    </button>
-  </div>
-</header>
-
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="index.html#problem">The problem</a>
-    <a href="index.html#governance">Governance</a>
-    <a href="index.html#vinci">Vinci</a>
-    <a href="index.html#features">What it does</a>
-    <a href="index.html#how-it-works">How it works</a>
-    <a href="partner.html">Partner</a>
-    <a href="join-waitlist.html">Early access</a>
-  </div>
-
 <main>
   <section class="hero">
     <div class="wrap">
-      <span class="label">/ &nbsp; partner</span>
-      <h1>Build this with us.</h1>
-      <p class="lede">
-        I&#8209;Ops is early and it is being built in the open where it can be. If you have a workflow
-        worth governing, an opinion about how this should work, or time you want to put into it,
-        there is a way in.
-      </p>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="wrap">
-      <div class="grid">
-        <div class="cell">
-          <span class="label">/01 &nbsp; design partner</span>
-          <h3>You have work you do not trust an agent with yet.</h3>
-          <p>A real workflow, real constraints, and a reason nobody has automated it. We shape the runtime around it and you see everything we find, including the parts that do not work. No cost, and no obligation at the end of it.</p>
-        </div>
-        <div class="cell">
-          <span class="label">/02 &nbsp; build with us</span>
-          <h3>You want to work on the runtime itself.</h3>
-          <p>Engineers, and people who think carefully about verification, permissions and failure. Some of this is open source and some is not. Tell us which part interests you and what you would want to own.</p>
-        </div>
-        <div class="cell">
-          <span class="label">/03 &nbsp; integrate</span>
-          <h3>You have an agent and no way to prove it behaved.</h3>
-          <p>The guarantees are computed outside the worker, so they can apply to yours. Integration depth decides how much can be held, and the runtime says which guarantees it can hold rather than claiming all of them.</p>
-        </div>
-        <div class="cell">
-          <span class="label">/04 &nbsp; advise</span>
-          <h3>You work somewhere this has to be defensible.</h3>
-          <p>Regulated industries, audit, legal, clinical. The people who ask what happens when it is wrong are the ones worth listening to early, and mostly they are not being asked.</p>
-        </div>
-        <div class="cell">
-          <span class="label">/05 &nbsp; use the open pieces</span>
-          <h3>You want to check the claims before talking to anyone.</h3>
-          <p>Parts of the assurance layer are published and installable. Read them, run them against your own work, and tell us where they are wrong. That is the most useful thing anyone has done for us so far.</p>
-        </div>
-        <div class="cell">
-          <span class="label">/06 &nbsp; something else</span>
-          <h3>You have a reason we have not thought of.</h3>
-          <p>Say it in the last box. Most of what has changed the direction of this product arrived from someone who was not in any of the categories above.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="reach-out">
-    <div class="wrap">
-      <div class="section-head">
-        <div>
-          <span class="label">/ &nbsp; reach out</span>
-          <h2>Tell us which one you are.</h2>
-        </div>
-      </div>
-      <p class="lede">
-        Everything here goes to one person and gets a reply. If a form is the wrong shape for what
-        you want to say, <a href="mailto:hello@i-ops.dev" style="color:var(--ink);">hello@i&#8209;ops.dev</a> works just as well.
-      </p>
-
-      <form class="reveal in" id="partner-form" data-sheet-form data-type="partner"
-            data-status="partner-status" data-busy="Sending…"
-            data-success="Thanks. That reached us and you will get a reply by email."
-            style="max-width:640px; margin-top:36px;">
-        <div class="hp">
-          <label for="website">Website</label>
-          <input id="website" name="website" tabindex="-1" autocomplete="off" />
-        </div>
-
-        <label class="field" for="name"><span>Name</span>
-          <input id="name" name="name" type="text" required autocomplete="name" />
-        </label>
-
-        <label class="field" for="workEmail"><span>Email</span>
-          <input id="workEmail" name="workEmail" type="email" required autocomplete="email" />
-        </label>
-
-        <label class="field" for="role"><span>What brings you here</span>
-          <select id="role" name="role" required>
-            <option value="">Choose one</option>
-            <option value="design partner">Design partner, I have a workflow</option>
-            <option value="build with us">Build with us, I want to work on it</option>
-            <option value="integrate">Integrate, I have an agent to govern</option>
-            <option value="advise">Advise, I work somewhere this has to be defensible</option>
-            <option value="open source">Open source, I want to check the claims</option>
-            <option value="something else">Something else</option>
-          </select>
-        </label>
-
-        <label class="field" for="company"><span>Company or project</span>
-          <input id="company" name="company" type="text" autocomplete="organization" />
-        </label>
-
-        <label class="field" for="location"><span>Where you are</span>
-          <input id="location" name="location" type="text" />
-        </label>
-
-        <label class="field" for="linkedinProfile"><span>LinkedIn or GitHub, optional</span>
-          <input id="linkedinProfile" name="linkedinProfile" type="url" placeholder="https://" />
-        </label>
-
-        <label class="field" for="expectedFeatures"><span>What you would want to work on, or what you would want it to do</span>
-          <textarea id="expectedFeatures" name="expectedFeatures"></textarea>
-        </label>
-
-        <label class="field" for="requirements"><span>Anything we should know</span>
-          <textarea id="requirements" name="requirements"></textarea>
-        </label>
-
-        <button class="btn btn-lg" type="submit" aria-busy="false" style="margin-top:28px;">Send</button>
-      </form>
-      <p class="form-status" id="partner-status" aria-live="polite" hidden></p>
-      <p class="collect-note">
-        What you send here is stored and used to reply to you, and to tell you about I&#8209;Ops and
-        what we release. We do not sell it and we do not share it for advertising. Ask us and we
-        will delete it. <a href="legal.html#privacy">How we handle information</a>.
-      </p>
+      <h1>Partner</h1>
+      <p class="lede"><a href="/partner/" style="color:var(--ink);">Continue to partner</a></p>
     </div>
   </section>
 </main>
-
-<footer class="footer">
-  <div class="wrap footer-inner">
-    <div>
-      <div class="brand">I&#8209;Ops</div>
-      <p class="dim" style="font-size:var(--step--1); margin-top:8px;">Operations Intelligence LLC</p>
-      <div class="social">
-        <a href="https://github.com/i-ops-hq" target="_blank" rel="noopener noreferrer" aria-label="I-Ops on GitHub" title="Open source">
-          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.24 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
-        </a>
-        <a href="https://www.linkedin.com/company/i-ops-llc/" target="_blank" rel="noopener noreferrer" aria-label="I-Ops on LinkedIn" title="LinkedIn">
-          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05a3.74 3.74 0 0 1 3.37-1.85c3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13ZM7.12 20.45H3.55V9h3.57v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0Z"/></svg>
-        </a>
-        <a href="mailto:hello@i-ops.dev" aria-label="Email hello@i-ops.dev" title="hello@i-ops.dev">
-          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M3 5.75h18v12.5H3z"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="m3.4 6.4 8.6 6.6 8.6-6.6"/></svg>
-        </a>
-      </div>
-    </div>
-    <div class="footer-links">
-      <a href="index.html">Home</a>
-      <a href="join-waitlist.html">Early access</a>
-      <a href="legal.html">Legal</a>
-    </div>
-  </div>
-</footer>
-
-<script src="site.js?v=20260911"></script>
-<script src="forms.js?v=20260911"></script>
 </body>
 </html>
