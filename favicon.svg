@@ -1,17 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="I-Ops">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50.9 -308.4 1297.8 1297.8" role="img" aria-label="I-Ops">
   <title>I-Ops</title>
-  <!-- Drawn twice: a wider black pass underneath is the outline, a narrower red
-       pass on top is the interior, so the mark reads as one outlined stroke. -->
-  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <g stroke="#000000" stroke-width="7.6">
-      <path d="M9 17 L18 47 L26.5 17 L35 47 L43.5 17" />
-      <path d="M54 17 L54 36" />
-    </g>
-    <g stroke="#ff2d20" stroke-width="5.2">
-      <path d="M9 17 L18 47 L26.5 17 L35 47 L43.5 17" />
-      <path d="M54 17 L54 36" />
-    </g>
+  <!-- The Vinci AI mark, taken from logo/vinci Ai logo.svg in the product repo,
+       which is the same artwork the macOS app icon is cut from. The source draws
+       it as white outlines on dark; here the identical contours are filled red
+       and stroked black. Nothing is redrawn or approximated. -->
+  <g fill="#ff2d20" stroke="#000000" stroke-width="16" stroke-linejoin="round">
+    <path d="M123.5 20.5H44.5L38.5 22.5L34.5 24L28.5 27L25.5 30L19 34L17.5 36L13 40L8.5 47L3 56.5L0.5 68V85L1.5 90L3 94L5 99.5L7 105L269 606.5L275.5 620.5L280.5 629.5L286.5 638.5L292.5 645.5L298.5 652L307 660L316 667L324 672L333 675.5L339.5 678L345.5 679H383.5L395 676.5L406.5 672L419 663.5L431.5 652L440.5 641.5L445.5 636L449 631L639.5 263.5L641.5 260L643 257.5L644.5 258.5L814.5 591L822.5 608L829 620.5L837.5 632L844 639.5L850.5 645L857.5 649.5L867 655L871.5 656.5L876.5 658L880.5 659.5L883.5 660.5H891.5H958.5H963.5L968.5 659L975.5 656L980.5 653L986.5 648.5L994 642.5L997.5 638L1001 632.5L1004 627L1005.5 622L1007 617.5L1008 613V597L1007 592.5L1006 587.5L1004.5 582.5L736.5 68L721.5 42.5L717 36L713 31L709 26.5L705 23L700.5 19.5L696 16L691 12.5L685.5 9.5L679.5 7L674.5 5.5L667 3L660 1.5H626L619 3L614 4.5L606 7L598.5 11L590.5 16L581 24L573.5 32L566.5 40L560 48.5L368 418L367.5 420.5L366.5 422.5H365L363.5 421L363 419.5L362.5 418L188.5 80L179.5 61.5L175 54.5L168.5 46L162 39L152 31L148 28.5L145 27L142.5 25.5L138.5 24L134 22.5L130 21.5L123.5 20.5Z"/>
+    <path d="M1048 29.5L1049 460.5L1050 462L1052.5 465.5L1055 469L1058.5 474L1062 478L1066 480.5L1070.5 484L1075.5 486.5L1080 487.5H1165.5L1169.5 486L1177 481.5L1181.5 478.5L1185 475L1188 471L1190 468L1192.5 463L1193.5 458.5L1194.5 454.5V28L1193 23L1191 19.5L1187.5 15L1185.5 12.5L1183.5 10L1182 8L1177.5 5L1173.5 2L1168.5 0.5H1075H1071L1066.5 3.5L1064 5L1060 9L1056.5 12L1052.5 18.5L1050 23L1048 29.5Z"/>
+    <path fill-rule="evenodd" d="M1121.5 514C1161.81 514 1194.5 546.904 1194.5 587.5C1194.5 628.096 1161.81 661 1121.5 661C1081.19 661 1048.5 628.096 1048.5 587.5C1048.5 546.904 1081.19 514 1121.5 514Z M1072.5,587.5 a49.5,49.5 0 1,0 99.0,0 a49.5,49.5 0 1,0 -99.0,0"/>
   </g>
-  <circle cx="54" cy="45.5" r="5" fill="#000000" />
-  <circle cx="54" cy="45.5" r="3.4" fill="#ff2d20" />
 </svg>
