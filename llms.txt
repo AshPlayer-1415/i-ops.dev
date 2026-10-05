@@ -1,0 +1,21 @@
+# I-Ops
+
+> Infrastructure that makes AI workers finish real tasks correctly: it determines what context a task
+> needs, acquires what is missing under company permissions, governs consequential actions, and
+> independently verifies the outcome. The worker that did the work does not get to declare it complete.
+
+I-Ops Operations Intelligence LLC. Three of the layers are open source under Apache-2.0 and run
+locally with no account.
+
+## Docs
+
+- [For agents](https://i-ops.dev/agents.md): the full machine-readable summary — what I-Ops is, the
+  tools and their install lines, what we do not claim, and every contact link.
+- [For agents, as a page](https://i-ops.dev/agents/): the same content as HTML.
+- [Open source](https://github.com/i-ops-hq): assurance, rooms and rollcall. Source, issues, releases.
+
+## Optional
+
+- [Partner](https://i-ops.dev/partner/): for companies with a workflow to govern.
+- [Early access](https://i-ops.dev/early-access/): the macOS app, in private testing.
+- [Legal](https://i-ops.dev/legal/): terms and privacy.

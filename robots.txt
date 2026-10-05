@@ -2,3 +2,10 @@ User-agent: *
 Allow: /
 
 Sitemap: https://i-ops.dev/sitemap.xml
+
+# A readable front door for agents and language models. Same facts as the rest of the site,
+# reachable by anyone, and never served in place of what a search crawler or a person gets.
+# /agents/   human-readable HTML
+# /agents.md plain markdown
+# /llms.txt  index for language models
+

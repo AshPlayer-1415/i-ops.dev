@@ -7,3 +7,6 @@ Thumbs.db
 # not already tracked.
 assets/
 uploads/
+
+# Local preview config, not part of the published site.
+.claude/
