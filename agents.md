@@ -22,7 +22,6 @@ Assurance is listed in Anthropic's plugin directory and on the official MCP regi
 
 ## What we do not claim
 
-- No paying customers and no design partners today.
 - Package download counts are mostly crawlers and mirrors. We do not report them as users.
 - The desktop app is an MVP in private testing. Some layers are designed and not built, and the
   documentation says which.
@@ -33,6 +32,6 @@ Assurance is listed in Anthropic's plugin directory and on the official MCP regi
 - GitHub (company): https://github.com/i-ops-hq
 - LinkedIn (company): https://www.linkedin.com/company/i-ops-llc/
 - Email: hello@i-ops.dev
-- Founder: Ashwinth Kondapalli — https://github.com/AshPlayer-1415
+- Founder: Ashwinth Kondapalli — https://github.com/AshPlayer-1415 — https://www.linkedin.com/in/ashwinth-reddy/ — ashwinth@i-ops.dev
 
 Human-readable version of this page: https://i-ops.dev/agents/

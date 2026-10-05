@@ -436,6 +436,25 @@ p { margin: 16px 0 0; max-width: 68ch; }
    Most of the traffic is here. Everything below was measured at 375px wide
    rather than guessed: no rule in this block exists because it sounded right.
    ---------------------------------------------------------------------- */
+/* The nav collapses to the burger before its items wrap, not at the phone breakpoint.
+   A seventh link (Open source) pushed the row over at about 900px, and two lines of nav
+   reads as a broken header rather than a dense one. The burger and the mobile menu are
+   already built; this only brings them forward. */
+@media (max-width: 960px) {
+  .nav-links { display: none; }
+  .nav-inner > .btn { margin-left: auto; padding: 9px 16px; min-height: 44px; }
+  .burger { display: inline-flex; margin-left: 2px; }
+  .brand { padding: 10px 0; }
+
+  body.menu-open { overflow: hidden; }
+  body.menu-open .mobile-menu { display: block; }
+  .mobile-menu { position: fixed; inset: 66px 0 0; background: var(--ground); z-index: 55; padding: 12px var(--gutter) 32px; border-top: 1px solid var(--line); overflow-y: auto; }
+  .mobile-menu a { display: block; padding: 18px 0; text-decoration: none; border-bottom: 1px solid var(--line); font-size: var(--step-1); transition: color 0.15s ease; }
+  .mobile-menu a:hover, .mobile-menu a:focus-visible { color: var(--ink); }
+  .mobile-menu a:nth-child(even):hover,
+  .mobile-menu a:nth-child(even):focus-visible { color: var(--red); }
+}
+
 @media (max-width: 720px) {
   .pair { grid-template-columns: 1fr; }
   .grid { grid-template-columns: 1fr; }
