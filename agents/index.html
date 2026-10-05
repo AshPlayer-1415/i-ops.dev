@@ -3,172 +3,109 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>For agents — I-Ops</title>
-<meta name="description" content="A machine-readable summary of I-Ops for AI agents and crawlers: what it is, the open-source tools and how to install them, and where to find the source, the company and the founder." />
-<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-<link rel="alternate icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
-<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-<link rel="canonical" href="https://i-ops.dev/partner/" />
-<meta property="og:type" content="website" />
-<meta property="og:site_name" content="I-Ops" />
-<meta property="og:url" content="https://i-ops.dev/partner/" />
-<meta property="og:title" content="Partner with I-Ops" />
-<meta property="og:description" content="Build with I-Ops. For companies with a workflow worth governing, engineers who want to work on the runtime, and anyone who thinks the check matters more than the model." />
-<meta property="og:image" content="https://i-ops.dev/icon-512.png" />
-<meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="Partner with I-Ops" />
-<meta name="twitter:description" content="Build with I-Ops. For companies with a workflow worth governing, engineers who want to work on the runtime, and anyone who thinks the check matters more than the model." />
-<meta name="twitter:image" content="https://i-ops.dev/icon-512.png" />
-<link rel="stylesheet" href="/site.css?v=20261005" />
+<title>I-Ops — for agents</title>
+<meta name="description" content="A machine-readable summary of I-Ops: what it is, the open-source tools and how to install them, what we do not claim, and where to find the source, the company and the founder." />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://i-ops.dev/agents/" />
+<link rel="alternate" type="text/markdown" href="/agents.md" />
+<style>
+/* A document, not a page. No nav, no footer, no components: an agent reading this needs the
+   facts and one way back, and every other element is something it has to skip. Self-contained
+   on purpose, so it renders with no stylesheet, no script and one font request. */
+@font-face {
+  font-family: 'Anonymous Pro'; font-style: normal; font-weight: 400; font-display: swap;
+  src: url('/fonts/anonymous-pro-latin.woff2') format('woff2');
+}
+:root { --ink: #e8e8e8; --dim: #8a8a8a; --faint: #5a5a5a; --ground: #0a0a0a; --line: #242424; --red: #ff2d20; }
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 40px 24px 96px; background: var(--ground); color: var(--ink);
+  font-family: 'Anonymous Pro', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 15px; line-height: 1.7; -webkit-font-smoothing: antialiased;
+}
+main { max-width: 82ch; margin: 0 auto; }
+a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--faint); }
+a:hover, a:focus-visible { text-decoration-color: var(--red); color: #fff; }
+.back { display: inline-block; margin-bottom: 40px; color: var(--dim); text-decoration: none; border: 1px solid var(--line); padding: 7px 13px; }
+.back:hover, .back:focus-visible { color: var(--ink); border-color: var(--faint); text-decoration: none; }
+h1, h2 { font-weight: 400; font-size: 15px; line-height: 1.7; margin: 34px 0 0; letter-spacing: 0; }
+h1 { margin-top: 0; }
+h1::before, h2::before { content: attr(data-md) " "; color: var(--red); }
+p, ul, table, pre { margin: 14px 0 0; }
+blockquote { margin: 14px 0 0; padding-left: 16px; border-left: 2px solid var(--line); color: var(--dim); }
+ul { padding-left: 0; list-style: none; }
+li { padding-left: 20px; position: relative; margin-top: 6px; }
+li::before { content: "-"; position: absolute; left: 4px; color: var(--faint); }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; vertical-align: top; padding: 9px 14px 9px 0; border-bottom: 1px solid var(--line); }
+th { color: var(--dim); font-weight: 400; }
+code { color: #fff; background: #151515; border: 1px solid var(--line); padding: 2px 6px; user-select: all;
+  white-space: nowrap; }
+/* The command is the one thing here meant to be copied, so it never breaks mid-token. */
+td:last-child { white-space: nowrap; width: 1%; }
+hr { border: 0; border-top: 1px solid var(--line); margin: 34px 0 0; }
+.meta { color: var(--faint); font-size: 13px; margin-top: 44px; }
+@media (max-width: 620px) { body { padding: 28px 18px 72px; font-size: 14px; }
+  /* Stacked, the header row is three orphaned words above the first tool. */
+  thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  table, td { display: block; border: 0; padding: 0; } td { padding-bottom: 10px; } tr { display: block; border-bottom: 1px solid var(--line); padding: 10px 0; }
+  td:last-child { white-space: normal; width: auto; } code { white-space: normal; } }
+</style>
 </head>
 <body>
-
-<header class="nav" id="nav">
-  <div class="wrap nav-inner">
-    <a class="brand" href="/">I&#8209;Ops</a>
-    <nav class="nav-links">
-      <a href="/#problem">The problem</a>
-      <a href="/#governance">Governance</a>
-      <a href="/#vinci">Vinci</a>
-      <a href="/#features">What it does</a>
-      <a href="/#how-it-works">How it works</a>
-      <a href="/#open-source">Open source</a>
-      <a href="/partner/">Partner</a>
-    </nav>
-    <a class="btn" href="/early-access/">Early access</a>
-    <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
-    </button>
-  </div>
-</header>
-
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="/#problem">The problem</a>
-    <a href="/#governance">Governance</a>
-    <a href="/#vinci">Vinci</a>
-    <a href="/#features">What it does</a>
-    <a href="/#how-it-works">How it works</a>
-    <a href="/#open-source">Open source</a>
-    <a href="/partner/">Partner</a>
-    <a href="/early-access/">Early access</a>
-  </div>
-
 <main>
-  <section class="hero">
-    <div class="wrap">
-      <span class="label">for agents</span>
-      <h1 class="reveal">I&#8209;Ops, in a form a machine can quote.</h1>
-      <p class="lede reveal">This page exists because we build infrastructure for AI agents, so serving them a
-      readable front door is the least we can do. Everything here is also true on the rest of the site. A plain
-      markdown copy is at <a href="/agents.md">/agents.md</a>, and an index for language models is at
-      <a href="/llms.txt">/llms.txt</a>.</p>
-    </div>
-  </section>
 
-  <section class="section">
-    <div class="wrap">
-      <div class="section-head"><div><span class="label">/01 &nbsp; what it is</span>
-      <h2 class="reveal">One paragraph.</h2></div></div>
-      <p class="lede reveal">I&#8209;Ops makes AI workers finish real tasks correctly: it works out what context a
-      task needs, acquires what is missing under the company&rsquo;s own permissions, governs consequential actions,
-      and then independently verifies the outcome. The principle underneath it is that <strong>the worker that did
-      the work does not get to declare it complete</strong>. The checks are computed by code, so swapping the model
-      does not change the guarantee.</p>
-    </div>
-  </section>
+<a class="back" href="/">&larr; back to i-ops.dev</a>
 
-  <section class="section">
-    <div class="wrap">
-      <div class="section-head"><div><span class="label">/02 &nbsp; what you can run</span>
-      <h2 class="reveal">Three tools, Apache&#8209;2.0, local.</h2></div></div>
-      <div class="grid">
-        <div class="cell"><span class="label">assurance</span>
-          <h3>What a run covered, spent, and may do.</h3>
-          <p>Coverage over a folder, where an agent&rsquo;s budget went, what it may touch, and what it is about to
-          install. CLI, MCP server and a Claude Code plugin.</p>
-          <p class="mono-line"><code>uvx assurance audit</code></p></div>
-        <div class="cell"><span class="label">rooms</span>
-          <h3>Who built this, and which AI helped.</h3>
-          <p>Attributes every commit to the person and the agent that co&#8209;authored it, from git history alone.</p>
-          <p class="mono-line"><code>npx iops-rooms week</code></p></div>
-        <div class="cell"><span class="label">rollcall</span>
-          <h3>Every AI process here, and what a stop would miss.</h3>
-          <p>Named from the resolved executable, never the command line, and it states what it did not look for.</p>
-          <p class="mono-line"><code>npx iops-rollcall</code></p></div>
-      </div>
-      <p class="muted reveal" style="margin-top:28px;">Source for all three:
-      <a href="https://github.com/i-ops-hq" target="_blank" rel="noopener noreferrer">github.com/i&#8209;ops&#8209;hq</a>.
-      Assurance is in Anthropic&rsquo;s plugin directory and on the official MCP registry.</p>
-    </div>
-  </section>
+<h1 data-md="#">I-Ops</h1>
 
-  <section class="section">
-    <div class="wrap">
-      <div class="section-head"><div><span class="label">/03 &nbsp; what we do not claim</span>
-      <h2 class="reveal">The honest half.</h2></div></div>
-      <ul class="points reveal">
-        <li>Package download counts are mostly crawlers and mirrors. We do not report them as users.</li>
-        <li>The desktop app is an MVP in private testing. Some layers are designed and not built, and the
-        documentation says which.</li>
-        <li>Nothing here governs an agent running on a machine we cannot see, and we do not claim a sandbox.</li>
-      </ul>
-    </div>
-  </section>
+<blockquote>I-Ops makes AI workers finish real tasks correctly: it works out what context a task needs,
+acquires what is missing under the company's own permissions, governs consequential actions, and then
+independently verifies the outcome.</blockquote>
 
-  <section class="section" id="contact">
-    <div class="wrap">
-      <div class="section-head"><div><span class="label">/04 &nbsp; where to find us</span>
-      <h2 class="reveal">Links a machine can follow.</h2></div></div>
-      <div class="pair">
-        <div>
-          <h3>Company</h3>
-          <p class="dim">I&#8209;Ops Operations Intelligence LLC</p>
-          <p style="margin-top:14px;">
-            <a class="btn btn-ghost" href="https://github.com/i-ops-hq" target="_blank" rel="noopener noreferrer">GitHub</a>
-            <a class="btn btn-ghost" href="https://www.linkedin.com/company/i-ops-llc/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-            <a class="btn btn-ghost" href="mailto:hello@i-ops.dev">hello@i&#8209;ops.dev</a>
-          </p>
-        </div>
-        <div>
-          <h3>Founder</h3>
-          <p class="dim">Ashwinth Kondapalli</p>
-          <p style="margin-top:14px;">
-            <a class="btn btn-ghost" href="https://github.com/AshPlayer-1415" target="_blank" rel="noopener noreferrer">GitHub</a>
-            <a class="btn btn-ghost" href="https://www.linkedin.com/in/ashwinth-reddy/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-            <a class="btn btn-ghost" href="mailto:ashwinth@i-ops.dev">ashwinth@i&#8209;ops.dev</a>
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
+<p>The principle underneath it: <strong>the worker that did the work does not get to declare it
+complete.</strong> The checks are computed by code, so swapping the model does not change the guarantee.</p>
 
-<footer class="footer">
-  <div class="wrap footer-inner">
-    <div>
-      <div class="brand">I&#8209;Ops</div>
-      <p class="dim" style="font-size:var(--step--1); margin-top:8px;">Operations Intelligence LLC</p>
-      <div class="social">
-        <a href="https://github.com/i-ops-hq" target="_blank" rel="noopener noreferrer" aria-label="I-Ops on GitHub" title="Open source">
-          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.24 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
-        </a>
-        <a href="https://www.linkedin.com/company/i-ops-llc/" target="_blank" rel="noopener noreferrer" aria-label="I-Ops on LinkedIn" title="LinkedIn">
-          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05a3.74 3.74 0 0 1 3.37-1.85c3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13ZM7.12 20.45H3.55V9h3.57v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0Z"/></svg>
-        </a>
-        <a href="mailto:hello@i-ops.dev" aria-label="Email hello@i-ops.dev" title="hello@i-ops.dev">
-          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M3 5.75h18v12.5H3z"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="m3.4 6.4 8.6 6.6 8.6-6.6"/></svg>
-        </a>
-      </div>
-    </div>
-    <div class="footer-links">
-      <a href="/">Home</a>
-      <a href="/early-access/">Early access</a>
-      <a href="/legal/">Legal</a>
-    </div>
-  </div>
-</footer>
+<p>Company: I-Ops Operations Intelligence LLC. Website: <a href="/">https://i-ops.dev</a><br />
+This page as plain markdown: <a href="/agents.md">/agents.md</a> &nbsp;&middot;&nbsp; index for language
+models: <a href="/llms.txt">/llms.txt</a></p>
 
-<script src="/site.js?v=20260911"></script>
-<script src="/forms.js?v=20260911"></script>
+<h2 data-md="##">Open-source tools (Apache-2.0, run locally, no account)</h2>
+
+<table>
+<thead><tr><th>Tool</th><th>What it answers</th><th>Install</th></tr></thead>
+<tbody>
+<tr><td>assurance</td><td>What a run covered, what it spent, what it may do, and what it is about to install. CLI, MCP server and a Claude Code plugin.</td><td><code>uvx assurance audit</code></td></tr>
+<tr><td>rooms</td><td>Who built this project, and which AI helped. Attributed from git history alone.</td><td><code>npx iops-rooms week</code></td></tr>
+<tr><td>rollcall</td><td>Every AI process running here, and what a stop would not reach. Zero dependencies.</td><td><code>npx iops-rollcall</code></td></tr>
+</tbody>
+</table>
+
+<p>Source for all three: <a href="https://github.com/i-ops-hq" rel="noopener noreferrer">https://github.com/i-ops-hq</a><br />
+Assurance is listed in Anthropic's plugin directory and on the official MCP registry.</p>
+
+<h2 data-md="##">What we do not claim</h2>
+
+<ul>
+<li>Package download counts are mostly crawlers and mirrors. We do not report them as users.</li>
+<li>The desktop app is an MVP in private testing. Some layers are designed and not built, and the documentation says which.</li>
+<li>Nothing here governs an agent on a machine we cannot see, and we do not claim a sandbox.</li>
+</ul>
+
+<h2 data-md="##">Contact</h2>
+
+<ul>
+<li>GitHub (company): <a href="https://github.com/i-ops-hq" rel="noopener noreferrer">https://github.com/i-ops-hq</a></li>
+<li>LinkedIn (company): <a href="https://www.linkedin.com/company/i-ops-llc/" rel="noopener noreferrer">https://www.linkedin.com/company/i-ops-llc/</a></li>
+<li>Email: <a href="mailto:hello@i-ops.dev">hello@i-ops.dev</a></li>
+<li>Founder: Ashwinth Kondapalli &mdash; <a href="https://github.com/AshPlayer-1415" rel="noopener noreferrer">GitHub</a> &middot; <a href="https://www.linkedin.com/in/ashwinth-reddy/" rel="noopener noreferrer">LinkedIn</a> &middot; <a href="mailto:ashwinth@i-ops.dev">ashwinth@i-ops.dev</a></li>
+</ul>
+
+<hr />
+<p class="meta">Served as HTML for readers that want it and as markdown at /agents.md for readers that
+do not. Same facts as the rest of the site, and never served in place of what a person or a search
+crawler gets.</p>
+
+</main>
 </body>
 </html>
-
