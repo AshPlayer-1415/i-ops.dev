@@ -15,9 +15,8 @@ Company: I-Ops Operations Intelligence LLC. Website: https://i-ops.dev
 |---|---|---|
 | assurance | What a run covered, what it spent, what it may do, and what it is about to install. CLI, MCP server and a Claude Code plugin. | `uvx assurance audit` |
 | rooms | Who built this project, and which AI helped. Attributed from git history alone. | `npx iops-rooms week` |
-| rollcall | Every AI process running here, and what a stop would not reach. Zero dependencies. | `npx iops-rollcall` |
 
-Source for all three: https://github.com/i-ops-hq
+Source: https://github.com/i-ops-hq
 Assurance is listed in Anthropic's plugin directory and on the official MCP registry.
 
 ## What we do not claim

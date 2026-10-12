@@ -5,21 +5,98 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>I-Ops — the runtime that checks what AI workers actually did</title>
 <meta name="description" content="AI workers finish the work. I-Ops ensures they do it right. A runtime that decides what a task needs, governs what it may change, and verifies the result against conditions the worker never got to write." />
-<link rel="icon" href="/favicon.svg?v=20261005" type="image/svg+xml" />
-<link rel="alternate icon" href="/favicon.ico?v=20261005" sizes="16x16 32x32 48x48" />
-<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=20261005" />
+<link rel="icon" href="/favicon.svg?v=445249498e" type="image/svg+xml" />
+<link rel="alternate icon" href="/favicon.ico?v=445249498e" sizes="16x16 32x32 48x48" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=445249498e" />
 <link rel="canonical" href="https://i-ops.dev/" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="I-Ops" />
 <meta property="og:url" content="https://i-ops.dev/" />
 <meta property="og:title" content="I-Ops — the runtime that checks what AI workers actually did" />
 <meta property="og:description" content="AI workers finish the work. I-Ops ensures they do it right. A runtime that works out what a task needs, governs anything consequential, and verifies the result against conditions the worker never wrote." />
-<meta property="og:image" content="https://i-ops.dev/icon-512.png?v=20261005" />
+<meta property="og:image" content="https://i-ops.dev/icon-512.png?v=445249498e" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="I-Ops — the runtime that checks what AI workers actually did" />
 <meta name="twitter:description" content="AI workers finish the work. I-Ops ensures they do it right. A runtime that works out what a task needs, governs anything consequential, and verifies the result against conditions the worker never wrote." />
-<meta name="twitter:image" content="https://i-ops.dev/icon-512.png?v=20261005" />
-<link rel="stylesheet" href="/site.css?v=20261005" />
+<meta name="twitter:image" content="https://i-ops.dev/icon-512.png?v=445249498e" />
+<link rel="stylesheet" href="/site.css?v=445249498e" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://i-ops.dev/#organization",
+      "name": "I-Ops Operations Intelligence LLC",
+      "alternateName": "I-Ops",
+      "url": "https://i-ops.dev/",
+      "logo": "https://i-ops.dev/icon-512.png",
+      "description": "Infrastructure that makes AI workers finish real tasks correctly: it determines what context a task needs, acquires what is missing under company permissions, governs consequential actions, and independently verifies the outcome.",
+      "founder": {
+        "@type": "Person",
+        "name": "Ashwinth Reddy",
+        "sameAs": [
+          "https://www.linkedin.com/in/ashwinth-reddy/",
+          "https://github.com/AshPlayer-1415"
+        ]
+      },
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "contactType": "customer support",
+          "email": "ashwinth@i-ops.dev",
+          "url": "https://i-ops.dev/contact/",
+          "availableLanguage": [
+            "en"
+          ]
+        }
+      ],
+      "sameAs": [
+        "https://github.com/i-ops-hq",
+        "https://www.linkedin.com/company/i-ops-llc/"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "2261 Market Street, STE 91631",
+        "addressLocality": "San Francisco",
+        "addressRegion": "CA",
+        "postalCode": "94114",
+        "addressCountry": "US"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://i-ops.dev/#assurance",
+      "name": "Assurance",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "macOS, Linux, Windows",
+      "url": "https://i-ops.dev/",
+      "downloadUrl": "https://pypi.org/project/assurance/",
+      "softwareHelp": "https://github.com/i-ops-hq/assurance",
+      "description": "Reads what an AI coding agent actually did in a session and reports what it skipped: whether anything was tested after the last edit, where a run's budget went, what an action may touch, and what could not be checked. Runs locally with no account.",
+      "license": "https://www.apache.org/licenses/LICENSE-2.0",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "publisher": {
+        "@id": "https://i-ops.dev/#organization"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://i-ops.dev/#website",
+      "url": "https://i-ops.dev/",
+      "name": "I-Ops",
+      "publisher": {
+        "@id": "https://i-ops.dev/#organization"
+      }
+    }
+  ]
+}
+  </script>
 </head>
 <body>
 
@@ -390,13 +467,13 @@
       <div class="section-head">
         <div>
           <span class="label">/07 &nbsp; open source</span>
-          <h2 class="reveal">Three of the layers are already yours.</h2>
+          <h2 class="reveal">Some of the layers are already yours.</h2>
         </div>
       </div>
       <p class="lede reveal">A boundary you cannot read is a boundary you have to take on trust. These install in
       minutes, come out in one step, and run entirely on your machine. Apache&#8209;2.0.</p>
 
-      <div class="grid">
+      <div class="grid grid--two">
         <div class="cell">
           <span class="label">assurance</span>
           <h3>What a run covered, spent, and may do.</h3>
@@ -411,19 +488,11 @@
           No account, no network.</p>
           <p class="mono-line"><code>npx iops-rooms week</code></p>
         </div>
-        <div class="cell">
-          <span class="label">rollcall</span>
-          <h3>Every AI process here, and what a stop would miss.</h3>
-          <p>Names what is running from the resolved executable, never the command line, and says plainly what it did
-          not look for. Zero dependencies.</p>
-          <p class="mono-line"><code>npx iops-rollcall</code></p>
-        </div>
       </div>
 
       <p class="muted reveal" style="margin-top:28px;">Assurance is in
       <a href="https://github.com/i-ops-hq" target="_blank" rel="noopener noreferrer">Anthropic&rsquo;s plugin
-      directory</a>, listed on the official MCP registry, and published as six packages on PyPI. The source for all
-      three is at <a href="https://github.com/i-ops-hq" target="_blank" rel="noopener noreferrer">github.com/i&#8209;ops&#8209;hq</a>.</p>
+      directory</a>, listed on the official MCP registry, and published as six packages on PyPI. The source is at <a href="https://github.com/i-ops-hq" target="_blank" rel="noopener noreferrer">github.com/i&#8209;ops&#8209;hq</a>.</p>
     </div>
   </section>
 
@@ -447,7 +516,7 @@
         </div>
         <div>
           <h3>Where it stands</h3>
-          <p>A signed, notarised macOS app on a live updater, and three open&#8209;source tools you can run right
+          <p>A signed, notarised macOS app on a live updater, and open&#8209;source tools you can run right
           now without talking to anyone.</p>
           <p style="margin-top:14px;">If you run agents somewhere the blast radius matters, I would rather hear what
           breaks than what sounds good.</p>

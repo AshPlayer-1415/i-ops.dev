@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>About — I-Ops</title>
+<meta name="description" content="I-Ops Operations Intelligence LLC builds the layer that independently verifies what AI workers actually did, computed by code rather than claimed by the worker." />
+<link rel="canonical" href="https://i-ops.dev/about/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="I-Ops" />
+<meta property="og:url" content="https://i-ops.dev/about/" />
+<meta property="og:title" content="About — I-Ops" />
+<meta property="og:description" content="I-Ops Operations Intelligence LLC builds the layer that independently verifies what AI workers actually did, computed by code rather than claimed by the worker." />
+<link rel="icon" href="/favicon.svg?v=445249498e" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=445249498e" />
+<link rel="stylesheet" href="/site.css?v=445249498e" />
+</head>
+<body>
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <p class="label"><a href="/" style="color:var(--ink-2);">&larr; i-ops.dev</a></p>
+      <h1>About I&#8209;Ops</h1>
+      <p class="lede">The layer that checks what AI workers actually did, rather than what they said.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap prose">
+      <p>I&#8209;Ops Operations Intelligence LLC builds the layer that checks what AI workers actually did.
+      Not whether an action was permitted, and not whether a command exited zero, but whether the thing
+      that was asked for became true &mdash; checked by code that is not the worker that did the work.</p>
+
+      <p>The reason that distinction matters is that it is the one every other layer stops short of. A
+      policy gateway decides whether an action may run. An observability tool records that it ran. Neither
+      answers whether the intended outcome holds afterwards, and an agent asked to confirm its own work
+      will tell you that it does. That is not dishonesty in the model; it is a structural problem with
+      asking any worker to mark its own homework, and it does not go away as models improve.</p>
+
+      <p>So the guarantees are computed by ordinary code, from artifacts that already exist &mdash; the
+      session transcript, the test run, the git history, the import graph, the CODEOWNERS file. Nothing
+      is predicted. Where a thing cannot be determined, the answer says so rather than guessing, because
+      an unknown reported as a pass is worse than no check at all.</p>
+
+      <p>Several of those layers are open source under Apache&#8209;2.0, run entirely on your machine, need
+      no account and no network, and come out in one step. <a href="/#open-source">The tools are here</a>,
+      the source is at <a href="https://github.com/i-ops-hq" rel="noopener noreferrer">github.com/i&#8209;ops&#8209;hq</a>,
+      and the packages are on PyPI and npm. A signed macOS application is in private testing.</p>
+
+      <p>The company is one person: Ashwinth Reddy, founder, and the LLC is registered in Delaware. Public record of the work is on
+      <a href="https://github.com/AshPlayer-1415" rel="noopener noreferrer">GitHub</a> and
+      <a href="https://www.linkedin.com/in/ashwinth-reddy/" rel="noopener noreferrer">LinkedIn</a>.</p>
+
+      <p class="muted" style="margin-top:28px;"><a href="/contact/">Contact</a> &middot;
+      <a href="/legal/">Terms and privacy</a> &middot; <a href="/agents.md">For agents</a></p>
+    </div>
+  </section>
+</main>
+</body>
+</html>

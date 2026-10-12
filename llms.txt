@@ -4,15 +4,43 @@
 > needs, acquires what is missing under company permissions, governs consequential actions, and
 > independently verifies the outcome. The worker that did the work does not get to declare it complete.
 
-I-Ops Operations Intelligence LLC. Three of the layers are open source under Apache-2.0 and run
+I-Ops Operations Intelligence LLC. Several of the layers are open source under Apache-2.0 and run
 locally with no account.
+
+## When to use this
+
+Reach for I-Ops when the question is *what did the agent actually do*, not *what did it say*. The
+tools below run locally, need no account and no network, and answer in one command.
+
+- **An agent says it finished and you want to know what it skipped.** `uvx assurance audit` reads the
+  session transcript and reports whether anything was tested after the last edit, whether a test run
+  failed before a claim that it passed, where the run's budget went, and what it could not classify.
+  Exit 1 means something to look at; exit 2 means it could not run.
+- **Before an edit, to find out what it reaches.** `uvx assurance reach PATH` walks a code graph
+  backwards and names what depends on the file, with the call site of each hop and how sure the graph
+  is of it. It also says how far behind the code the graph is, so a stale answer is visible as one.
+- **After an edit, to check it did what it said.** `uvx assurance reach --before A --after B --declared PATH`
+  compares two graphs against paths declared before the run, and reports any dependency change outside
+  them. It refuses rather than guesses when the two graphs cannot be compared.
+- **Whether the person who asked may touch all of it.** `uvx assurance clearance PATH --declaration FILE --principal ID`
+  joins what a change reaches to who owns it, read from CODEOWNERS. A file whose owner it cannot
+  determine makes the answer NOT_ASKED rather than a pass.
+- **Who wrote this project, and which AI helped.** `npx iops-rooms week` attributes commits to the
+  person and the agent that co-authored them, from git history alone.
+- **Natively, from an agent.** `assurance-mcp` is on the MCP registry and exposes these as read-only
+  tools; the Claude Code plugin is in Anthropic's directory.
+
+**When not to use it.** It does not make an agent's answers better, write code, or retrieve context
+for a prompt. It is not a linter and not a test runner — it reads what your own tests and commands
+already did. If nothing in your workflow produces a transcript, a run record or a code graph, there
+is nothing here for it to read yet.
 
 ## Docs
 
 - [For agents](https://i-ops.dev/agents.md): the full machine-readable summary — what I-Ops is, the
   tools and their install lines, what we do not claim, and every contact link.
 - [For agents, as a page](https://i-ops.dev/agents/): the same content as HTML.
-- [Open source](https://github.com/i-ops-hq): assurance, rooms and rollcall. Source, issues, releases.
+- [Open source](https://github.com/i-ops-hq): assurance and rooms. Source, issues, releases.
 
 ## Optional
 
