@@ -1,3 +1,8 @@
+/* Visible only when focused: the first thing a keyboard user reaches, and invisible otherwise. */
+.skip-link { position: absolute; left: -9999px; top: 0; z-index: 100; padding: 10px 16px;
+             background: var(--ink); color: var(--ground); text-decoration: none; }
+.skip-link:focus { left: 8px; top: 8px; }
+
 /* ============================================================
    Self-hosted type. SIL Open Font License 1.1, both families; the licences
    travel with the files in fonts/ because OFL requires it.
