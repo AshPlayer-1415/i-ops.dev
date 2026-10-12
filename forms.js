@@ -47,11 +47,38 @@
       if (state) statusElement.classList.add("is-" + state);
     }
 
+    // The orb is a progressive enhancement: imported only when a form is actually submitted, so the
+    // engine is not downloaded by anyone who merely reads the page, and every step is guarded so a
+    // failure to load leaves the form behaving exactly as it did before.
+    var orbHost = null;
+    var orbHandle = null;
+
+    function showOrb() {
+      if (orbHost) return;
+      orbHost = document.createElement("span");
+      orbHost.className = "submit-orb";
+      submitButton.insertAdjacentElement("afterend", orbHost);
+      import("/vendor/thinking-orbs/orb.js?v=5e4f6fb1d2")
+        .then(function (m) {
+          if (!orbHost) return; // the request finished before the module arrived
+          orbHandle = m.mountOrb(orbHost, "connecting", 20);
+        })
+        .catch(function () {});
+    }
+
+    function hideOrb() {
+      if (orbHandle) orbHandle.stop();
+      if (orbHost) orbHost.remove();
+      orbHandle = null;
+      orbHost = null;
+    }
+
     function setSubmitting(submitting) {
       inProgress = submitting;
       submitButton.disabled = submitting;
       submitButton.setAttribute("aria-busy", submitting ? "true" : "false");
       submitButton.textContent = submitting ? busyText : defaultButtonText;
+      submitting ? showOrb() : hideOrb();
     }
 
     form.addEventListener("submit", async function (event) {

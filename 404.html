@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Page not found — I-Ops</title>
+<meta name="description" content="That page does not exist on i-ops.dev. Here is where the documentation, the open-source tools and the machine-readable summary live." />
+<meta name="robots" content="noindex" />
+<link rel="icon" href="/favicon.svg?v=60cde4f1dc" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=60cde4f1dc" />
+<link rel="stylesheet" href="/site.css?v=60cde4f1dc" />
+<style>
+  .nf { display:flex; flex-direction:column; align-items:flex-start; gap:22px; }
+  .nf-orb { min-height:64px; }
+  .nf-links { margin-top:6px; line-height:2; }
+  .nf-links a { display:inline-block; margin-right:22px; }
+  .nf-path { font-family:var(--mono,monospace); font-size:13px; color:var(--ink-2);
+             border:1px solid var(--line); padding:6px 10px; display:inline-block; word-break:break-all; }
+</style>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <div class="wrap nf">
+      <div class="nf-orb" id="orb"></div>
+      <h1>That page is not here.</h1>
+      <p class="lede">The address returned a 404. Nothing was moved recently, so it was most likely
+      mistyped or linked from somewhere stale.</p>
+      <p class="nf-path" id="asked"></p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap">
+      <p>Where things actually live:</p>
+      <p class="nf-links">
+        <a href="/">Home</a>
+        <a href="/about/">About</a>
+        <a href="/contact/">Contact</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/legal/">Terms</a>
+      </p>
+      <p class="nf-links">
+        <a href="/llms.txt">llms.txt</a>
+        <a href="/agents.md">agents.md</a>
+        <a href="/agents/">For agents</a>
+        <a href="/sitemap.xml">sitemap.xml</a>
+        <a href="https://github.com/i-ops-hq" rel="noopener noreferrer">Source</a>
+      </p>
+      <p class="muted" style="margin-top:26px;">If an agent sent you here, <a href="/llms.txt">llms.txt</a>
+      lists every page and what each is for.</p>
+    </div>
+  </section>
+</main>
+<script type="module">
+  import { cycleOrb } from "/vendor/thinking-orbs/orb.js?v=5e4f6fb1d2";
+  // Four states rather than one: a different orb on each load, and a change for anyone who stays.
+  cycleOrb(document.getElementById("orb"),
+           ["searching", "connecting", "working", "listening"], 64, { every: 18000 });
+  const asked = document.getElementById("asked");
+  asked.textContent = location.pathname + location.search;
+</script>
+</body>
+</html>

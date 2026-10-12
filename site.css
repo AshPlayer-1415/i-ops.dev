@@ -371,6 +371,10 @@ p { margin: 16px 0 0; max-width: 68ch; }
    now, so the rules live here or nowhere.
    ---------------------------------------------------------------------- */
 .legal { max-width: 74ch; margin-top: 8px; }
+/* The submit orb sits beside the button while a form is in flight. It is decorative — the button's
+   own `aria-busy` and the status message carry the state for anyone not looking at it. */
+.submit-orb { display: inline-flex; align-items: center; margin-left: 12px; vertical-align: middle; }
+
 /* The about and contact pages set running prose with subheads, which no existing context covered:
    `h1, h2, h3 { margin: 0 }` is global and every other place overrides it per component. Scoped so
    adding it cannot move type on any page that already existed. */
