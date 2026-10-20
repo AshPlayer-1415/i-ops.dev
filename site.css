@@ -151,6 +151,9 @@ a { color: inherit; }
   display: block;
   margin-bottom: 18px;
 }
+/* Which layer of the runtime a package is. Set on its own line rather than after a separator,
+   because one name wraps and the other does not, and the two headings then stop aligning. */
+.label b { display: block; font-weight: 400; color: var(--ink-2); margin-top: 6px; }
 
 h1, h2, h3 { font-weight: 400; margin: 0; text-wrap: balance; letter-spacing: -0.02em; }
 h1 { font-size: var(--step-4); line-height: 1.02; }
