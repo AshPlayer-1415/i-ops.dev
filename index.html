@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>I-Ops — the runtime that checks what AI workers actually did</title>
 <meta name="description" content="AI workers finish the work. I-Ops ensures they do it right. A runtime that decides what a task needs, governs what it may change, and verifies the result against conditions the worker never got to write." />
-<link rel="icon" href="/favicon.svg?v=d2a84c764e" type="image/svg+xml" />
+<link rel="icon" href="/favicon.svg?v=5624ec7f18" type="image/svg+xml" />
 <link rel="alternate icon" href="/favicon.ico?v=445249498e" sizes="16x16 32x32 48x48" />
-<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=d2a84c764e" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=5624ec7f18" />
 <link rel="canonical" href="https://i-ops.dev/" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="I-Ops" />
@@ -19,7 +19,7 @@
 <meta name="twitter:title" content="I-Ops — the runtime that checks what AI workers actually did" />
 <meta name="twitter:description" content="AI workers finish the work. I-Ops ensures they do it right. A runtime that works out what a task needs, governs anything consequential, and verifies the result against conditions the worker never wrote." />
 <meta name="twitter:image" content="https://i-ops.dev/og-card.png" />
-<link rel="stylesheet" href="/site.css?v=d2a84c764e" />
+<link rel="stylesheet" href="/site.css?v=5624ec7f18" />
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -154,8 +154,23 @@
         before the run by something that is not the worker. It runs on your machine by default.
       </p>
       <div class="hero-actions">
-        <a class="btn btn-lg" href="/early-access/">Request early access</a>
-        <a class="btn btn-ghost btn-lg" href="#governance">Why this matters</a>
+        <a class="btn btn-lg" href="#open-source">Run the checks on your own work</a>
+        <a class="btn btn-ghost btn-lg" href="/early-access/">Request early access</a>
+      </div>
+
+      <!-- A page arguing that claims should be checkable has to be checkable itself. The command
+           and the numbers go above the argument, not after it. -->
+      <div class="hero-proof">
+        <p class="mono-line"><code>uvx assurance audit</code></p>
+        <p class="hero-proof-note">
+          Open source, Apache&#8209;2.0. Reads your last coding&#8209;agent session on your own
+          machine and tells you what it did not check. Nothing is sent anywhere.
+        </p>
+        <ul class="hero-stats">
+          <li><b>27,742</b><span>plugin loads</span></li>
+          <li><b>0%</b><span>error rate, measured by Anthropic</span></li>
+          <li><b>8</b><span>packages published on PyPI</span></li>
+        </ul>
       </div>
 
       <!-- The one interactive thing on the page. It is the product in ten seconds. -->
@@ -318,7 +333,7 @@
         </div>
         <div class="cell">
           <span class="label">folders, not systems</span>
-          <p>You grant a folder. That is the boundary, and it belongs to the runtime rather than to whatever is doing the thinking. Nothing widens it quietly.</p>
+          <p>You grant a folder. That is the boundary, and it belongs to the runtime rather than to whatever is doing the thinking. Nothing widens it quietly. Databases and SaaS systems are a different boundary and a different problem; we say so rather than implying a folder covers them.</p>
         </div>
         <div class="cell">
           <span class="label">proposes, then acts</span>
@@ -504,7 +519,7 @@
 
       <p class="muted reveal" style="margin-top:28px;">Assurance is in
       <a href="https://github.com/i-ops-hq" target="_blank" rel="noopener noreferrer">Anthropic&rsquo;s plugin
-      directory</a>, listed on the official MCP registry, and published as six packages on PyPI. The source is at <a href="https://github.com/i-ops-hq" target="_blank" rel="noopener noreferrer">github.com/i&#8209;ops&#8209;hq</a>.</p>
+      directory</a>, listed on the official MCP registry, and published as eight packages on PyPI. The source is at <a href="https://github.com/i-ops-hq" target="_blank" rel="noopener noreferrer">github.com/i&#8209;ops&#8209;hq</a>.</p>
     </div>
   </section>
 
