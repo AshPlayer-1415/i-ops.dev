@@ -2,8 +2,34 @@
 <html lang="en"><head><meta charset="utf-8" />
 <meta name="robots" content="noindex" />
 <title>og-card source — not a page</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600&family=Anonymous+Pro:wght@400;700&display=swap" />
 <style>
+  /* The site's own font files, not Google's copies of them. This page is served publicly at
+     /og-card.html, so a font-host request here is a third-party request on a public page, which
+     nothing on this site is allowed to make. It also made regenerate-og-card.sh's promise that the
+     card "uses the site's own fonts" untrue: it used Google's build of the same typefaces.
+     Absolute paths because the card is rendered over http://localhost:4321, not from file://.
+     Only weight 400 is declared because that is the only weight this card renders at -- the old
+     link requested 600 and 700 and nothing here ever used them. font-display is block rather than
+     swap: a headless screenshot that fires before the font loads would bake the fallback into the
+     PNG, and here there is no reader to keep waiting. */
+  @font-face {
+    font-family: 'Bricolage Grotesque'; font-style: normal; font-weight: 400; font-display: block;
+    src: url('/fonts/bricolage-grotesque-latin.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'Bricolage Grotesque'; font-style: normal; font-weight: 400; font-display: block;
+    src: url('/fonts/bricolage-grotesque-latin-ext.woff2') format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  @font-face {
+    font-family: 'Anonymous Pro'; font-style: normal; font-weight: 400; font-display: block;
+    src: url('/fonts/anonymous-pro-latin.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'Anonymous Pro'; font-style: normal; font-weight: 400; font-display: block;
+    src: url('/fonts/anonymous-pro-latin-ext.woff2') format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
   * { margin:0; padding:0; box-sizing:border-box; }
   html,body { width:1200px; height:630px; }
   body { background:#000; color:#fff; font-family:'Bricolage Grotesque',system-ui,sans-serif;
