@@ -67,9 +67,23 @@ def navs(path):
     return p.out["nav-links"], p.out["mobile-menu"]
 
 ref_header, _ = navs("index.html")
-pages = sorted(f for f in glob.glob("*.html") + glob.glob("*/index.html") + glob.glob("*/*/index.html")
-               if 'class="nav-links"' in open(f, encoding="utf-8").read())
+every = sorted(set(glob.glob("*.html") + glob.glob("*/index.html") + glob.glob("*/*/index.html")))
+src = {f: open(f, encoding="utf-8").read() for f in every}
+pages = [f for f in every if 'class="nav-links"' in src[f]]
 bad = []
+
+# A page selected by nav-links alone is a page that disappears from this check the moment it loses
+# its nav, and silence then looks exactly like a pass. So the three parts of the chrome are held
+# together: a page with the site header has all of nav-links, mobile-menu and the burger that opens
+# it, or none of them. None of them is what the gated early-release pages have on purpose -- brand
+# and "Back to site", no nav -- and that stays legal without naming them here, because a list of
+# exceptions goes stale and an invariant does not.
+for f in every:
+    has = ['class="nav-links"' in src[f], 'class="mobile-menu"' in src[f], 'class="burger"' in src[f]]
+    if 'class="nav" id="nav"' in src[f] and any(has) and not all(has):
+        bad.append(f"{f}: has only part of the header chrome "
+                   f"(nav-links={has[0]}, mobile-menu={has[1]}, burger={has[2]})")
+
 for f in pages:
     header, mobile = navs(f)
     if header != ref_header:
@@ -80,7 +94,8 @@ for f in pages:
 for b in bad:
     print(f"  FAIL  {b}")
 if not bad:
-    print(f"  PASS  {len(pages)} pages: header == index, and mobile starts with header")
+    print(f"  PASS  {len(pages)} of {len(every)} pages carry a nav: header == index, mobile starts with header")
+    print(f"  PASS  {len(every) - len(pages)} pages carry no nav, and none carries only part of one")
 sys.exit(1 if bad else 0)
 PY
 
