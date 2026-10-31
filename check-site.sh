@@ -125,14 +125,18 @@ if [ "$LIVE" = "0" ]; then
   exit 0
 fi
 
-echo "--- the live site is serving this commit ---"
-# last-modified is what proves which deploy answered. A query string does NOT bust the cache here:
-# Pages fronts with Fastly at max-age=600, keyed on path. A new page therefore goes live before an
-# edit to an existing page does, and a check that greps for a string without pinning the deploy can
-# report success against the previous one -- or, as happened on 2026-10-31, failure against it.
+echo "--- the live site is serving what is committed here ---"
+# The hash is the question; the headers only explain a failure. An earlier version of this asserted
+# that every file carried the SAME last-modified as the home page, on the theory that it pinned the
+# deploy. It does not: Pages writes a deploy's files over a second or two, so a healthy deploy spans
+# several timestamps -- 23:54:22 to 23:54:23 on 2026-10-31 -- and ten files whose bytes were correct
+# were reported as coming from an earlier deploy. A check that fails on a correct site is worse than
+# no check, because the next real failure reads as more of the same.
+#
+# What the timestamp is good for is explaining a mismatch. A query string does NOT bust the cache
+# here: Pages fronts with Fastly at max-age=600, keyed on path. So a new page goes live before an
+# edit to an existing page does, and right after a push an edge can still hold the previous copy.
 TMP=$(mktemp -d); trap 'rm -rf "$TMP"' EXIT
-DEPLOY=$(curl -sSI "$SITE/" | grep -i '^last-modified:' | cut -d' ' -f2- | tr -d '\r')
-echo "  (serving last-modified: $DEPLOY)"
 for f in $(find . -name '*.html' -not -path './node_modules/*' | sed 's|^\./||' | sort) \
          agents.md llms.txt sitemap.xml robots.txt; do
   case "$f" in
@@ -143,12 +147,12 @@ for f in $(find . -name '*.html' -not -path './node_modules/*' | sed 's|^\./||' 
   esac
   code=$(curl -s -o "$TMP/body" -D "$TMP/head" -w '%{http_code}' "$SITE$url")
   if [ "$code" != "200" ]; then bad "$url returned $code"; continue; fi
-  lm=$(grep -i '^last-modified:' "$TMP/head" | cut -d' ' -f2- | tr -d '\r')
-  if [ "$lm" != "$DEPLOY" ]; then bad "$url is from an earlier deploy ($lm)"; continue; fi
-  if [ "$(shasum -a 256 "$TMP/body" | cut -d' ' -f1)" != "$(shasum -a 256 "$f" | cut -d' ' -f1)" ]; then
-    bad "$url does not match $f byte for byte"
-  else
+  if [ "$(shasum -a 256 "$TMP/body" | cut -d' ' -f1)" = "$(shasum -a 256 "$f" | cut -d' ' -f1)" ]; then
     ok "$url == $f"
+  else
+    lm=$(grep -i '^last-modified:' "$TMP/head" | cut -d' ' -f2- | tr -d '\r')
+    age=$(grep -i '^age:' "$TMP/head" | cut -d' ' -f2- | tr -d '\r')
+    bad "$url does not match $f (last-modified $lm, cache age ${age:-0}s; within 600s of a push an edge may still hold the previous copy)"
   fi
 done
 
