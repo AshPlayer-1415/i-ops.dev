@@ -37,6 +37,12 @@ is nothing here for it to read yet.
 
 ## Docs
 
+- [The false-completion index](https://i-ops.dev/false-completion/): one question, measured the same
+  way every month - when a coding agent's last message says the tests pass, how often does the
+  session's own record show no test passing after its last edit? The definition of a claim and of a
+  false claim, the five published figures and why no two are comparable, what a contributed session
+  would carry, and the threshold the first number publishes at. There is no number on it yet, and
+  the page says why.
 - [For agents](https://i-ops.dev/agents.md): the full machine-readable summary — what I-Ops is, the
   tools and their install lines, what we do not claim, and every contact link.
 - [For agents, as a page](https://i-ops.dev/agents/): the same content as HTML.

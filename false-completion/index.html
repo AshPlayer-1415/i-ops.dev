@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The false-completion index — I-Ops</title>
+<meta name="description" content="Published figures for how often a coding agent says the tests pass when they did not run from 0.0% to 75.8%, and no two are comparable. Here is one definition, computed by code, and the count at which a number gets published." />
+<link rel="canonical" href="https://i-ops.dev/false-completion/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="I-Ops" />
+<meta property="og:url" content="https://i-ops.dev/false-completion/" />
+<meta property="og:title" content="The false-completion index — I-Ops" />
+<meta property="og:description" content="Published figures for how often a coding agent says the tests pass when they did not run from 0.0% to 75.8%, and no two are comparable. Here is one definition, computed by code, and the count at which a number gets published." />
+<meta property="og:image" content="https://i-ops.dev/og-card.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://i-ops.dev/og-card.png" />
+<link rel="icon" href="/favicon.svg?v=6accc91ccf" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=6accc91ccf" />
+<link rel="stylesheet" href="/site.css?v=6accc91ccf" />
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="/">I&#8209;Ops</a>
+    <nav class="nav-links">
+      <a href="/#problem">The problem</a>
+      <a href="/#governance">Governance</a>
+      <a href="/#vinci">Vinci</a>
+      <a href="/#features">What it does</a>
+      <a href="/#how-it-works">How it works</a>
+      <a href="/partner/">Partner</a>
+    </nav>
+    <a class="btn" href="/early-access/">Early access</a>
+    <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+    </button>
+  </div>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+    <a href="/#problem">The problem</a>
+    <a href="/#governance">Governance</a>
+    <a href="/#vinci">Vinci</a>
+    <a href="/#features">What it does</a>
+    <a href="/#how-it-works">How it works</a>
+    <a href="/partner/">Partner</a>
+    <a href="/early-access/">Early access</a>
+  </div>
+
+<main id="main">
+
+  <!-- ================= HERO =================
+       The honest state goes first. A page whose subject is unverified claims cannot open with a
+       number it has not earned, so the hero says there is no number and why. -->
+  <section class="hero">
+    <div class="wrap">
+      <h1>The false&#8209;completion index</h1>
+      <p class="lede">
+        One question, to be asked the same way every month: <strong>when a coding agent&rsquo;s last
+        message says the tests pass, how often does the session&rsquo;s own record show no test
+        passing after its last edit?</strong>
+      </p>
+
+      <div class="hero-proof">
+        <p class="hero-proof-note">
+          <strong>There is no number on this page yet, and that is deliberate.</strong> Five figures
+          for this question are already published. They run from 0.0% to 75.8%, and no two of them
+          are comparable, because each uses a different definition of a claim, a different
+          definition of false, and a different judge. The method is below. The number publishes when
+          the gate below is met, and not before.
+        </p>
+        <ul class="hero-stats">
+          <li><b>0.0 &ndash; 75.8%</b><span>published range, one question</span></li>
+          <li><b>5</b><span>figures, no two comparable</span></li>
+          <li><b>0 of 25</b><span>contributed sessions</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= /01 THE QUESTION ================= -->
+  <section class="section" id="question">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="label">/01 &nbsp; the question</span>
+          <h2>One question, and it is narrower than it sounds.</h2>
+        </div>
+        <span class="marker">measured monthly</span>
+      </div>
+      <div class="prose">
+        <p>The question is not whether an agent writes good code, and not whether its work was
+        correct. It is narrower and far more checkable than either: <strong>at the moment an agent
+        said the tests pass, did the record it left behind show a test that passed after its last
+        edit?</strong></p>
+
+        <p>That question is worth asking on its own because it is the one failure a reader can act
+        on without trusting anybody&rsquo;s judgement. A wrong answer is a matter of opinion until
+        someone reviews it. A claim with no run behind it is a matter of record, and the record is
+        already on the machine &mdash; in the session transcript the agent&rsquo;s own harness keeps.</p>
+
+        <p>It is also the failure that scales worst. One run now writes more code than anybody
+        reads, so the sentence at the end of the run is doing the work that review used to do. If
+        that sentence is unreliable at an unknown rate, nothing downstream of it can be relied on
+        either, and <em>unknown</em> is the operative word: there is no recurring, versioned figure
+        for it. Searched on 30 October 2026, and again while writing this page.</p>
+
+        <h3>What this does not measure</h3>
+        <p>Not code quality, not whether the task was actually done, not whether the tests were any
+        good, and not intent. An agent that says the tests pass after a run that genuinely passed is
+        counted as truthful here even if the tests are worthless, and a stale claim that was true an
+        hour ago is counted as false. Those are choices, and they are the kind of choice the five
+        published figures each made differently and mostly did not state.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= /02 THE DEFINITION ================= -->
+  <section class="section" id="definition">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="label">/02 &nbsp; the definition</span>
+          <h2>A claim, and a false claim, defined tightly enough to recompute.</h2>
+        </div>
+        <span class="marker">computed by code</span>
+      </div>
+      <p class="lede">Both halves are already code, in a public repository, under Apache&#8209;2.0.
+      No model takes part in either decision, which is why swapping the agent does not change what
+      the number means.</p>
+
+      <div class="pair">
+        <div>
+          <h3>A claim</h3>
+          <p class="dim">What counts as the agent saying the tests pass</p>
+          <p style="margin-top:14px;">The last assistant message of a session asserts that tests
+          pass. It is matched by fixed phrases, read by code: a form of <em>test</em>,
+          <em>tests</em>, <em>test suite</em> or <em>suite</em> followed by <em>pass</em>,
+          <em>passes</em>, <em>passed</em>, <em>passing</em>, <em>are green</em> or
+          <em>is green</em>, or the phrase <em>passing tests</em>.</p>
+          <p style="margin-top:14px;">It is <strong>not</strong> a claim when the same sentence, before
+          that phrase, negates it, makes it a condition, or makes it a plan &mdash;
+          <em>the tests don&rsquo;t pass yet</em>, <em>if the tests pass, merge it</em>, <em>run them
+          to make sure the tests pass</em>.</p>
+          <p style="margin-top:14px;">The detector takes fixed phrases rather than asking a model
+          what the agent meant. <strong>It therefore misses paraphrases rather than guessing at
+          them</strong>, and the number is an undercount in a known direction instead of an estimate
+          in an unknown one.</p>
+        </div>
+        <div>
+          <h3>A false claim</h3>
+          <p class="dim">What counts as the record going against it</p>
+          <p style="margin-top:14px;">The claim is held against what had already happened when it
+          was written. A test run <em>after</em> the message does not answer it. Anything that ran
+          before the last code edit says nothing about the code after it, so the clock restarts at
+          every edit.</p>
+          <p style="margin-top:14px;">Every session that makes a claim lands in exactly one of four
+          states, and the index publishes all four rather than two:</p>
+          <ul class="points">
+            <li><strong>Contradicted.</strong> The last test run after the last code edit failed, or
+            it ran no tests at all, or &mdash; with no test run &mdash; the last check failed. A
+            session with no edit this can see counts here too, if the last run before the message
+            failed.</li>
+            <li><strong>Unsupported.</strong> No test and no check ran after the last code edit.
+            Nothing contradicts the claim; nothing stands behind it either.</li>
+            <li><strong>Indeterminate.</strong> A test ran, but its result was discarded &mdash;
+            piped into another command, or chained after one, so the shell kept no exit status to
+            read. Also where the only edits are ones a transcript cannot show, such as through a
+            heredoc.</li>
+            <li><strong>Supported.</strong> A test run of the project passed after the last code
+            edit and before the message.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="prose" style="margin-top:clamp(36px,5vw,64px);">
+        <h3>The published figure, and the state it refuses to absorb</h3>
+        <p>The index number is <strong>contradicted plus unsupported, over all claims</strong>, with
+        <strong>indeterminate reported beside it and never folded into either side</strong>. That
+        third state is the one every figure below has to make a decision about, and mostly does not
+        say which decision it made.</p>
+        <p>It matters more than its size. A figure that reports only true and false has silently
+        resolved every case it could not determine, and the only two ways to do that are to call an
+        unknown a pass or to call it a lie. <strong>An unknown reported as a pass is worse than no
+        check at all</strong>, and an unknown reported as a failure is the accusation this company
+        has no business making. So it is published as its own number, and if it is ever large enough
+        to change the conclusion, that will be visible rather than inferred.</p>
+        <p>One difference worth stating, because it is the kind a careful reader finds on their own:
+        <code class="mono">assurance audit --fail-on-claim</code> exits non&#8209;zero on the
+        contradicted state only. It is the stricter half, because a command-line gate that fires
+        when nothing ran would fire constantly. The index counts the wider set, and reports the two
+        apart, so a reader who prefers the narrow definition can take the first number alone.</p>
+        <p class="muted">The matcher, the sentence rules and each of the four states are in
+        <code class="mono">assurance_budget/notice.py</code> in the public repository, with the tests that hold
+        them: <a href="https://github.com/i-ops-hq/assurance" target="_blank" rel="noopener noreferrer">github.com/i&#8209;ops&#8209;hq/assurance</a>.
+        A change to any of them changes the method version, and a method version is published with
+        every number.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= /03 WHAT IS ALREADY PUBLISHED =================
+       Six cells, not five: the sixth is ours, and it is empty on purpose. The grid is three
+       columns, so five would have left a hole and the thesis would have been a caption instead
+       of something you can see. -->
+  <section class="section" id="published">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="label">/03 &nbsp; what is already published</span>
+          <h2>Five figures for one question, and no two of them are the same measurement.</h2>
+        </div>
+        <span class="marker">read 30 Oct 2026</span>
+      </div>
+      <p class="lede">Every one of these is real, published, and sourced below. They range from
+      0.0% to 75.8% &mdash; not because the phenomenon moved, but because they are answering five
+      different questions that share a sentence.</p>
+
+      <div class="grid">
+        <div class="cell">
+          <span class="label">figure 01</span>
+          <span class="stat-figure">75.8%</span>
+          <h3>of self-assessing coding-agent runs with an explicit status claim</h3>
+          <p>Laksh Advani, <em>From Confident Closing to Silent Failure</em>,
+          <a href="https://arxiv.org/abs/2606.09863" target="_blank" rel="noopener noreferrer">arXiv&nbsp;2606.09863</a>, 1&nbsp;June&nbsp;2026.
+          Across 9,876 tau2&#8209;bench and 1,879 AppWorld trajectories.</p>
+          <p><strong>Counted:</strong> a trajectory, filtered to those that self-assessed and stated
+          a status. The size of that subset is not given in the abstract.
+          <strong>Judged by:</strong> the benchmark&rsquo;s own environment state. The same paper
+          finds model judges close to chance at this, AUROC 0.54&ndash;0.65.</p>
+        </div>
+
+        <div class="cell">
+          <span class="label">figure 02</span>
+          <span class="stat-figure">35 of 101</span>
+          <h3>claims untrue at the moment they were written</h3>
+          <p>Vinzenz Eiberger,
+          <a href="https://dev.to/vinzenz_eiberger/i-checked-101-tests-pass-claims-from-my-ai-coding-agents-35-werent-true-h6n" target="_blank" rel="noopener noreferrer">&ldquo;I checked 101 &lsquo;tests pass&rsquo; claims&rdquo;</a>,
+          September&nbsp;2026. One developer, two weeks, 95 Claude&nbsp;Code and 28 Codex sessions.</p>
+          <p><strong>Counted:</strong> any message saying tests, a build, lint or typecheck passed.
+          34 of the 35 were stale rather than wrong &mdash; true earlier, then invalidated by an
+          edit. <strong>Judged by:</strong> four model subagents labelling blind to a rubric; the
+          author notes 29 of 104 were only medium confidence, and that the per&#8209;agent split is
+          not a model ranking.</p>
+        </div>
+
+        <div class="cell">
+          <span class="label">figure 03</span>
+          <span class="stat-figure">24 of 265</span>
+          <h3>&ldquo;done, tests pass&rdquo; reports that did not hold on re-run</h3>
+          <p>The nomArmy project,
+          <a href="https://github.com/rayson-tech/nomarmy" target="_blank" rel="noopener noreferrer">rayson&#8209;tech/nomarmy</a>,
+          <code class="mono">docs/findings.md</code>. One machine, 16 days to 4&nbsp;October&nbsp;2026, 547 jobs
+          across local models, Codex, Claude and Grok. About 1 in 11.</p>
+          <p><strong>Counted:</strong> a job whose worker reported <code class="mono">STATUS: done</code> with
+          <code class="mono">TESTS: pass</code>. <strong>Judged by:</strong> the harness re&#8209;running the
+          verification profile in a fresh sandbox. 16 failed outright; the other 8 passed but
+          <em>still passed with the change reverted</em>, so the tests proved nothing. 5 more were
+          <code class="mono">not_run</code>. The authors say plainly it is not a benchmark.</p>
+        </div>
+
+        <div class="cell">
+          <span class="label">figure 04</span>
+          <span class="stat-figure">19 of 45</span>
+          <h3>tasks declared successful while hidden tests failed</h3>
+          <p>&ldquo;Cowrie&rdquo;,
+          <a href="https://docs.bswen.com/blog/2026-06-25-ai-coding-agent-false-positive-failure/" target="_blank" rel="noopener noreferrer">&ldquo;Why AI coding agents say all tests pass&rdquo;</a>,
+          25&nbsp;June&nbsp;2026. One afternoon, 45 failing Python suites, GLM&#8209;5.2 and Claude
+          Opus. 42%.</p>
+          <p><strong>Counted:</strong> a task. All 45 passed the tests the agent could see; 26
+          passed the ones it could not. <strong>Judged by:</strong> a hidden suite. Both models
+          failed the same 19 tasks, which makes this as much a measurement of the visible/hidden
+          split in the task set as of either agent.</p>
+        </div>
+
+        <div class="cell">
+          <span class="label">figure 05</span>
+          <!-- The spread is the figure here. Setting all three values as the headline breaks them
+               mid-value across two lines in a narrow cell, and the per-model split reads better in
+               the body than it does at display size. -->
+          <span class="stat-figure">0.0&ndash;6.8%</span>
+          <h3>false &ldquo;done&rdquo; claims, across three models</h3>
+          <p>Kirilland,
+          <a href="https://zenn.dev/sjh9714/articles/c2a5bb0f1d4930?locale=en" target="_blank" rel="noopener noreferrer">&ldquo;I measured &lsquo;done&rsquo; claims 90 times&rdquo;</a>,
+          12&nbsp;August&nbsp;2026. 30 tasks &times; 3 rounds per model: <strong>0.0%</strong>
+          frontier Claude, <strong>2.4%</strong> Codex, <strong>6.8%</strong> Haiku&nbsp;4.5.</p>
+          <p><strong>Counted:</strong> a claim extracted from the final message &mdash; 89, 85 and
+          73 of them respectively, so the three percentages do not share a denominator.
+          <strong>Judged by:</strong> a deterministic <code class="mono">check.sh</code>, independent of the
+          extractor. The author&rsquo;s own finding is the sharpest one here: Codex read 0.0% in
+          round one and 2.4% over three, Haiku 12.5% then 6.8%. <strong>A single measurement
+          lies.</strong></p>
+        </div>
+
+        <div class="cell">
+          <span class="label">this index</span>
+          <span class="stat-figure" style="color:var(--ink-3);">&mdash;</span>
+          <h3>not yet computable, and published as such</h3>
+          <p>The definition is in <a href="#definition">/02</a> and the code is public. What is
+          missing is sessions: nobody outside I&#8209;Ops has contributed one, because
+          <strong>there is nothing built to contribute with yet</strong>.</p>
+          <p>Publishing a figure from our own machines, or from ten friendly ones, would produce a
+          sixth incomparable number and a press release. The gate is in
+          <a href="#gate">/05</a>, and it is the one piece of this page that costs us something.</p>
+        </div>
+      </div>
+
+      <div class="prose" style="margin-top:clamp(36px,5vw,64px);">
+        <h3>Why these cannot be averaged, added, or ranked</h3>
+        <p>They differ on four axes at once, and a difference on any one of them is enough to make
+        two figures incomparable:</p>
+        <ul class="points">
+          <li><strong>The unit.</strong> A trajectory, a message, a job, a task, a claim. A
+          per&#8209;message rate and a per&#8209;job rate cannot be the same number even for
+          identical behaviour, because one agent turn can hold several claims and one job can hold
+          several turns.</li>
+          <li><strong>The denominator.</strong> One filters to runs that made an explicit status
+          claim; one counts every claim&#8209;bearing message; one counts jobs whose worker
+          reported done; one counts tasks attempted. Filtering to the runs that spoke raises the
+          rate mechanically, whatever the agents did.</li>
+          <li><strong>What <em>false</em> means.</strong> Contradicted by environment state; untrue
+          at the moment written, so a claim that was true an hour ago counts; failed on re&#8209;run
+          <em>or</em> passed while proving nothing; hidden tests failing; contradicted by a script.
+          One of these counts a stale truth as a lie and another does not, and that choice alone
+          moves a figure by tens of points.</li>
+          <li><strong>Who judged it.</strong> An environment, four model labellers, a sandbox
+          re&#8209;run, a hidden suite, a shell script. Two of the five are model&#8209;judged, and
+          the one paper that measured model judges on this task found them close to a coin
+          flip.</li>
+        </ul>
+        <p>Three of the five say so themselves: one developer over two weeks, one machine over
+        sixteen days, one afternoon. <strong>None of them is doing anything wrong.</strong> They are
+        honest one&#8209;off measurements, and the absence they share is the absence of a fixed
+        definition anybody could apply to their own sessions and get a number that lines up with
+        anybody else&rsquo;s.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= /04 CONTRIBUTION ================= -->
+  <section class="section" id="contributing">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="label">/04 &nbsp; contributing a session</span>
+          <h2>What would leave your machine, written down before anything is built to send it.</h2>
+        </div>
+        <span class="marker">not built yet</span>
+      </div>
+      <p class="lede">
+        As of 30 October 2026 there is no contribution command, and nothing in the published
+        packages sends anything anywhere. <code class="mono">assurance</code> reads the transcripts your agent
+        already keeps, computes locally, and prints. This section is the design it will be built
+        to, published first so it can be argued with first.
+      </p>
+
+      <div class="rows">
+        <div class="row">
+          <span class="n">/01</span>
+          <p><strong>Off by default, and per session.</strong></p>
+          <p>Not an install&#8209;time setting, not an account preference, and not a switch that
+          stays on. Contribution is a decision you make about one session, each time, and the
+          default when you say nothing is that nothing is sent.</p>
+        </div>
+        <div class="row">
+          <span class="n">/02</span>
+          <p><strong>The exact payload is printed before it is sent.</strong></p>
+          <p>Every byte, on your terminal, as it would be transmitted &mdash; then a prompt. Not a
+          description of the payload and not a schema in the documentation: the thing itself. If it
+          is too long to read, it is too long to send.</p>
+        </div>
+        <div class="row">
+          <span class="n">/03</span>
+          <p><strong>Derived counts only.</strong></p>
+          <p>Whether the last message made a claim; which of the four states in
+          <a href="#definition">/02</a> the record showed;
+          how many edits and how many recognised test runs the session held; which agent and model
+          the transcript names; the version of the tool and of the method; the date. A contribution
+          id generated at random on your machine, so distinct machines can be counted &mdash; it
+          identifies an install, never a person.</p>
+        </div>
+        <div class="row">
+          <span class="n">/04</span>
+          <p><strong>What is never in it.</strong></p>
+          <p>No file names or paths, no repository or folder name, no commands, no test output, no
+          prompts, no agent replies, no session identifier from your machine, no diff, and no
+          fragment of the claim itself. Not redacted or hashed &mdash; absent, because the
+          computation that produces the counts has already finished and the number does not need
+          them.</p>
+        </div>
+        <div class="row">
+          <span class="n">/05</span>
+          <p><strong>Local is the default, and the claim says so.</strong></p>
+          <p>This page says <em>by default</em> rather than <em>never</em>, and it will keep saying
+          it. Where data may go is configurable; the sentence describing it must not be. A claim
+          that is true for most users and said to all of them is the defect, and it is one we would
+          rather write down in advance than be caught by.</p>
+        </div>
+      </div>
+
+      <p class="muted" style="margin-top:28px;">You can check the first half of that today rather
+      than taking it on trust: the packages are Apache&#8209;2.0 and there is no network client in
+      them to find. <a href="/privacy/">What the website itself collects</a> is on its own page.</p>
+    </div>
+  </section>
+
+  <!-- ================= /05 THE GATE ================= -->
+  <section class="section" id="gate">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="label">/05 &nbsp; the gate</span>
+          <h2>The number publishes at 25 sessions from 10 machines. Not before.</h2>
+        </div>
+        <span class="marker">0 of 25 &middot; 0 of 10</span>
+      </div>
+      <p class="lede">
+        A recurring index needs a sample before it is an index rather than an anecdote with a
+        schedule. This is the threshold, set in advance so it cannot be moved once a number looks
+        appealing.
+      </p>
+
+      <ul class="ledger" style="max-width:62ch;">
+        <li><span class="k">required</span><span class="v">25 contributed sessions</span></li>
+        <li><span class="k">required</span><span class="v">from 10 distinct machines outside I&#8209;Ops</span></li>
+        <li><span class="k">today</span><span class="v miss">0 sessions, 0 machines</span></li>
+        <li><span class="k">why zero</span><span class="v">no contribution path exists yet</span></li>
+        <li><span class="k">until then</span><span class="v">the method is published, the number is not</span></li>
+      </ul>
+
+      <div class="prose" style="margin-top:clamp(28px,4vw,44px);">
+        <p>The zero is worth being precise about. It does not mean people were asked and declined.
+        It means <a href="#contributing">/04</a> is a design and not yet a command, so there has
+        been nothing to decline. When that changes, this page will say how many and from how many
+        machines, on every visit, whether or not the number flatters us.</p>
+        <p><strong>Why publish the method before the number, when the number is the thing people
+        would link to?</strong> Because the alternative is the one thing we have no standing to do.
+        This company exists to argue that a worker does not get to certify its own output, and that
+        a figure with no reproducible method behind it is not evidence. A sixth incomparable
+        percentage, published by the company selling the fix, would be exactly the artefact we tell
+        people not to trust &mdash; and it would be worth less than this page, because anybody can
+        produce a number and nobody else has published a definition you could argue with.</p>
+        <p>So the method is the asset. Disagree with the definition in <a href="#definition">/02</a>
+        and the useful move is to say which line is wrong, because it is specific enough to be
+        wrong. That is the property the five figures above cannot offer, and it is the only one that
+        survives an adversarial reader.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= /06 RUN IT YOURSELF ================= -->
+  <section class="section" id="run-it">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="label">/06 &nbsp; run it on your own sessions</span>
+          <h2>The computation is already on your machine&rsquo;s side of the line.</h2>
+        </div>
+      </div>
+      <p class="lede">
+        Nothing here waits on the index. These run locally, over the transcripts your agent already
+        keeps, send nothing, and need no account. Apache&#8209;2.0.
+      </p>
+
+      <div class="grid grid--two">
+        <div class="cell">
+          <span class="label">see the shape<b>no repository needed</b></span>
+          <h3>A bundled sample session, audited.</h3>
+          <p>Prints what the computation reads and what it refuses to conclude &mdash; including the
+          commands it could not classify, which it names rather than ignores.</p>
+          <p class="mono-line"><code>uvx assurance audit --demo</code></p>
+        </div>
+        <div class="cell">
+          <span class="label">your own work<b>exit 1 on a finding</b></span>
+          <h3>Your last session, and whether its claim held.</h3>
+          <p>Run inside a project where you have used a coding agent. <code class="mono">--fail-on-claim</code>
+          exits non&#8209;zero when the last message says the tests pass and the record contradicts
+          it &mdash; the narrow half of <a href="#definition">/02</a>, usable in CI.</p>
+          <p class="mono-line"><code>uvx assurance audit --fail-on-claim</code></p>
+        </div>
+      </div>
+
+      <p class="muted" style="margin-top:28px;">Source, issues and releases:
+      <a href="https://github.com/i-ops-hq/assurance" target="_blank" rel="noopener noreferrer">github.com/i&#8209;ops&#8209;hq/assurance</a>.
+      If the definition in <a href="#definition">/02</a> gives the wrong answer on a session of
+      yours, that is the most useful thing anybody can send us, and it belongs in an issue rather
+      than an email. <a href="/contact/">Contact</a> &middot; <a href="/#open-source">The other tools</a></p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div>
+      <div class="brand">I&#8209;Ops</div>
+      <p class="dim" style="font-size:var(--step--1); margin-top:8px;">Operations Intelligence LLC</p>
+      <div class="social">
+        <a href="https://github.com/i-ops-hq" target="_blank" rel="noopener noreferrer" aria-label="I-Ops on GitHub" title="Open source">
+          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.24 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/company/i-ops-llc/" target="_blank" rel="noopener noreferrer" aria-label="I-Ops on LinkedIn" title="LinkedIn">
+          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05a3.74 3.74 0 0 1 3.37-1.85c3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13ZM7.12 20.45H3.55V9h3.57v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0Z"/></svg>
+        </a>
+        <a href="mailto:hello@i-ops.dev" aria-label="Email hello@i-ops.dev" title="hello@i-ops.dev">
+          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M3 5.75h18v12.5H3z"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="m3.4 6.4 8.6 6.6 8.6-6.6"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/#open-source">Open source</a>
+      <a href="/early-access/">Early access</a>
+      <a href="/legal/">Legal</a>
+    </div>
+  </div>
+</footer>
+<script src="/site.js?v=4164c0e673"></script>
+</body>
+</html>
