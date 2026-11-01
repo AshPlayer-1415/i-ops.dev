@@ -151,25 +151,47 @@ echo "--- the live site is serving what is committed here ---"
 # What the timestamp is good for is explaining a mismatch. A query string does NOT bust the cache
 # here: Pages fronts with Fastly at max-age=600, keyed on path. So a new page goes live before an
 # edit to an existing page does, and right after a push an edge can still hold the previous copy.
+#
+# The set of files to check is derived from git, not listed here. It used to be a hand-written set
+# -- the HTML pages plus four text files -- which left og-card.png unverified, and that is the image
+# every page advertises as its og:image and the one asset third parties fetch most. Both icons,
+# site.css, site.js, forms.js, orb.js and all four font files were unlisted too: a font that failed
+# to deploy would have taken the typeface off every page while this check still reported everything
+# passing. A hand-written set is the same defect as reading one copy of the nav or one asset token,
+# and it goes stale the first time somebody adds a file. Pages serves the whole repository, dotfiles
+# included -- checked, not assumed -- so every tracked file is fetched at its own path, and each
+# index.html is fetched again at the clean URL the site actually links to, since directory-index
+# serving could break while /about/index.html still answered.
 TMP=$(mktemp -d); trap 'rm -rf "$TMP"' EXIT
-for f in $(find . -name '*.html' -not -path './node_modules/*' | sed 's|^\./||' | sort) \
-         agents.md llms.txt sitemap.xml robots.txt; do
+TAB=$(printf '\t')
+git ls-files > "$TMP/files"
+: > "$TMP/urls"
+while read -r f; do
+  printf '%s\t%s\n' "/$f" "$f" >> "$TMP/urls"
   case "$f" in
-    404.html) continue ;;                      # served as the 404 body, not at its own path
-    */index.html) url="/${f%index.html}" ;;
-    index.html)   url="/" ;;
-    *)            url="/$f" ;;
+    index.html)   printf '%s\t%s\n' "/" "$f" >> "$TMP/urls" ;;
+    */index.html) printf '%s\t%s\n' "/${f%index.html}" "$f" >> "$TMP/urls" ;;
   esac
-  code=$(curl -s -o "$TMP/body" -D "$TMP/head" -w '%{http_code}' "$SITE$url")
-  if [ "$code" != "200" ]; then bad "$url returned $code"; continue; fi
+done < "$TMP/files"
+sort -u -o "$TMP/urls" "$TMP/urls"
+
+MATCH=0
+while IFS="$TAB" read -r url f; do
+  code=$(curl -s -o "$TMP/body" -D "$TMP/head" -w '%{http_code}' "$SITE$url" < /dev/null)
+  if [ "$code" != "200" ]; then bad "$url returned $code (expected to serve $f)"; continue; fi
   if [ "$(shasum -a 256 "$TMP/body" | cut -d' ' -f1)" = "$(shasum -a 256 "$f" | cut -d' ' -f1)" ]; then
-    ok "$url == $f"
+    MATCH=$((MATCH+1))
   else
     lm=$(grep -i '^last-modified:' "$TMP/head" | cut -d' ' -f2- | tr -d '\r')
     age=$(grep -i '^age:' "$TMP/head" | cut -d' ' -f2- | tr -d '\r')
     bad "$url does not match $f (last-modified $lm, cache age ${age:-0}s; within 600s of a push an edge may still hold the previous copy)"
   fi
-done
+done < "$TMP/urls"
+# One line, with both numbers in it, so the denominator is visible. A check whose scope can shrink
+# without the summary changing is the hole this whole section was rewritten to close.
+[ "$MATCH" = "$(wc -l < "$TMP/urls" | tr -d ' ')" ] \
+  && ok "$MATCH URLs over $(wc -l < "$TMP/files" | tr -d ' ') tracked files, every byte matching" \
+  || echo "  ....  $MATCH of $(wc -l < "$TMP/urls" | tr -d ' ') URLs matched"
 
 echo "--- no page asks a third party for anything ---"
 EXT=$(grep -rhoE '<(script|link|img|iframe|source)[^>]*' --include='*.html' . \
