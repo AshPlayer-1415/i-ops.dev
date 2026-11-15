@@ -1,27 +1,34 @@
 /* ============================================================
-   i-ops.dev v2 — Google Sheets submission, one implementation.
+   i-ops.dev v2 — form submission, one implementation.
 
    The live site has this logic inlined in join-waitlist.html. There are two
    forms now, so it lives in one place: a second copy is a second place for the
-   payload shape to drift away from what the Apps Script actually reads.
+   payload shape to drift away from what the endpoint actually reads.
 
-   The payload keys below are NOT free to rename. They are the column names the
-   existing Apps Script expects, and `mode: "no-cors"` means the browser cannot
-   read the response, so a server-side rejection is INVISIBLE from here. A form
-   that says "sent" over a row that never arrived is the worst failure this file
-   can have, which is why the endpoint is validated by shape before anything is
-   sent and the form refuses rather than pretending.
+   CHANGED 2026-11-15: this used to POST to a Google Apps Script with
+   `mode: "no-cors"`, and the paragraph that stood here said the quiet part out
+   loud — the browser could not read the response, so a server-side rejection
+   was INVISIBLE, and "a form that says 'sent' over a row that never arrived is
+   the worst failure this file can have". That is no longer a hazard being
+   mitigated by shape-checking the URL. It is fixed: the endpoint is our own
+   Cloudflare Worker, it answers with CORS headers and a real status, and the
+   code below READS that status. A request is reported as sent when, and only
+   when, the server said it stored one — and it hands back a request_id that
+   exists in the database.
+
+   Rows land in D1 `access_requests` (cloudflare/migrations/0002). The older
+   KV path expired every request after 120 days, which is data loss by design
+   in the one table that records who asked.
    ============================================================ */
 (function () {
   "use strict";
 
-  var ENDPOINT =
-    "https://script.google.com/macros/s/AKfycbw7XgSmH1OQxBDuXb0hwkNxurBc_TQHYX87nQ1uMVbNeiFFXWx-v6C7y6B1tZFm8PRcdw/exec";
+  var ENDPOINT = "https://api.i-ops.dev/v1/access-request";
 
   function endpointIsConfigured() {
-    return ENDPOINT &&
-      ENDPOINT.indexOf("https://script.google.com/macros/s/") === 0 &&
-      ENDPOINT.slice(-5) === "/exec";
+    // Kept, and still worth keeping: it is the guard that stops a half-edited endpoint from
+    // quietly swallowing a real lead. It just checks a different shape now.
+    return ENDPOINT && ENDPOINT.indexOf("https://api.i-ops.dev/") === 0;
   }
 
   function text(formData, key) {
@@ -137,18 +144,28 @@
       showStatus(busyText, "loading");
 
       try {
-        await fetch(ENDPOINT, {
+        var response = await fetch(ENDPOINT, {
           method: "POST",
-          mode: "no-cors",
           cache: "no-store",
-          redirect: "follow",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload)
         });
+
+        // The whole point of the move. A non-2xx, or a body that does not say ok, is now
+        // something this page can SEE — so it tells the person instead of thanking them.
+        var result = null;
+        try { result = await response.json(); } catch (parseError) { result = null; }
+        if (!response.ok || !result || result.ok !== true) {
+          throw new Error((result && result.error) || ("http " + response.status));
+        }
+
         form.reset();
         showStatus(successText, "success");
       } catch (error) {
-        showStatus("We couldn’t send that. Please check your connection and try again.", "error");
+        showStatus(
+          "We couldn’t send that. Please try again, or email hello@i-ops.dev and we will pick it up.",
+          "error"
+        );
       } finally {
         setSubmitting(false);
       }
