@@ -67,7 +67,17 @@ def navs(path):
     return p.out["nav-links"], p.out["mobile-menu"]
 
 ref_header, _ = navs("index.html")
-every = sorted(set(glob.glob("*.html") + glob.glob("*/index.html") + glob.glob("*/*/index.html")))
+# RECURSIVE on purpose. This used to be three fixed globs reaching two directories deep, so
+# open-source/assurance/welcome/index.html - three deep - was never checked at all: no nav check,
+# no asset-token check, no third-party check, and the totals still printed a confident pass. A
+# checker that silently skips a new page is the same defect as a test that asserts nothing, and it
+# gets quieter the more the site grows. Depth is no longer a thing anyone has to remember.
+every = sorted(
+    f for f in (glob.glob("*.html") + glob.glob("**/index.html", recursive=True)
+                + glob.glob("**/*.html", recursive=True))
+    if not f.startswith(("vendor/", "uploads/", "fonts/", "assets/"))
+)
+every = sorted(set(every))
 src = {f: open(f, encoding="utf-8").read() for f in every}
 pages = [f for f in every if 'class="nav-links"' in src[f]]
 bad = []

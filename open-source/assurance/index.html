@@ -94,7 +94,8 @@
   <section class="hero">
     <div class="wrap">
 
-      <!-- Terminal pairing. Shown only when the page is opened from `assurance login`,
+      <!-- Terminal pairing. Shown only when the page is opened from `assurance login` (a command
+           that does not exist yet; it arrives with the CLI sign-in work),
            which arrives with ?code=XXXX-XXXX. The code is displayed so the person can
            check it against the one in their terminal before signing in: that comparison
            is the only thing standing between this flow and someone else's device code. -->
@@ -111,19 +112,25 @@
       <h1>Tell us how your batch run lied to you.</h1>
 
       <p class="lede narrow">
-        <code>assurance batch</code> reads a provider&rsquo;s batch output and answers one question:
-        <strong>did every record you sent actually come back.</strong> Not <em>did the job
-        succeed</em> — the job reports success while records are missing, truncated, or quietly
-        replaced by a retry under a new ID.
+        A batch job reports success while records are missing, truncated, or quietly replaced by a
+        retry under a new ID. The question worth answering is not <em>did the job succeed</em> but
+        <strong>did every record you sent actually come back.</strong>
       </p>
 
-      <p class="narrow">It is a local command. It stays a local command.</p>
+      <p class="narrow">
+        <strong>That check does not exist yet, and this page is how it gets built.</strong> What
+        ships today is <code>uvx assurance audit</code>, which reads the coding&#8209;agent session in
+        a folder and tells you what it did not check. The batch check is being written from real
+        failures people send us &mdash; it will run on your machine, like everything else here, and
+        it will stay that way.
+      </p>
 
       <h2>What this is for</h2>
       <p class="narrow">
         If you run batch inference on Bedrock, OpenAI or Anthropic and you have ever found out late
-        that a run was short, send us the shape of the failure. A research team did exactly that —
-        eight failures from one production run — and each one is now a check you can run.
+        that a run was short, send us the shape of the failure. A research team did exactly that
+        &mdash; eight failures from one production run. <strong>The first of them are already checks
+        you can run; the rest are being built in the order they asked for.</strong>
       </p>
       <p class="narrow">
         <strong>Sign in, describe the failure, and we will tell you whether it is already covered or
@@ -207,7 +214,8 @@
 <script>
 /* Terminal pairing, and nothing else.
 
-   `assurance login` opens this page with ?code=XXXX-XXXX. Two things happen:
+   `assurance login` (NOT SHIPPED YET - it lands with the CLI sign-in work) will open this
+   page with ?code=XXXX-XXXX. Two things happen:
    the code is shown so the person can compare it with their terminal before
    signing in, and it is carried on both provider links so the Worker can bind
    the finished sign-in back to that waiting terminal.
