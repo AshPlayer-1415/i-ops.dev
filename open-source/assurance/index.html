@@ -54,6 +54,20 @@
     overflow-x:auto; color:var(--ink-2);
   }
   .store pre b { color:var(--ink); font-weight:400; }
+  .signed {
+    display:flex; flex-wrap:wrap; align-items:center; gap:14px;
+    border:1px solid var(--line); border-radius:var(--radius-field);
+    background:var(--ground-2); padding:16px 18px; margin:28px 0 0;
+  }
+  .signed-dot { width:8px; height:8px; border-radius:50%; background:#4ade80; flex:none; }
+  .signed-text { margin:0; font-size:var(--step--1); color:var(--ink-2); }
+  .signed-text b { color:var(--ink); font-weight:500; }
+  .signed form { margin:0; }
+  .signed button {
+    font:inherit; font-size:var(--step--1); color:var(--ink-2);
+    background:none; border:0; padding:0; cursor:pointer; text-decoration:underline;
+  }
+  .signed button:hover { color:var(--ink); }
   .narrow { max-width:62ch; }
   [hidden] { display:none !important; }
 </style>
@@ -132,10 +146,20 @@
         &mdash; eight failures from one production run. <strong>The first of them are already checks
         you can run; the rest are being built in the order they asked for.</strong>
       </p>
-      <p class="narrow">
+      <p class="narrow" id="callToAction">
         <strong>Sign in, describe the failure, and we will tell you whether it is already covered or
         build the check.</strong>
       </p>
+
+      <!-- Shown INSTEAD of the sign-in buttons once there is a session. The buttons are what
+           the HTML ships with, so a failed or blocked session call leaves a page that still
+           works rather than one that claims to know who you are. -->
+      <div class="signed" id="signed" hidden>
+        <span class="signed-dot" aria-hidden="true"></span>
+        <p class="signed-text">Signed in as <b id="signedName">&mdash;</b> <span id="signedVia"></span></p>
+        <a class="btn" id="signedGo" href="/open-source/assurance/welcome/">Your commands</a>
+        <form id="signedOut"><button type="submit">Sign out</button></form>
+      </div>
 
       <div class="providers">
         <a class="provider" id="ghBtn" href="https://api.i-ops.dev/v1/auth/github/start" rel="nofollow">
@@ -240,6 +264,53 @@
   ["ghBtn", "gBtn"].forEach(function (id) {
     var a = document.getElementById(id);
     a.href = a.href + "?code=" + encodeURIComponent(code);
+  });
+})();
+
+/* Who is signed in.
+
+   This page had no idea. The session cookie was working the whole time and this page simply
+   never asked, so anyone who signed in, browsed away and came back was shown the sign-in
+   buttons again and reasonably concluded they had been forgotten. The welcome page asked and
+   remembered them correctly; the difference was never the cookie.
+
+   Shipped signed-OUT, as the buttons are correct for a stranger AND for the case where this
+   call fails. Only a positive, parsed answer swaps them. */
+(function () {
+  "use strict";
+  /* Local wrangler when opened from a local copy, so this is testable; api.i-ops.dev
+     otherwise. The branch can only be taken on localhost, so a deployed page cannot be
+     steered elsewhere. Same shape as the welcome page. */
+  var API = location.hostname === "localhost" || location.hostname === "127.0.0.1"
+    ? "http://localhost:8788"
+    : "https://api.i-ops.dev";
+  var providers = document.querySelector(".providers");
+  var signed = document.getElementById("signed");
+  if (!providers || !signed) return;
+
+  fetch(API + "/v1/auth/session", { credentials: "include", cache: "no-store" })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (d) {
+      if (!d || d.signed_in !== true) return;
+      document.getElementById("signedName").textContent = d.name || d.email || "your account";
+      document.getElementById("signedVia").textContent = d.provider ? "\u00b7 via " + d.provider : "";
+      providers.hidden = true;
+      signed.hidden = false;
+      // "Sign in, describe the failure" is a stale instruction once you have. Swapped rather
+      // than hidden, because the ask itself still stands.
+      var cta = document.getElementById("callToAction");
+      if (cta) {
+        cta.innerHTML = "<strong>Describe the failure and we will tell you whether it is already " +
+          "covered, or build the check.</strong>";
+      }
+    })
+    .catch(function () { /* leave the buttons, which are still the right thing to show */ });
+
+  document.getElementById("signedOut").addEventListener("submit", function (e) {
+    e.preventDefault();
+    fetch(API + "/v1/auth/logout", { method: "POST", credentials: "include" })
+      .then(function () { window.location.reload(); })
+      .catch(function () { window.location.reload(); });
   });
 })();
 </script>
