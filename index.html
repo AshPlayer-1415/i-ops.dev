@@ -160,21 +160,29 @@
 
       <!-- A page arguing that claims should be checkable has to be checkable itself. The command
            and the numbers go above the argument, not after it. -->
+      <!-- The install command used to open this block. It was removed because it appears in
+           the open-source section, on /open-source/, and on /open-source/assurance/, and a
+           command repeated four times on one journey reads as a slogan rather than an
+           instruction. The numbers stay, because they are the part a reader cannot get
+           elsewhere.
+
+           PROVENANCE IS PART OF THE CLAIM. Installs, loads and the error rate are Anthropic's
+           figures for the assurance plugin in their marketplace, not ours, and their dashboard
+           reports them over the LAST 90 DAYS. Both panels it was read from, Errors and Directory
+           funnel, are labelled 90 days; the window is stated rather than left for the reader to
+           assume it is all-time. -->
       <div class="hero-proof">
-        <p class="mono-line"><code>uvx assurance audit</code></p>
-        <p class="hero-proof-note">
-          Open source, Apache&#8209;2.0. Reads your last coding&#8209;agent session on your own
-          machine and tells you what it did not check. Nothing is sent anywhere.
-        </p>
-        <!-- Read off Anthropic's plugin dashboard on 2026-11-17. The error rate is the valuable
-             one and it is the one we did not measure: 0 failed loads, 0 failed installs and 0
-             command errors across 186,699 loads, counted by somebody else. Installs are reported
-             rather than loads because 962 is a number a person can hold. -->
         <ul class="hero-stats">
           <li><b>962</b><span>installs, all surfaces</span></li>
-          <li><b>0%</b><span>error rate across 186,699 loads, measured by Anthropic</span></li>
+          <li><b>0%</b><span>error rate across 186,699 loads</span></li>
           <li><b>10</b><span>packages published on PyPI</span></li>
         </ul>
+        <p class="hero-proof-note">
+          Installs, loads and error rate are Anthropic&rsquo;s own figures for the assurance
+          plugin in their marketplace, last 90&nbsp;days. We did not record them. Everything
+          here is open source and Apache&#8209;2.0, runs on your own machine, and sends nothing
+          anywhere.
+        </p>
       </div>
 
       <!-- The one interactive thing on the page. It is the product in ten seconds. -->
