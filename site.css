@@ -234,9 +234,9 @@ p { margin: 16px 0 0; max-width: 68ch; }
 }
 .hero-proof .mono-line { margin-top: 0; }
 .hero-proof-note {
-  /* No max-width of its own any more: it fills .hero-proof, so the note and the numbers above
-     it end on the same right edge instead of the note stopping 400px short. */
-  margin-top: 16px;
+  /* Now a one-line footnote rather than a paragraph: italic, smaller than the stat labels, and
+     quiet enough that it dates the figures without competing with them. */
+  margin-top: 18px; font-style: italic; font-size: 12px; max-width: none;
   color: var(--ink-2); font-size: var(--step--1); line-height: 1.65;
 }
 .hero-stats {

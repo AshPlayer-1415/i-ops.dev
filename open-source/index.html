@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Open source — I-Ops</title>
 <meta name="description" content="Four Apache-2.0 tools that run on your own machine: verification, attribution, a per-process kill switch, and two alpha labs products. Install in minutes, remove in one step." />
-<link rel="icon" href="/favicon.svg?v=ff6d0db218" type="image/svg+xml" />
+<link rel="icon" href="/favicon.svg?v=d9e80dab5b" type="image/svg+xml" />
 <link rel="alternate icon" href="/favicon.ico?v=445249498e" sizes="16x16 32x32 48x48" />
-<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=ff6d0db218" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=d9e80dab5b" />
 <link rel="canonical" href="https://i-ops.dev/open-source/" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="I-Ops" />
@@ -19,7 +19,7 @@
 <meta name="twitter:title" content="Open source — I-Ops" />
 <meta name="twitter:description" content="Verification, attribution and a per-process kill switch. Apache-2.0, on your own machine, nothing sent anywhere." />
 <meta name="twitter:image" content="https://i-ops.dev/og-card.png" />
-<link rel="stylesheet" href="/site.css?v=ff6d0db218" />
+<link rel="stylesheet" href="/site.css?v=d9e80dab5b" />
 <style>
   /* Scoped to this page. site.css carries every colour, type and spacing token used here; what
      is below is only the two shapes it has no component for: the index of tools at the top, and
@@ -56,6 +56,34 @@
      only legible on hover, when the fill goes transparent. Caught on the live page. */
   .tool-links a:not(.btn) { color:var(--ink-2); }
   .tool-links a:not(.btn):hover { color:var(--ink); }
+
+  /* Run-it two ways. Same pattern as the welcome page's Command/Prompt tabs, because a
+     second mechanism for the same choice is how two things that should agree stop agreeing. */
+  .tabs { display:flex; gap:4px; margin:16px 0 -1px; }
+  .tab {
+    font:inherit; font-family:var(--mono); font-size:var(--step--1);
+    padding:8px 16px; min-height:40px; cursor:pointer;
+    background:transparent; color:var(--ink-3);
+    border:1px solid var(--line); border-bottom-color:transparent;
+    border-radius:8px 8px 0 0;
+  }
+  .tab[aria-selected="true"] { background:var(--panel,#111); color:var(--ink); border-color:var(--line-2); border-bottom-color:transparent; }
+  .tab:focus-visible { outline:2px solid var(--ink); outline-offset:2px; }
+  .panel { position:relative; }
+  .panel pre {
+    font-family:var(--mono); font-size:var(--step--1); line-height:1.75;
+    background:#111; border:1px solid var(--line-2); border-radius:0 10px 10px 10px;
+    padding:16px 56px 16px 18px; margin:0; overflow-x:auto; color:var(--ink);
+    white-space:pre-wrap; word-break:break-word;
+  }
+  .copy {
+    position:absolute; top:10px; right:10px;
+    font:inherit; font-family:var(--mono); font-size:11px; cursor:pointer;
+    padding:5px 10px; border-radius:7px;
+    background:var(--ground); color:var(--ink-3); border:1px solid var(--line-2);
+  }
+  .copy:hover { color:var(--ink); }
+  .copy[data-done="1"] { color:var(--ink); border-color:var(--ink); }
 
   @media (max-width:600px) {
     .tool { padding-top:34px; margin-top:34px; }
@@ -128,12 +156,38 @@
         Claude Code or Codex session in a folder and reports the coverage of the run, where the
         budget went, what the change reached, who owns what it touched, and what a dependency
         install is about to execute.</p>
-        <p class="mono-line"><code>uvx assurance audit</code></p>
-        <p class="muted" style="margin-top:14px;">Ships as a CLI, an MCP server on the official
+        <div class="tabs" role="tablist" aria-label="How to run assurance">
+          <button class="tab" id="tabCmd" role="tab" aria-selected="true" aria-controls="panelCmd">Run the command</button>
+          <button class="tab" id="tabAI" role="tab" aria-selected="false" aria-controls="panelAI">Copy a prompt</button>
+        </div>
+        <div class="panel" id="panelCmd" role="tabpanel" aria-labelledby="tabCmd">
+          <pre id="srcCmd">uvx assurance audit</pre>
+          <button class="copy" data-for="srcCmd">Copy</button>
+        </div>
+        <div class="panel" id="panelAI" role="tabpanel" aria-labelledby="tabAI" hidden>
+          <pre id="srcAI">Install and run the I-Ops assurance audit on this project, then report what it found.
+
+It is a Python CLI on PyPI: `uvx assurance audit`, or `pipx run assurance audit`. It needs
+no account, no API key and no network. Do not add credentials and do not send any file from
+this project anywhere.
+
+Before running it: `assurance audit` reads the coding-agent session recorded FOR THE
+DIRECTORY IT RUNS IN, from ~/.claude/projects or ~/.codex/sessions. If I have never run
+Claude Code or Codex in this exact directory it will correctly say there is no session, and
+that is not a broken install. Check `ls ~/.claude/projects` first (each entry is a path with
+"/" written as "-"). If this project is not there, run `uvx assurance audit --demo` instead
+and tell me that is what you did.
+
+Then show me its findings verbatim. Do not summarise a finding away, and do not fix anything
+unless I ask.</pre>
+          <button class="copy" data-for="srcAI">Copy</button>
+        </div>
+        <p class="muted" style="margin-top:16px;">Ships as a CLI, an MCP server on the official
         registry, and a plugin in Anthropic&rsquo;s directory. Eight packages, so you can install
-        only the part you want.</p>
+        only the part you want. <a href="/docs/">Read the docs &#8599;</a></p>
         <p class="tool-links">
           <a class="btn" href="/open-source/assurance/">Get assurance</a>
+          <a href="/docs/">Docs &#8599;</a>
           <a href="https://github.com/i-ops-hq/assurance" target="_blank" rel="noopener noreferrer">Source &#8599;</a>
           <a href="https://pypi.org/project/assurance/" target="_blank" rel="noopener noreferrer">PyPI &#8599;</a>
         </p>
@@ -242,6 +296,7 @@
     </div>
     <div class="footer-links">
       <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
       <a href="/open-source/assurance/">Get assurance</a>
       <a href="/partner/">Partner</a>
       <a href="/legal/">Legal</a>
@@ -249,6 +304,53 @@
   </div>
 </footer>
 
+<script>
+(function () {
+  "use strict";
+  var tabs = [
+    { tab: document.getElementById("tabCmd"), panel: document.getElementById("panelCmd") },
+    { tab: document.getElementById("tabAI"),  panel: document.getElementById("panelAI") }
+  ];
+  if (!tabs[0].tab) return;
+  function select(i) {
+    tabs.forEach(function (t, j) {
+      t.tab.setAttribute("aria-selected", i === j ? "true" : "false");
+      t.panel.hidden = i !== j;
+    });
+    tabs[i].tab.focus();
+  }
+  tabs.forEach(function (t, i) {
+    t.tab.addEventListener("click", function () { select(i); });
+    t.tab.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+        e.preventDefault();
+        select((i + (e.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length);
+      }
+    });
+  });
+  /* A failure says so rather than showing "Copied" over an empty clipboard. Either way the
+     text is selected, so a keyboard copy still works. */
+  [].slice.call(document.querySelectorAll(".copy")).forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var src = document.getElementById(btn.getAttribute("data-for"));
+      if (!src) return;
+      var done = function (ok) {
+        btn.textContent = ok ? "Copied" : "Press \u2318C";
+        btn.setAttribute("data-done", ok ? "1" : "0");
+        setTimeout(function () { btn.textContent = "Copy"; btn.removeAttribute("data-done"); }, 2000);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(src.textContent).then(function () { done(true); },
+                                                           function () { done(false); });
+      } else { done(false); }
+      try {
+        var r = document.createRange(); r.selectNodeContents(src);
+        var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      } catch (e) {}
+    });
+  });
+})();
+</script>
 <script src="/site.js?v=4164c0e673"></script>
 </body>
 </html>

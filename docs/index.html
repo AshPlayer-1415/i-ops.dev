@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Docs — assurance</title>
+<meta name="description" content="Install assurance, run it in a folder where you have actually used a coding agent, and read what it tells you. The first-run mistake, and how to avoid it." />
+<link rel="icon" href="/favicon.svg?v=d9e80dab5b" type="image/svg+xml" />
+<link rel="alternate icon" href="/favicon.ico?v=445249498e" sizes="16x16 32x32 48x48" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=d9e80dab5b" />
+<link rel="canonical" href="https://i-ops.dev/docs/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="I-Ops" />
+<meta property="og:url" content="https://i-ops.dev/docs/" />
+<meta property="og:title" content="Docs — assurance" />
+<meta property="og:description" content="Install it, run it where you have actually used a coding agent, and read what it tells you." />
+<meta property="og:image" content="https://i-ops.dev/og-card.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Docs — assurance" />
+<meta name="twitter:description" content="Install it, run it where you have actually used a coding agent, and read what it tells you." />
+<meta name="twitter:image" content="https://i-ops.dev/og-card.png" />
+<link rel="stylesheet" href="/site.css?v=d9e80dab5b" />
+<style>
+  /* Scoped to this page. site.css carries every token; what is here is the two-column docs
+     shell, the audience toggle, and the command blocks, none of which the site has a
+     component for. */
+
+  .docs { display:grid; grid-template-columns:214px minmax(0,1fr); gap:56px; align-items:start; }
+  @media (max-width:900px) { .docs { grid-template-columns:1fr; gap:28px; } }
+
+  /* The left rail. Sticky under the 67px nav so a long page keeps its map on screen. */
+  .rail { position:sticky; top:96px; }
+  @media (max-width:900px) {
+    .rail { position:static; border-bottom:1px solid var(--line); padding-bottom:20px; }
+  }
+  .rail-label {
+    font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--ink-3); margin:0 0 14px;
+  }
+  .rail ol { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:2px; }
+  @media (max-width:900px) { .rail ol { flex-direction:row; flex-wrap:wrap; gap:8px; } }
+  .rail a {
+    display:block; padding:7px 12px; margin-left:-12px; border-radius:8px;
+    color:var(--ink-2); text-decoration:none; font-size:var(--step--1); line-height:1.4;
+    border-left:2px solid transparent;
+  }
+  .rail a:hover { color:var(--ink); background:var(--ground-2); }
+  .rail a[aria-current="true"] { color:var(--ink); border-left-color:var(--red); background:var(--ground-2); }
+  @media (max-width:900px) {
+    .rail a { margin-left:0; border-left:0; border:1px solid var(--line); }
+  }
+
+  /* The audience toggle. Two buttons, not a checkbox: the state is which of two documents you
+     are reading, and a checkbox would imply the page is still the page with a setting on it. */
+  .aud { display:flex; gap:4px; margin:0 0 32px; }
+  .aud button {
+    font:inherit; font-size:var(--step--1); font-family:var(--mono);
+    padding:9px 18px; min-height:var(--tap); cursor:pointer;
+    background:transparent; color:var(--ink-3);
+    border:1px solid var(--line); border-radius:var(--radius-btn);
+  }
+  .aud button[aria-pressed="true"] { background:var(--ground-2); color:var(--ink); border-color:var(--line-2); }
+  .aud button:focus-visible { outline:2px solid var(--ink); outline-offset:2px; }
+
+  .sec { scroll-margin-top:96px; border-top:1px solid var(--line); padding-top:34px; margin-top:38px; }
+  .sec:first-of-type { border-top:0; padding-top:0; margin-top:0; }
+  .sec h2 { font-size:var(--step-2); margin:0 0 6px; }
+  .sec h3 { font-size:var(--step-0); margin:26px 0 0; color:var(--ink); }
+
+  .cmd { position:relative; margin:16px 0 0; }
+  .cmd pre {
+    font-family:var(--mono); font-size:var(--step--1); line-height:1.75;
+    background:var(--ground-2); border:1px solid var(--line); border-radius:var(--radius-field);
+    padding:16px 56px 16px 18px; margin:0; overflow-x:auto; color:var(--ink);
+    white-space:pre-wrap; word-break:break-word;
+  }
+  .copy {
+    position:absolute; top:10px; right:10px;
+    font:inherit; font-family:var(--mono); font-size:11px; cursor:pointer;
+    padding:5px 10px; border-radius:7px;
+    background:var(--ground); color:var(--ink-3); border:1px solid var(--line-2);
+  }
+  .copy:hover { color:var(--ink); }
+  .copy[data-done="1"] { color:var(--ink); border-color:var(--ink); }
+
+  /* The one callout on the page, used once, for the mistake that loses people. */
+  .flag {
+    border:1px solid var(--line-2); border-left:2px solid var(--red);
+    border-radius:var(--radius-field); background:var(--ground-2);
+    padding:18px 20px; margin:20px 0 0;
+  }
+  .flag p:first-child { margin-top:0; }
+
+  .out {
+    font-family:var(--mono); font-size:var(--step--1); line-height:1.75;
+    color:var(--ink-2); background:var(--ground-2);
+    border:1px solid var(--line); border-radius:var(--radius-field);
+    padding:16px 18px; margin:16px 0 0; overflow-x:auto; white-space:pre;
+  }
+  .out b { color:var(--ink); font-weight:400; }
+
+  table.ref { width:100%; border-collapse:collapse; margin:18px 0 0; }
+  table.ref th, table.ref td {
+    text-align:left; padding:10px 14px 10px 0; border-bottom:1px solid var(--line);
+    font-size:var(--step--1); vertical-align:top;
+  }
+  table.ref th { color:var(--ink-3); font-weight:400; font-family:var(--mono); font-size:11px;
+                 letter-spacing:.08em; text-transform:uppercase; }
+  table.ref td code { color:var(--ink); }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="/">I&#8209;Ops</a>
+    <nav class="nav-links">
+      <a href="/#problem">The problem</a>
+      <a href="/#governance">Governance</a>
+      <a href="/#vinci">Vinci</a>
+      <a href="/#features">What it does</a>
+      <a href="/#how-it-works">How it works</a>
+      <a href="/open-source/">Open source</a>
+      <a href="/partner/">Partner</a>
+    </nav>
+    <a class="btn btn-ghost" href="/open-source/">Back</a>
+    <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/#problem">The problem</a>
+    <a href="/#governance">Governance</a>
+    <a href="/#vinci">Vinci</a>
+    <a href="/#features">What it does</a>
+    <a href="/#how-it-works">How it works</a>
+    <a href="/open-source/">Open source</a>
+    <a href="/partner/">Partner</a>
+  </div>
+</header>
+
+<main id="main">
+  <section class="section">
+    <div class="wrap">
+
+      <span class="label">/ &nbsp; assurance &nbsp; / &nbsp; docs</span>
+      <h1 style="margin:14px 0 0;">Run it where you have actually used an agent.</h1>
+      <p class="lede">That one sentence is most of this page. Assurance reads the coding&#8209;agent
+      session recorded for the folder you are standing in, so in a folder where you have never run
+      one there is nothing to read and it will say so.</p>
+
+      <div class="docs" style="margin-top:46px;">
+
+        <!-- ============ left rail ============ -->
+        <aside class="rail">
+          <p class="rail-label">On this page</p>
+          <nav aria-label="Documentation sections">
+            <ol>
+              <li><a href="#install">Install</a></li>
+              <li><a href="#where">Where to run it</a></li>
+              <li><a href="#first">Your first report</a></li>
+              <li><a href="#signin">Signing in</a></li>
+              <li><a href="#commands">The commands</a></li>
+              <li><a href="#trouble">Troubleshooting</a></li>
+            </ol>
+          </nav>
+        </aside>
+
+        <!-- ============ content ============ -->
+        <div>
+
+          <div class="aud" role="group" aria-label="Who is reading this">
+            <button id="audHuman" aria-pressed="true">For a person</button>
+            <button id="audAI" aria-pressed="false">For an AI agent</button>
+          </div>
+
+          <!-- ---------- the agent's version ---------- -->
+          <div id="viewAI" hidden>
+            <p>Paste this to Claude Code, Codex, Cursor or whatever you have open. It installs
+            assurance, works out where it will actually find something, runs it, and tells you
+            what it found without being allowed to tidy the answer up.</p>
+            <div class="cmd">
+              <pre id="aiBlock">Install and run the I-Ops assurance audit for me, then report what it found.
+
+WHAT IT IS
+A Python CLI on PyPI called `assurance`. Run it with `uvx assurance audit`, or
+`pipx run assurance audit` if uv is not installed. It needs no account, no API key and
+no network. Do not add credentials, do not sign me in, and do not send any file from
+this project anywhere.
+
+THE PART THAT MOST PEOPLE GET WRONG
+`assurance audit` reads the coding-agent session recorded FOR THE DIRECTORY IT IS RUN IN.
+It looks in ~/.claude/projects and ~/.codex/sessions. If I have never run Claude Code or
+Codex in this exact directory, there is no session and the command will correctly refuse.
+That is not an error and not a broken install.
+
+So before you run it, work out where it will find something:
+
+  ls ~/.claude/projects        # one entry per project, "/" written as "-"
+  ls ~/.codex/sessions         # nested by year/month/day
+
+Each ~/.claude/projects entry is the project path with every "/" replaced by "-", so
+"-Users-me-myproject" means /Users/me/myproject. Pick the directory we are working in if
+it appears. If it does not appear, say so and run `uvx assurance audit --demo` instead,
+which shows a sample report and needs no session at all.
+
+THEN
+1. Run the audit in a directory that has a session.
+2. Show me its output verbatim. Do not summarise a finding away and do not reword it.
+3. Do not fix anything you see in the report unless I ask.
+4. If it reports that something was not checked, tell me plainly which thing.
+
+WHAT GOOD OUTPUT LOOKS LIKE
+A line naming the session and how long it ran, then a short list of what was and was not
+covered. For example: "No prompt typed by the person was found to check the outcome
+against." That is the tool telling you it could not verify the goal, which is information,
+not a failure.</pre>
+              <button class="copy" data-for="aiBlock">Copy</button>
+            </div>
+            <p class="muted" style="margin-top:20px;">Switch back to <button type="button" id="toHuman" style="background:none;border:0;padding:0;color:var(--ink);text-decoration:underline;cursor:pointer;font:inherit;">the version for a person</button> to read the same thing yourself.</p>
+          </div>
+
+          <!-- ---------- the human version ---------- -->
+          <div id="viewHuman">
+
+            <section class="sec" id="install">
+              <h2>Install</h2>
+              <p>There is nothing to install permanently. <code>uvx</code> fetches it, runs it and
+              throws it away.</p>
+              <div class="cmd">
+                <pre id="c1">uvx assurance audit</pre>
+                <button class="copy" data-for="c1">Copy</button>
+              </div>
+              <p class="muted">That needs <a href="https://docs.astral.sh/uv/" target="_blank" rel="noopener noreferrer">uv</a>.
+              Without it, <code>pipx run assurance audit</code> does the same thing, and
+              <code>pip install assurance</code> installs it properly if you would rather keep it.</p>
+              <p>No account, no API key and no network. Everything it reads is already on your
+              machine and nothing leaves it.</p>
+            </section>
+
+            <section class="sec" id="where">
+              <h2>Where to run it</h2>
+              <p>Assurance reads the coding&#8209;agent session recorded <strong>for the directory
+              you are in</strong>. It looks in two places that your agent already writes to:</p>
+              <table class="ref">
+                <tr><th>Agent</th><th>Where its sessions live</th></tr>
+                <tr><td>Claude Code</td><td><code>~/.claude/projects</code></td></tr>
+                <tr><td>Codex</td><td><code>~/.codex/sessions</code></td></tr>
+              </table>
+
+              <div class="flag">
+                <p><strong>This is the mistake that loses most people on their first try.</strong>
+                You run <code>uvx assurance audit</code> in your home directory, or in a project you
+                have only ever opened in an editor, and it says there is no session. The command is
+                not broken and the install is fine. There is genuinely nothing there to read,
+                because you have never run an agent in that folder.</p>
+                <p>It happens because the install command is the thing people copy, and the first
+                place anyone pastes a command is wherever their terminal happens to be.</p>
+              </div>
+
+              <h3>Find a folder that will work</h3>
+              <p>Every entry in <code>~/.claude/projects</code> is a project path with each
+              <code>/</code> written as <code>-</code>, so <code>-Users-you-myapp</code> is
+              <code>/Users/you/myapp</code>.</p>
+              <div class="cmd">
+                <pre id="c2">ls ~/.claude/projects</pre>
+                <button class="copy" data-for="c2">Copy</button>
+              </div>
+              <p><code>cd</code> into one of those and run the audit there.</p>
+
+              <h3>Or skip the hunt entirely</h3>
+              <p>If you just want to see what the output looks like before committing to any of
+              this, there is a sample report that needs no session at all.</p>
+              <div class="cmd">
+                <pre id="c3">uvx assurance audit --demo</pre>
+                <button class="copy" data-for="c3">Copy</button>
+              </div>
+            </section>
+
+            <section class="sec" id="first">
+              <h2>Your first report</h2>
+              <p>Run in a folder with a real session, the output is short on purpose:</p>
+              <div class="out">Codex session 01a1e80b — 3h 34 min in /Users/you/project
+
+  <b>No prompt typed by the person was found to check the outcome against.</b>
+  Every shell command was classified.
+  Also in the transcript: 9 assistant turns, 4 user turns, 102 bookkeeping records.
+  Not read: 0 lines.</div>
+              <p>The bolded line is the point of the tool. It is not an error. It is assurance
+              telling you that it could not find a stated goal to check the result against, so
+              nobody, including it, can say whether the run did what you wanted.</p>
+              <p>That is the whole idea: the thing that did the work does not get to be the thing
+              that says it went well.</p>
+            </section>
+
+            <section class="sec" id="signin">
+              <h2>Signing in</h2>
+              <p>Optional, and it changes nothing about the checks. An account never gates a check
+              and never will: the CLI has no account, no API key and no network, and that is the
+              point of it rather than a limitation.</p>
+              <p>What an account does is give us a way to reach you when a check you asked for
+              ships. <a href="/open-source/assurance/">Sign in with Google or GitHub</a> if you want
+              that. The welcome email carries a link that deletes the record and every sign&#8209;in
+              event attached to it, in one click, if you change your mind.</p>
+            </section>
+
+            <section class="sec" id="commands">
+              <h2>The commands</h2>
+              <p><code>audit</code> is the one to start with. The rest answer narrower questions
+              and each takes <code>--help</code>.</p>
+              <table class="ref">
+                <tr><th>Command</th><th>What it answers</th></tr>
+                <tr><td><code>audit</code></td><td>What the session in this folder did, and what it skipped</td></tr>
+                <tr><td><code>hook</code></td><td>Run the audit automatically after every Claude Code turn</td></tr>
+                <tr><td><code>coupling</code></td><td>What usually changes with what you just changed, from git history</td></tr>
+                <tr><td><code>reach</code></td><td>What a change to a file or folder reaches</td></tr>
+                <tr><td><code>clearance</code></td><td>Whether the person who asked is cleared for every owner it reaches</td></tr>
+                <tr><td><code>deps</code></td><td>What a Python install is about to execute, read without executing it</td></tr>
+                <tr><td><code>budget</code></td><td>Where a run's budget went, and where it looped going nowhere</td></tr>
+                <tr><td><code>pin</code></td><td>Pin MCP tool definitions and detect supply-chain drift</td></tr>
+                <tr><td><code>drift</code></td><td>Detect a shift in a binary outcome stream</td></tr>
+                <tr><td><code>serve</code></td><td>A local endpoint any agent can send traces to</td></tr>
+              </table>
+            </section>
+
+            <section class="sec" id="trouble">
+              <h2>Troubleshooting</h2>
+
+              <h3>&ldquo;no Claude Code or Codex session recorded for&nbsp;&hellip;&rdquo;</h3>
+              <p>Working as intended. You are in a folder where you have never run one of those
+              agents. Read <a href="#where">Where to run it</a>, or run with <code>--demo</code> to
+              see a sample.</p>
+
+              <h3><code>uvx: command not found</code></h3>
+              <p>You do not have uv. Use <code>pipx run assurance audit</code>, or install uv from
+              <a href="https://docs.astral.sh/uv/" target="_blank" rel="noopener noreferrer">docs.astral.sh/uv</a>.</p>
+
+              <h3>Odd characters, or a crash, on Windows</h3>
+              <p>Piped output on Windows uses the locale code page rather than UTF&#8209;8. If you
+              see a crash or a row of question marks, report it with the command you ran: that is a
+              bug on our side and we want it.</p>
+
+              <h3>Something else</h3>
+              <p>Open an issue at
+              <a href="https://github.com/i-ops-hq/assurance/issues" target="_blank" rel="noopener noreferrer">github.com/i&#8209;ops&#8209;hq/assurance</a>,
+              or reply to any email from us. If an agent has ever told you a job was done when it
+              was not, that is the thing we most want to hear about: it is where the checks come
+              from.</p>
+            </section>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div>
+      <div class="brand">I&#8209;Ops</div>
+      <p class="dim" style="font-size:var(--step--1); margin-top:8px;">Operations Intelligence LLC</p>
+    </div>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/open-source/">Open source</a>
+      <a href="/open-source/assurance/">Sign in</a>
+      <a href="/legal/">Legal</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  /* The audience toggle. Two documents, one of which is on screen; aria-pressed is the state
+     and `hidden` follows it, so what a screen reader announces and what is visible cannot
+     disagree. The choice is remembered per browser, because somebody who reads as an agent
+     once will do it again, and a try/catch because storage throws outright in some privacy
+     modes rather than returning null. */
+  var bH = document.getElementById("audHuman"), bA = document.getElementById("audAI");
+  var vH = document.getElementById("viewHuman"), vA = document.getElementById("viewAI");
+  var rail = document.querySelector(".rail");
+
+  function pick(ai) {
+    bH.setAttribute("aria-pressed", ai ? "false" : "true");
+    bA.setAttribute("aria-pressed", ai ? "true" : "false");
+    vH.hidden = ai; vA.hidden = !ai;
+    /* The rail indexes the human document's sections. With the agent block on screen those
+       anchors point at hidden headings, so it goes away rather than scrolling to nothing.
+       display, not visibility: visibility keeps the element's box, which on a phone left a
+       full empty row above the content where the rail used to be. */
+    if (rail) rail.style.display = ai ? "none" : "";
+    try { localStorage.setItem("iops-docs-audience", ai ? "ai" : "human"); } catch (e) {}
+  }
+  bH.addEventListener("click", function () { pick(false); });
+  bA.addEventListener("click", function () { pick(true); });
+  var toH = document.getElementById("toHuman");
+  if (toH) toH.addEventListener("click", function () { pick(false); bH.focus(); });
+  try { if (localStorage.getItem("iops-docs-audience") === "ai") pick(true); } catch (e) {}
+
+  /* Copy. A failure says so rather than showing "Copied" over an empty clipboard: the
+     clipboard API is refused outright in some browsers. Either way the text is selected, so
+     a keyboard copy still works. */
+  [].slice.call(document.querySelectorAll(".copy")).forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var src = document.getElementById(btn.getAttribute("data-for"));
+      if (!src) return;
+      var done = function (ok) {
+        btn.textContent = ok ? "Copied" : "Press ⌘C";
+        btn.setAttribute("data-done", ok ? "1" : "0");
+        setTimeout(function () { btn.textContent = "Copy"; btn.removeAttribute("data-done"); }, 2000);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(src.textContent).then(function () { done(true); },
+                                                           function () { done(false); });
+      } else { done(false); }
+      try {
+        var r = document.createRange(); r.selectNodeContents(src);
+        var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      } catch (e) {}
+    });
+  });
+
+  /* Which section the rail marks as current. IntersectionObserver rather than a scroll
+     handler, and a guard because it does not exist in older browsers, where the rail simply
+     stays unmarked instead of throwing. */
+  if (!("IntersectionObserver" in window)) return;
+  var links = {};
+  [].slice.call(document.querySelectorAll(".rail a")).forEach(function (a) {
+    links[a.getAttribute("href").slice(1)] = a;
+  });
+  var seen = new Set();
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) seen.add(e.target.id); else seen.delete(e.target.id);
+    });
+    Object.keys(links).forEach(function (id) {
+      links[id].removeAttribute("aria-current");
+    });
+    var order = Object.keys(links).filter(function (id) { return seen.has(id); });
+    if (order.length) links[order[0]].setAttribute("aria-current", "true");
+  }, { rootMargin: "-96px 0px -60% 0px" });
+  [].slice.call(document.querySelectorAll(".sec")).forEach(function (s) { io.observe(s); });
+})();
+</script>
+<script src="/site.js?v=4164c0e673"></script>
+</body>
+</html>
