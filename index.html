@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>I-Ops — the runtime that checks what AI workers actually did</title>
 <meta name="description" content="AI workers finish the work. I-Ops ensures they do it right. A runtime that decides what a task needs, governs what it may change, and verifies the result against conditions the worker never got to write." />
-<link rel="icon" href="/favicon.svg?v=6accc91ccf" type="image/svg+xml" />
+<link rel="icon" href="/favicon.svg?v=ff6d0db218" type="image/svg+xml" />
 <link rel="alternate icon" href="/favicon.ico?v=445249498e" sizes="16x16 32x32 48x48" />
-<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=6accc91ccf" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=ff6d0db218" />
 <link rel="canonical" href="https://i-ops.dev/" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="I-Ops" />
@@ -19,7 +19,7 @@
 <meta name="twitter:title" content="I-Ops — the runtime that checks what AI workers actually did" />
 <meta name="twitter:description" content="AI workers finish the work. I-Ops ensures they do it right. A runtime that works out what a task needs, governs anything consequential, and verifies the result against conditions the worker never wrote." />
 <meta name="twitter:image" content="https://i-ops.dev/og-card.png" />
-<link rel="stylesheet" href="/site.css?v=6accc91ccf" />
+<link rel="stylesheet" href="/site.css?v=ff6d0db218" />
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -172,16 +172,22 @@
            funnel, are labelled 90 days; the window is stated rather than left for the reader to
            assume it is all-time. -->
       <div class="hero-proof">
+        <p class="hero-proof-head">From Anthropic&rsquo;s plugin marketplace and PyPI</p>
         <ul class="hero-stats">
           <li><b>962</b><span>installs, all surfaces</span></li>
           <li><b>0%</b><span>error rate across 186,699 loads</span></li>
           <li><b>10</b><span>packages published on PyPI</span></li>
+          <!-- Downloads are the weakest number on this page and are labelled so they cannot be
+               read as people: scanners and SBOM tools crawl a new release within minutes, and
+               `scripts/adoption.py` refuses to report them as adoption for exactly that reason.
+               Mirrors are already excluded; the with-mirrors figure is 52,187 and is not used. -->
+          <li><b>38,562</b><span>downloads of assurance, mirrors excluded</span></li>
         </ul>
         <p class="hero-proof-note">
-          Installs, loads and error rate are Anthropic&rsquo;s own figures for the assurance
-          plugin in their marketplace, last 90&nbsp;days. We did not record them. Everything
-          here is open source and Apache&#8209;2.0, runs on your own machine, and sends nothing
-          anywhere.
+          Installs, loads and error rate are Anthropic&rsquo;s figures, not ours, for the
+          assurance plugin in their marketplace over the last 90&nbsp;days. Downloads are
+          all&#8209;time from PyPI with mirrors removed, and they count machines rather than
+          people. As of 17&nbsp;November&nbsp;2026.
         </p>
       </div>
 
