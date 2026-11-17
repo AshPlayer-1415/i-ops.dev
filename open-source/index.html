@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Open source — I-Ops</title>
+<meta name="description" content="Four Apache-2.0 tools that run on your own machine: verification, attribution, a per-process kill switch, and two alpha labs products. Install in minutes, remove in one step." />
+<link rel="icon" href="/favicon.svg?v=6accc91ccf" type="image/svg+xml" />
+<link rel="alternate icon" href="/favicon.ico?v=445249498e" sizes="16x16 32x32 48x48" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=6accc91ccf" />
+<link rel="canonical" href="https://i-ops.dev/open-source/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="I-Ops" />
+<meta property="og:url" content="https://i-ops.dev/open-source/" />
+<meta property="og:title" content="Open source — I-Ops" />
+<meta property="og:description" content="Verification, attribution and a per-process kill switch. Apache-2.0, on your own machine, nothing sent anywhere." />
+<meta property="og:image" content="https://i-ops.dev/og-card.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Open source — I-Ops" />
+<meta name="twitter:description" content="Verification, attribution and a per-process kill switch. Apache-2.0, on your own machine, nothing sent anywhere." />
+<meta name="twitter:image" content="https://i-ops.dev/og-card.png" />
+<link rel="stylesheet" href="/site.css?v=6accc91ccf" />
+<style>
+  /* Scoped to this page. site.css carries every colour, type and spacing token used here; what
+     is below is only the two shapes it has no component for: the index of tools at the top, and
+     the per-tool row. Nothing here redefines a token. */
+
+  /* The index. Present because this page is a list and a reader should be able to see its whole
+     shape before scrolling, the way the docs page of any tool they already trust does. */
+  .toc { display:flex; flex-wrap:wrap; gap:10px; margin:28px 0 0; }
+  .toc a {
+    display:inline-flex; align-items:center; min-height:var(--tap); padding:0 18px;
+    border:1px solid var(--line); border-radius:var(--radius-btn);
+    background:var(--ground-2); color:var(--ink-2);
+    font-family:var(--mono); font-size:var(--step--1); text-decoration:none;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .toc a:hover, .toc a:focus-visible { border-color:var(--ink); color:var(--ink); }
+
+  .tool { border-top:1px solid var(--line); padding:44px 0 0; margin:44px 0 0; }
+  .tool:first-of-type { border-top:0; padding-top:0; margin-top:36px; }
+  .tool-head { display:flex; flex-wrap:wrap; align-items:baseline; gap:14px; }
+  .tool-head h3 { margin:0; }
+  .tool-meta {
+    font-family:var(--mono); font-size:var(--step--1); color:var(--ink-3);
+    display:flex; flex-wrap:wrap; gap:14px;
+  }
+  /* Used once, on Labs, and it says alpha rather than implying production. */
+  .tag {
+    font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+    border:1px solid var(--line-2); border-radius:999px; padding:3px 10px; color:var(--ink-3);
+  }
+  .tool-links { display:flex; flex-wrap:wrap; gap:18px; margin:20px 0 0; align-items:center; }
+  .tool-links a { color:var(--ink-2); }
+  .tool-links a:hover { color:var(--ink); }
+
+  @media (max-width:600px) {
+    .tool { padding-top:34px; margin-top:34px; }
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="/">I&#8209;Ops</a>
+    <nav class="nav-links">
+      <a href="/#problem">The problem</a>
+      <a href="/#governance">Governance</a>
+      <a href="/#vinci">Vinci</a>
+      <a href="/#features">What it does</a>
+      <a href="/#how-it-works">How it works</a>
+      <a href="/open-source/" aria-current="page">Open source</a>
+      <a href="/partner/">Partner</a>
+    </nav>
+    <a class="btn btn-ghost" href="/">Back</a>
+    <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+    </button>
+  </div>
+  <!-- The burger is useless without this. The site check caught it: nav-links and a burger were
+       present and the menu the burger opens was not, so the whole nav was unreachable on a phone. -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/#problem">The problem</a>
+    <a href="/#governance">Governance</a>
+    <a href="/#vinci">Vinci</a>
+    <a href="/#features">What it does</a>
+    <a href="/#how-it-works">How it works</a>
+    <a href="/open-source/">Open source</a>
+    <a href="/partner/">Partner</a>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="label">open source</span>
+          <h2 class="reveal">Some of the layers are already yours.</h2>
+        </div>
+      </div>
+
+      <p class="lede reveal">A boundary you cannot read is a boundary you have to take on trust.
+      Everything here is Apache&#8209;2.0, installs in minutes, comes out in one step, and runs
+      entirely on your own machine. None of it needs an account, and none of it sends us
+      anything.</p>
+
+      <nav class="toc" aria-label="On this page">
+        <a href="#assurance">assurance</a>
+        <a href="#rooms">rooms</a>
+        <a href="#rollcall">rollcall</a>
+        <a href="#labs">labs</a>
+      </nav>
+
+      <!-- ===================== assurance ===================== -->
+      <div class="tool" id="assurance">
+        <div class="tool-head">
+          <h3>assurance</h3>
+          <span class="tool-meta"><span>the verification layer</span><span>Python &middot; PyPI</span></span>
+        </div>
+        <p>Your agent says it is done. Assurance tells you what it did not check. It reads the
+        Claude Code or Codex session in a folder and reports the coverage of the run, where the
+        budget went, what the change reached, who owns what it touched, and what a dependency
+        install is about to execute.</p>
+        <p class="mono-line"><code>uvx assurance audit</code></p>
+        <p class="muted" style="margin-top:14px;">Ships as a CLI, an MCP server on the official
+        registry, and a plugin in Anthropic&rsquo;s directory. Eight packages, so you can install
+        only the part you want.</p>
+        <p class="tool-links">
+          <a class="btn" href="/open-source/assurance/">Get assurance</a>
+          <a href="https://github.com/i-ops-hq/assurance" target="_blank" rel="noopener noreferrer">Source &#8599;</a>
+          <a href="https://pypi.org/project/assurance/" target="_blank" rel="noopener noreferrer">PyPI &#8599;</a>
+        </p>
+      </div>
+
+      <!-- ===================== rooms ===================== -->
+      <div class="tool" id="rooms">
+        <div class="tool-head">
+          <h3>rooms</h3>
+          <span class="tool-meta"><span>the observability layer</span><span>Node &middot; npm</span></span>
+        </div>
+        <p>Who built this, and which AI helped. Reads your git history and attributes every commit
+        to the person and the agent that co&#8209;authored it, so a reviewer can tell the two apart
+        six months later. No account, no network.</p>
+        <p class="mono-line"><code>npx iops-rooms week</code></p>
+        <p class="tool-links">
+          <a href="https://github.com/i-ops-hq/iops-rooms" target="_blank" rel="noopener noreferrer">Source &#8599;</a>
+          <a href="https://www.npmjs.com/package/iops-rooms" target="_blank" rel="noopener noreferrer">npm &#8599;</a>
+        </p>
+      </div>
+
+      <!-- ===================== rollcall ===================== -->
+      <div class="tool" id="rollcall">
+        <div class="tool-head">
+          <h3>rollcall</h3>
+          <span class="tool-meta"><span>the containment layer</span><span>Node &middot; npm</span></span>
+        </div>
+        <p>What is actually running on this machine, and the ability to stop one of them. A
+        per&#8209;process view of the agents and tools a project has started, matched on the
+        process name rather than a command line anyone can forge.</p>
+        <p class="mono-line"><code>npx iops-rollcall</code></p>
+        <p class="tool-links">
+          <a href="https://github.com/i-ops-hq/iops-rollcall" target="_blank" rel="noopener noreferrer">Source &#8599;</a>
+          <a href="https://www.npmjs.com/package/iops-rollcall" target="_blank" rel="noopener noreferrer">npm &#8599;</a>
+        </p>
+      </div>
+
+      <!-- ===================== labs ===================== -->
+      <div class="tool" id="labs">
+        <div class="tool-head">
+          <h3>labs</h3>
+          <span class="tool-meta"><span>two products, early</span><span>Python &middot; PyPI</span></span>
+          <span class="tag">alpha</span>
+        </div>
+        <p><b>Crash Lab</b> breaks things on purpose. It injects faults into an agent&rsquo;s
+        execution and then the host, not the agent, checks the returned state against predicates
+        declared before the run and writes hashed evidence of what it found. An agent does not get
+        to declare its own task complete, and now it does not get to do so while the ground is
+        moving either.</p>
+        <p><b>Permission Simulator</b> reads declared authorisation and answers whether a task may
+        proceed, then exports the scenario as a file another tool can run.</p>
+        <p class="mono-line"><code>uvx iops-crashlab --help</code></p>
+        <p class="muted" style="margin-top:14px;">They share no runtime, only four JSON schemas.
+        Both are <code>0.1.0a2</code> and labelled alpha because that is what they are.</p>
+        <p class="tool-links">
+          <a href="https://github.com/i-ops-hq/labs" target="_blank" rel="noopener noreferrer">Source &#8599;</a>
+          <a href="https://pypi.org/project/iops-crashlab/" target="_blank" rel="noopener noreferrer">Crash Lab &#8599;</a>
+          <a href="https://pypi.org/project/iops-permissions/" target="_blank" rel="noopener noreferrer">Permission Simulator &#8599;</a>
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Why these exist, placed after the tools rather than before them: somebody who arrived
+       looking for an install should reach it without reading an argument first. -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="label">why these are open</span>
+          <h2 class="reveal">A check you cannot read is a check you have to trust.</h2>
+        </div>
+      </div>
+      <p class="lede reveal">We sell assurance. A closed tool that tells you it verified something
+      asks for exactly the trust the product exists to replace, so the parts that do the checking
+      are readable, forkable and removable in one step.</p>
+      <p class="muted reveal" style="margin-top:22px;">Every guarantee here is computed by code
+      rather than produced by a model, which is why it survives a change of model. Of the twenty
+      capabilities in the full product, eighteen never reach one.</p>
+      <p class="reveal" style="margin-top:26px;">
+        <a class="btn btn-ghost" href="/#how-it-works">How it works</a>
+        <a class="btn btn-ghost" href="https://github.com/i-ops-hq" target="_blank" rel="noopener noreferrer" style="margin-left:12px;">github.com/i&#8209;ops&#8209;hq &#8599;</a>
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div>
+      <div class="brand">I&#8209;Ops</div>
+      <p class="dim" style="font-size:var(--step--1); margin-top:8px;">Operations Intelligence LLC</p>
+      <div class="social">
+        <a href="https://github.com/i-ops-hq" target="_blank" rel="noopener noreferrer" aria-label="I-Ops on GitHub" title="Open source">
+          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.24 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/company/i-ops-llc/" target="_blank" rel="noopener noreferrer" aria-label="I-Ops on LinkedIn" title="LinkedIn">
+          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05a3.74 3.74 0 0 1 3.37-1.85c3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13ZM7.12 20.45H3.55V9h3.57v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0Z"/></svg>
+        </a>
+        <a href="mailto:hello@i-ops.dev" aria-label="Email hello@i-ops.dev" title="hello@i-ops.dev">
+          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M3 5.75h18v12.5H3z"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="m3.4 6.4 8.6 6.6 8.6-6.6"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/open-source/assurance/">Get assurance</a>
+      <a href="/partner/">Partner</a>
+      <a href="/legal/">Legal</a>
+    </div>
+  </div>
+</footer>
+
+<script src="/site.js?v=4164c0e673"></script>
+</body>
+</html>
