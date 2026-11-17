@@ -26,6 +26,10 @@
      component for. */
 
   .docs { display:grid; grid-template-columns:214px minmax(0,1fr); gap:56px; align-items:start; }
+  /* With the rail removed the grid still has two tracks, so the content becomes the FIRST
+     item and renders in the rail's 214px column: a narrow ribbon of text down the left with
+     the page empty beside it. Hiding an element is not the same as removing its column. */
+  .docs.no-rail { grid-template-columns:minmax(0,1fr); gap:0; }
   @media (max-width:900px) { .docs { grid-template-columns:1fr; gap:28px; } }
 
   /* The left rail. Sticky under the 67px nav so a long page keeps its map on screen. */
@@ -171,7 +175,7 @@
         <div>
 
           <div class="aud" role="group" aria-label="Who is reading this">
-            <button id="audHuman" aria-pressed="true">For a person</button>
+            <button id="audHuman" aria-pressed="true">For a human</button>
             <button id="audAI" aria-pressed="false">For an AI agent</button>
           </div>
 
@@ -218,7 +222,7 @@ against." That is the tool telling you it could not verify the goal, which is in
 not a failure.</pre>
               <button class="copy" data-for="aiBlock">Copy</button>
             </div>
-            <p class="muted" style="margin-top:20px;">Switch back to <button type="button" id="toHuman" style="background:none;border:0;padding:0;color:var(--ink);text-decoration:underline;cursor:pointer;font:inherit;">the version for a person</button> to read the same thing yourself.</p>
+            <p class="muted" style="margin-top:20px;">Switch back to <button type="button" id="toHuman" style="background:none;border:0;padding:0;color:var(--ink);text-decoration:underline;cursor:pointer;font:inherit;">the version for a human</button> to read the same thing yourself.</p>
           </div>
 
           <!-- ---------- the human version ---------- -->
@@ -383,6 +387,7 @@ not a failure.</pre>
   var bH = document.getElementById("audHuman"), bA = document.getElementById("audAI");
   var vH = document.getElementById("viewHuman"), vA = document.getElementById("viewAI");
   var rail = document.querySelector(".rail");
+  var grid = document.querySelector(".docs");
 
   function pick(ai) {
     bH.setAttribute("aria-pressed", ai ? "false" : "true");
@@ -393,6 +398,7 @@ not a failure.</pre>
        display, not visibility: visibility keeps the element's box, which on a phone left a
        full empty row above the content where the rail used to be. */
     if (rail) rail.style.display = ai ? "none" : "";
+    if (grid) grid.classList.toggle("no-rail", ai);
     try { localStorage.setItem("iops-docs-audience", ai ? "ai" : "human"); } catch (e) {}
   }
   bH.addEventListener("click", function () { pick(false); });
