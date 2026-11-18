@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Tell us how your batch run lied to you — assurance</title>
-<meta name="description" content="assurance reads a provider's batch output and answers one question: did every record you sent actually come back. Send us the shape of your failure and it becomes a check." />
+<title>assurance — what your agent did not check</title>
+<meta name="description" content="One command, in a folder where you have used a coding agent. It reports what the run covered and what it skipped. Apache-2.0, no account, no network, nothing sent anywhere." />
 <link rel="icon" href="/favicon.svg?v=d9e80dab5b" type="image/svg+xml" />
 <link rel="alternate icon" href="/favicon.ico?v=445249498e" sizes="16x16 32x32 48x48" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=d9e80dab5b" />
@@ -12,12 +12,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="I-Ops" />
 <meta property="og:url" content="https://i-ops.dev/open-source/assurance/" />
-<meta property="og:title" content="Tell us how your batch run lied to you" />
-<meta property="og:description" content="Your batch job reports success while records are missing, truncated, or replaced by a retry under a new ID. Send us the shape of the failure and it becomes a check." />
+<meta property="og:title" content="assurance — what your agent did not check" />
+<meta property="og:description" content="One command, in a folder where you have used a coding agent. It reports what the run covered and what it skipped. Apache-2.0, no account, no network, nothing sent anywhere." />
 <meta property="og:image" content="https://i-ops.dev/og-card.png" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Tell us how your batch run lied to you" />
-<meta name="twitter:description" content="Your batch job reports success while records are missing, truncated, or replaced by a retry under a new ID. Send us the shape of the failure and it becomes a check." />
+<meta name="twitter:title" content="assurance — what your agent did not check" />
+<meta name="twitter:description" content="One command, in a folder where you have used a coding agent. It reports what the run covered and what it skipped. Apache-2.0, no account, no network, nothing sent anywhere." />
 <meta name="twitter:image" content="https://i-ops.dev/og-card.png" />
 <link rel="stylesheet" href="/site.css?v=d9e80dab5b" />
 <style>
@@ -123,86 +123,130 @@
       </section>
 
       <span class="label">/ &nbsp; assurance</span>
-      <h1>Tell us how your batch run lied to you.</h1>
+      <h1>Your agent says it is done. This tells you what it did not check.</h1>
 
       <p class="lede narrow">
-        A batch job reports success while records are missing, truncated, or quietly replaced by a
-        retry under a new ID. The question worth answering is not <em>did the job succeed</em> but
-        <strong>did every record you sent actually come back.</strong>
+        One command, in a folder where you have used a coding agent. It reads that session and
+        reports what the run covered and what it quietly skipped. Nothing is sent anywhere.
       </p>
 
+<pre><b>uvx assurance audit</b>
+</pre>
+
+      <!-- Objection order, and the order is the point: everything below answers a reason to
+           leave, in the sequence a developer actually thinks of them. Works with my stack, is it
+           real, where does my code go, can I get out, what does it cost. The thing we WANT from
+           the reader is last, because an ask before those are settled is an ask nobody owes us. -->
+
+      <h2>Works with what you already run</h2>
       <p class="narrow">
-        <strong>That check does not exist yet, and this page is how it gets built.</strong> What
-        ships today is <code>uvx assurance audit</code>, which reads the coding&#8209;agent session in
-        a folder and tells you what it did not check. The batch check is being written from real
-        failures people send us &mdash; it will run on your machine, like everything else here, and
-        it will stay that way.
+        It reads the session your agent already writes. There is nothing to configure and no
+        integration to install.
       </p>
+      <ul class="narrow">
+        <li><strong>Claude Code</strong> &mdash; reads <code>~/.claude/projects</code>. A hook can run the audit after every turn: <code>assurance hook install</code>.</li>
+        <li><strong>Codex</strong> &mdash; reads <code>~/.codex/sessions</code>.</li>
+        <li><strong>Any agent, via MCP</strong> &mdash; an MCP server on the official registry, read&#8209;only by construction.</li>
+        <li><strong>CI</strong> &mdash; a GitHub Action that fails the build when a check does not pass.</li>
+      </ul>
 
-      <h2>What this is for</h2>
+      <h2>Is it reliable?</h2>
       <p class="narrow">
-        If you run batch inference on Bedrock, OpenAI or Anthropic and you have ever found out late
-        that a run was short, send us the shape of the failure. A research team did exactly that
-        &mdash; eight failures from one production run. <strong>The first of them are already checks
-        you can run; the rest are being built in the order they asked for.</strong>
+        <strong>0% error rate across 186,699 plugin loads. Zero failed installs, zero command
+        errors.</strong> That is Anthropic&rsquo;s figure from their plugin marketplace, over the
+        last 90&nbsp;days, not ours. For a tool that sells verification, the most useful number is
+        one somebody else recorded.
       </p>
-      <p class="narrow" id="callToAction">
-        <strong>Sign in, describe the failure, and we will tell you whether it is already covered or
-        build the check.</strong>
+      <p class="narrow dim">
+        Our own numbers, labelled as ours: 962 installs, and the package has been downloaded more
+        than 30,000 times. Downloads count machines, not people, and we do not report them as
+        users.
       </p>
 
-      <!-- Shown INSTEAD of the sign-in buttons once there is a session. The buttons are what
-           the HTML ships with, so a failed or blocked session call leaves a page that still
-           works rather than one that claims to know who you are. -->
-      <div class="signed" id="signed" hidden>
-        <span class="signed-dot" aria-hidden="true"></span>
-        <p class="signed-text">Signed in as <b id="signedName">&mdash;</b> <span id="signedVia"></span></p>
-        <a class="btn" id="signedGo" href="/open-source/assurance/welcome/">Your commands</a>
-        <form id="signedOut"><button type="submit">Sign out</button></form>
-      </div>
-
-      <div class="providers">
-        <a class="provider" id="ghBtn" href="https://api.i-ops.dev/v1/auth/github/start" rel="nofollow">
-          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.24 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
-          Continue with GitHub
-        </a>
-        <a class="provider" id="gBtn" href="https://api.i-ops.dev/v1/auth/google/start" rel="nofollow">
-          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 11v3.2h5.3a4.6 4.6 0 0 1-1.97 3l3.18 2.47C20.37 17.9 21.4 15.2 21.4 12c0-.7-.06-1.37-.18-2.01H12Z"/><path fill="currentColor" d="M6.6 14.29 5.88 14.84 3.34 16.81A9.5 9.5 0 0 0 12 21.5c2.56 0 4.71-.85 6.28-2.3l-3.18-2.47a5.7 5.7 0 0 1-8.5-2.44Z"/><path fill="currentColor" d="M3.34 7.19A9.42 9.42 0 0 0 2.5 12c0 1.74.42 3.37 1.16 4.81l3.26-2.52A5.65 5.65 0 0 1 6.62 12c0-.8.15-1.57.4-2.29L3.34 7.19Z"/><path fill="currentColor" d="M12 6.4c1.45 0 2.74.5 3.77 1.47l2.81-2.81C16.87 3.45 14.72 2.5 12 2.5A9.5 9.5 0 0 0 3.34 7.19l3.68 2.52A5.68 5.68 0 0 1 12 6.4Z"/></svg>
-          Continue with Google
-        </a>
-      </div>
-
-      <div class="store">
-        <h2>What we store</h2>
-        <p class="narrow">Your email, your name, and which provider you use. That is the account.</p>
-        <p class="narrow">
-          <strong><code>assurance</code> makes no network request of any kind</strong> — every check
-          runs on your machine, against your files, with no key and no login, and that does not
-          change by signing in. Signing in is for the conversation, not the tool. If we ever add
-          something that sends data somewhere, it will be a command you choose to run and it will
-          say what it sends.
-        </p>
-        <p class="narrow">
-          Verify that rather than trusting it. There is no HTTP client anywhere in the install,
-          dependencies included:
-        </p>
+      <h2>Where does my code go?</h2>
+      <p class="narrow">
+        <strong>Nowhere.</strong> <code>assurance</code> makes no network request of any kind.
+        Every check runs on your machine, against your files, with no key and no login. That does
+        not change if you sign in &mdash; signing in is for the conversation, not the tool. If we
+        ever add something that sends data somewhere, it will be a command you choose to run and
+        it will say what it sends.
+      </p>
+      <p class="narrow">
+        Verify that rather than trusting it. There is no HTTP client anywhere in the install,
+        dependencies included:
+      </p>
 <pre><b>pip download assurance -d a &amp;&amp; cd a &amp;&amp; for w in *.whl; do unzip -oq "$w" -d src; done</b>
 <b>grep -rn "urlopen\|requests\.\|httpx\.\|aiohttp" src --include='*.py'</b>
 </pre>
-        <p class="pair-note narrow">
-          No output. The unzip step is the point — a wheel is a zip, so grepping the downloaded
-          files directly finds nothing whether or not there is anything to find.
-        </p>
+      <p class="pair-note narrow">
+        No output. The unzip step is the point &mdash; a wheel is a zip, so grepping the downloaded
+        files directly finds nothing whether or not there is anything to find.
+      </p>
 
-        <h2>What we are building next</h2>
+      <h2>Can you get out?</h2>
+      <p class="narrow">
+        Apache&#8209;2.0, and removing it is one step: <code>uvx</code> leaves nothing behind at
+        all, and an installed copy goes with <code>pip uninstall assurance</code>. The hook, if you
+        installed it, comes out with <code>assurance hook remove</code>. There is no account to
+        close, because you never needed one to run a check.
+      </p>
+      <p class="narrow dim">
+        Source at <a href="https://github.com/i-ops-hq/assurance">github.com/i&#8209;ops&#8209;hq/assurance</a>.
+        Read it, fork it, or copy the parts you want.
+      </p>
+
+      <h2>What it costs</h2>
+      <p class="narrow">
+        Nothing, and there is no paid tier to upgrade to today. If that changes, the checks that
+        run on your machine stay free &mdash; that is the part we are not willing to make
+        conditional.
+      </p>
+
+      <div class="store">
+        <h2>One thing we are asking for</h2>
         <p class="narrow">
-          One run on one machine cannot tell you whether a <em>fleet</em> of runs came back complete.
-          That is the next thing, and the people who sign in now are the ones we build it with.
+          A batch job reports success while records are missing, truncated, or quietly replaced by
+          a retry under a new ID. The question worth answering is not <em>did the job succeed</em>
+          but <strong>did every record you sent actually come back.</strong>
+        </p>
+        <p class="narrow">
+          <strong>That check does not exist yet, and this is how it gets built.</strong> If you run
+          batch inference on Bedrock, OpenAI or Anthropic and have ever found out late that a run
+          was short, send us the shape of the failure. A research team did exactly that &mdash;
+          eight failures from one production run. The first of them are already checks you can run;
+          the rest are being built in the order they asked for.
+        </p>
+        <p class="narrow" id="callToAction">
+          <strong>Sign in, describe the failure, and we will tell you whether it is already covered
+          or build the check.</strong>
         </p>
 
-        <p class="narrow dim">
-          Apache&#8209;2.0. <code>pip install assurance</code> or <code>uvx assurance</code>. Source at
-          <a href="https://github.com/i-ops-hq/assurance">github.com/i-ops-hq/assurance</a>.
+        <!-- Shown INSTEAD of the sign-in buttons once there is a session. The buttons are what
+             the HTML ships with, so a failed or blocked session call leaves a page that still
+             works rather than one that claims to know who you are. -->
+        <div class="signed" id="signed" hidden>
+          <span class="signed-dot" aria-hidden="true"></span>
+          <p class="signed-text">Signed in as <b id="signedName">&mdash;</b> <span id="signedVia"></span></p>
+          <a class="btn" id="signedGo" href="/open-source/assurance/welcome/">Your commands</a>
+          <form id="signedOut"><button type="submit">Sign out</button></form>
+        </div>
+
+        <div class="providers">
+          <a class="provider" id="ghBtn" href="https://api.i-ops.dev/v1/auth/github/start" rel="nofollow">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.24 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
+            Continue with GitHub
+          </a>
+          <a class="provider" id="gBtn" href="https://api.i-ops.dev/v1/auth/google/start" rel="nofollow">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 11v3.2h5.3a4.6 4.6 0 0 1-1.97 3l3.18 2.47C20.37 17.9 21.4 15.2 21.4 12c0-.7-.06-1.37-.18-2.01H12Z"/><path fill="currentColor" d="M6.6 14.29 5.88 14.84 3.34 16.81A9.5 9.5 0 0 0 12 21.5c2.56 0 4.71-.85 6.28-2.3l-3.18-2.47a5.7 5.7 0 0 1-8.5-2.44Z"/><path fill="currentColor" d="M3.34 7.19A9.42 9.42 0 0 0 2.5 12c0 1.74.42 3.37 1.16 4.81l3.26-2.52A5.65 5.65 0 0 1 6.62 12c0-.8.15-1.57.4-2.29L3.34 7.19Z"/><path fill="currentColor" d="M12 6.4c1.45 0 2.74.5 3.77 1.47l2.81-2.81C16.87 3.45 14.72 2.5 12 2.5A9.5 9.5 0 0 0 3.34 7.19l3.68 2.52A5.68 5.68 0 0 1 12 6.4Z"/></svg>
+            Continue with Google
+          </a>
+        </div>
+
+        <p class="narrow dim" style="margin-top:28px;">
+          We store your email, your name, and which provider you use. That is the whole account.
+          One run on one machine cannot tell you whether a <em>fleet</em> of runs came back
+          complete; that is the next thing, and the people who sign in now are the ones we build
+          it with.
         </p>
       </div>
 
