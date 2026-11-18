@@ -177,12 +177,17 @@
           <li><b>962</b><span>plugin installs, all surfaces</span></li>
           <li><b>0%</b><span>error rate across 186,699 loads</span></li>
           <li><b>10</b><span>packages published on PyPI</span></li>
-          <!-- SEVEN, not six. Measured package by package on 2026-11-17: assurance 38,562,
-               assurance-cli 38,287, assurance-core 37,856, assurance-budget 38,099,
-               assurance-deps 33,354, assurance-authority 33,233, assurance-reach 31,946 are all
-               over 30,000. The three that are not: assurance-mcp at 5,386 and the two alpha labs
-               packages. "6 of 10" was the ask and 7 is the number. -->
-          <li><b>30,000+</b><span>downloads each for 7 of the 10</span></li>
+          <!-- REMOVED 2026-11-18, and the reason belongs here so it does not come back.
+               A download stat sat here for one day: "30,000+ downloads each for 7 of the 10".
+               Arithmetically true against pypistats' non-mirror series, and still wrong to show.
+               Between 12 and 18 November seven packages grew by 6,398 to 6,617 downloads each,
+               a spread of 3.4% across seven supposedly independent packages, or ~1,080 a day
+               every day. assurance-mcp, the only one nothing depends on, grew by 176 in the same
+               window. Seven numbers that tightly grouped are one automated process pulling the
+               whole dependency tree, not seven packages being chosen. pypistats' non-mirror
+               series does not filter it, because it only excludes known mirror user agents.
+               scripts/adoption.py already refuses to report downloads as adoption and says why;
+               the home page should not do what the project's own instrument will not. -->
         </ul>
         <p class="hero-proof-note">* as of 17 November 2026</p>
       </div>
@@ -549,8 +554,7 @@
       </p>
 
       <p class="muted reveal" style="margin-top:28px;">Assurance is in
-      <a href="https://github.com/i-ops-hq" target="_blank" rel="noopener noreferrer">Anthropic&rsquo;s plugin
-      directory</a>, listed on the official MCP registry, and published as ten packages on PyPI. The source is at <a href="https://github.com/i-ops-hq" target="_blank" rel="noopener noreferrer">github.com/i&#8209;ops&#8209;hq</a>.</p>
+      Anthropic&rsquo;s plugin directory, listed on the official MCP registry, and published as ten packages on PyPI. The source is at <a href="https://github.com/i-ops-hq" target="_blank" rel="noopener noreferrer">github.com/i&#8209;ops&#8209;hq</a>.</p>
     </div>
   </section>
 
