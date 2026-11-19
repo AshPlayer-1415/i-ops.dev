@@ -86,10 +86,14 @@
         times, as any web host does. We do not use those logs to build a profile of you.</p>
 
         <h3>3. Where form submissions go</h3>
-        <p>Form submissions are delivered to a spreadsheet we control, hosted by Google. Google acts
-        as a processor for that data and its own terms apply to the storage. We name this because a
-        privacy policy that says <em>we</em> hold your data, while a third party actually holds it,
-        is not a description of what happens.</p>
+        <p>Form submissions are delivered to a database we control, hosted by Cloudflare. Cloudflare
+        acts as a processor for that data and its own terms apply to the storage. We name this
+        because a privacy policy that says <em>we</em> hold your data, while a third party actually
+        holds it, is not a description of what happens.</p>
+        <p>Until 15 November 2026 these submissions went to a Google-hosted spreadsheet instead, and
+        this section said so. We are naming the change rather than quietly replacing the sentence,
+        because the only way to know whether a privacy policy is maintained is whether it admits
+        when the answer moved.</p>
         <p>Website hosting and the early access download are served by our infrastructure providers,
         who see request metadata in the ordinary course of delivering the page or the file.</p>
         <p>The two typefaces are served from our own origin rather than from a font service, so
@@ -97,7 +101,36 @@
         page: no font host, no analytics, no embedded media, no social widgets. You can check that
         in your browser&rsquo;s network panel rather than taking our word for it.</p>
 
-        <h3>4. The product, and your files</h3>
+        <h3>4. The optional account</h3>
+        <p>You can sign in on the Assurance page with GitHub or Google. It is optional, and it
+        changes nothing about the checks: the tool runs with no account, no network and no sign-in,
+        and an account never gates a check.</p>
+        <p>If you do sign in, here is the whole record, named field by field rather than
+        summarised:</p>
+        <ul>
+          <li>One row per person, keyed on your verified email address, holding your email, your
+          display name, the provider&rsquo;s own identifier for you, which provider or providers you
+          have used, when you first and last signed in, and how many times.</li>
+          <li>One row per sign-in, holding your email, the provider, whether it was your first, and
+          the time.</li>
+          <li>A random token used only to build the one-click removal link in your welcome email. It
+          is not derived from your email address.</li>
+        </ul>
+        <p>We ask GitHub for <code>read:user user:email</code> and Google for
+        <code>openid email profile</code>, and nothing else. We do not ask either provider for
+        offline access or a refresh token, so we cannot act on your behalf or read anything after
+        you close the tab. A provider that gives us no verified email address is refused rather than
+        recorded.</p>
+        <p>Signing in sets one cookie, <code>iops_sess</code>, which is HttpOnly, Secure,
+        SameSite=Lax and lasts ninety days. No script can read it, and it carries nothing but a
+        random session identifier.</p>
+        <p>On your first sign-in only, we send one welcome email. It carries a link that removes
+        your account. That link opens a page asking you to confirm, because mail-security products
+        fetch every link in an email before you see it and a one-click delete would erase a new
+        account within seconds of the mail arriving. Confirming deletes the account row and every
+        sign-in row, and the page tells you how many of each it deleted.</p>
+
+        <h3>5. The product, and your files</h3>
         <p>The product is designed to run on your own machine. Your files stay where they are.
         Content does not leave your machine except to endpoints you configure, and each run records
         the setting it executed under, so the posture is a fact you can check rather than a promise
@@ -107,7 +140,7 @@
         until you turn it on.</p>
         <p>We do not collect the contents of your business files through this website.</p>
 
-        <h3>5. How we use what you send</h3>
+        <h3>6. How we use what you send</h3>
         <ul>
           <li>To reply to you, and to run the access or partner conversation you started.</li>
           <li>To tell you about availability, builds, and changes that affect you, and to send you occasional updates about I-Ops and what we release. Every such message carries a way to stop receiving them, and one reply asking us to stop is enough.</li>
@@ -116,40 +149,46 @@
         </ul>
         <p>We do not sell personal information, and we do not share it for advertising.</p>
 
-        <h3>6. Sharing</h3>
+        <h3>7. Sharing</h3>
         <p>We share information only with service providers who need it to operate the site and
         communicate with you, such as hosting, form storage, and email. We may disclose information
         where the law requires it, or to protect the rights and safety of people using the service.
         If the business is ever sold or merged, information may transfer with it, and this policy
         follows the data.</p>
 
-        <h3>7. How long we keep it</h3>
+        <h3>8. How long we keep it</h3>
         <p>We keep enquiry and contact information for as long as the conversation is live and for a
         reasonable period afterwards, so that we can pick it back up and meet our record-keeping
         obligations. Ask us to delete it and we will, unless we are required to keep it.</p>
+        <p>An account is kept until you remove it. There is no expiry and no automatic deletion,
+        which is a choice worth naming rather than leaving you to discover: we would rather you
+        removed it deliberately than find it gone. The link in your welcome email removes it at any
+        time, and so does writing to us.</p>
 
-        <h3>8. Your choices</h3>
-        <p>Write to <a href="mailto:hello@i-ops.dev">hello@i&#8209;ops.dev</a> to see, correct,
+        <h3>9. Your choices</h3>
+        <p>If you have an account, the fastest route is the removal link in your welcome email,
+        which deletes it without going through us at all. Otherwise write to
+        <a href="mailto:hello@i-ops.dev">hello@i&#8209;ops.dev</a> to see, correct,
         export, or delete the information you have sent us. Depending on where you live you may have
         additional rights, including the right to object to processing or to complain to a
         supervisory authority. We honour those requests wherever they apply, and we do not require
         you to invoke a specific law to be taken seriously.</p>
 
-        <h3>9. Security, stated honestly</h3>
+        <h3>10. Security, stated honestly</h3>
         <p>We take reasonable technical and organisational measures to protect what you send us.
         No transmission over the internet and no storage system is completely secure, and anyone
         who tells you otherwise is selling something.</p>
 
-        <h3>10. Children</h3>
+        <h3>11. Children</h3>
         <p>This is a product for businesses. It is not directed at children, and we do not knowingly
         collect information from anyone under 16.</p>
 
-        <h3>11. Changes</h3>
+        <h3>12. Changes</h3>
         <p>We may update this page. The date at the top moves when we do. Material changes that
         affect people who have already contacted us will be sent by email rather than only posted
         here.</p>
 
-        <h3>12. Contact</h3>
+        <h3>13. Contact</h3>
         <p>Privacy questions go to <a href="mailto:hello@i-ops.dev">hello@i&#8209;ops.dev</a>.</p>
       <p class="muted" style="margin-top:36px;">I&#8209;Ops Operations Intelligence LLC, registered in
       Delaware. Mail reaches us at 2261 Market Street, STE 91631, San Francisco, CA 94114, US &mdash;
