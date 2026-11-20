@@ -25,7 +25,7 @@
      GENERATED from i-ops-hq/assurance docs/use-cases/*.md on 2026-11-19.
      Titles, promises and flows are copied from those files rather than written here, so the
      site cannot describe a workflow the documentation does not. Re-derive rather than edit:
-     the generator is scripts/gen_usecases.py in the I-Ops repo scratchpad brief. */
+     the generator is scripts/gen_usecases.py in the I-Ops repo. */
   .cases { display:grid; gap:22px; margin:36px 0 0; }
   .case {
     border:1px solid var(--line); border-radius:var(--radius-field);
@@ -61,20 +61,35 @@
   <div class="wrap nav-inner">
     <a class="brand" href="/">I&#8209;Ops</a>
     <nav class="nav-links">
-      <a href="/#problem">The problem</a>
+      <a href="#problem">The problem</a>
       <a href="/use-cases/">Workflows</a>
-      <a href="/#features">What it does</a>
-      <a href="/#how-it-works">How it works</a>
-      <a href="/open-source/">Open source</a>
-      <a href="/docs/">Docs</a>
+      <a href="#governance">Governance</a>
+      <a href="#vinci">Vinci</a>
+      <a href="#features">What it does</a>
+      <a href="#how-it-works">How it works</a>
+        <a href="/open-source/">Open source</a>
       <a href="/partner/">Partner</a>
     </nav>
+
     <a class="btn btn-ghost" href="/">Back</a>
     <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
     </button>
   </div>
 </header>
+
+<div class="mobile-menu" id="mobileMenu">
+    <a href="#problem">The problem</a>
+    <a href="/use-cases/">Workflows</a>
+    <a href="#governance">Governance</a>
+    <a href="#vinci">Vinci</a>
+    <a href="#features">What it does</a>
+    <a href="#how-it-works">How it works</a>
+    <a href="/open-source/">Open source</a>
+    <a href="/partner/">Partner</a>
+    <a href="/early-access/">Early access</a>
+  </div>
+
 
 <main id="main">
   <section class="hero">

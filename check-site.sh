@@ -144,6 +144,93 @@ if not bad: print(f"  PASS  {len(md_h)} sections and {md_b} bullets, in both")
 sys.exit(1 if bad else 0)
 PY
 
+echo "--- the figures carry their window, and the promise keeps its qualifier ---"
+# Three number defects shipped to this site and none of them was a typo.
+#
+#   A download stat that was arithmetically true was removed on 2026-11-18 because seven packages
+#   growing within 3.4% of each other is one automated process, not seven choices. Its absence is
+#   now asserted, because the easiest way for it to come back is somebody finding it in git log.
+#
+#   Both Anthropic figures rendered with no time window on 2026-11-19 while an HTML comment three
+#   lines above them claimed "the window is stated rather than left for the reader to assume it is
+#   all-time". It was stated in the comment. A reason written where the reader cannot see it is not
+#   a disclosure, and a comment asserting otherwise is how it survived a week.
+#
+#   The published pricing sentence is narrow on purpose: "there is no paid tier to upgrade to
+#   TODAY". Drop the qualifier and it becomes a promise about the future that nobody can keep. So
+#   the qualifier is checked rather than trusted to survive a copy edit.
+#
+# Figures are matched in RENDERED text with comments, scripts and styles removed, because the first
+# version of this grep read a page as broken when the page was right -- `last 90&nbsp;days` does not
+# match `90 days` until the entities are unescaped.
+run python3 - <<'PY'
+import re, html, glob, sys
+
+def visible(path):
+    s = open(path, encoding="utf-8").read()
+    s = re.sub(r"<!--.*?-->", " ", s, flags=re.S)
+    s = re.sub(r"<(script|style)\b.*?</\1>", " ", s, flags=re.S | re.I)
+    s = re.sub(r"<[^>]+>", " ", s)
+    return re.sub(r"\s+", " ", html.unescape(s))
+
+def blocks(path):
+    """Visible text per block element, not per character radius.
+
+    The first version of this asked whether the window appeared within 200 characters of the
+    figure. It passed with the window DELETED, because the hero prints two figures side by side
+    and the survivor's "in 90 days" sat inside the radius of the one that had lost its own. A
+    proximity test is satisfied by somebody else's qualifier. Found by deleting the window and
+    watching the check stay green, which is the only way that defect is visible.
+    """
+    s = open(path, encoding="utf-8").read()
+    s = re.sub(r"<!--.*?-->", " ", s, flags=re.S)
+    s = re.sub(r"<(script|style)\b.*?</\1>", " ", s, flags=re.S | re.I)
+    parts = re.split(r"(?=<(?:li|p|h[1-6]|td|figcaption|blockquote|dd|dt)\b)", s, flags=re.I)
+    out = []
+    for part in parts:
+        t = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", part))).strip()
+        if t:
+            out.append(t)
+    return out
+
+# figure -> the thing that must appear within 200 characters of it
+WINDOWED = {"186,699": r"90 ?day", "962": r"90 ?day"}
+BANNED = {
+    r"free forever": "an unqualified promise about the future",
+    r"forever free": "an unqualified promise about the future",
+    r"always free": "an unqualified promise about the future",
+    r"30,000": "the download stat removed on 2026-11-18, with its reason, from index.html",
+    r"\bis sandboxed\b": 'unqualified; third-party tools run contained, the app is not sandboxed',
+    r"fully sandboxed": 'unqualified; third-party tools run contained, the app is not sandboxed',
+}
+bad, checked = [], 0
+for f in sorted(glob.glob("**/*.html", recursive=True)):
+    v = visible(f)
+    for fig, window in WINDOWED.items():
+        for block in blocks(f):
+            if fig not in block:
+                continue
+            checked += 1
+            if not re.search(window, block, re.I):
+                bad.append(f'{f}: "{fig}" appears with no time window in its own block\n'
+                           f'          ...{block.strip()[:150]}...')
+    for pat, why in BANNED.items():
+        for m in re.finditer(pat, v, re.I):
+            bad.append(f'{f}: "{m.group(0)}" -- {why}\n'
+                       f'          ...{v[max(0,m.start()-70):m.start()+70].strip()}...')
+    for m in re.finditer(r"no paid tier", v, re.I):
+        checked += 1
+        tail = v[m.end():m.end() + 45]
+        if "today" not in tail.lower():
+            bad.append(f'{f}: "no paid tier" is not qualified with "today" within 45 chars\n'
+                       f'          ...{v[m.start():m.start()+100].strip()}...')
+for b in bad:
+    print(f"  FAIL  {b}")
+if not bad:
+    print(f"  PASS  {checked} figure and promise occurrences, each carrying its qualifier")
+sys.exit(1 if bad else 0)
+PY
+
 if [ "$LIVE" = "0" ]; then
   echo; echo "===== $PASS passed, $FAIL failed (local only) ====="
   [ "$FAIL" -eq 0 ] || exit 1
