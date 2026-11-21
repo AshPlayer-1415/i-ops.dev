@@ -211,6 +211,21 @@ p { margin: 16px 0 0; max-width: 68ch; }
 .burger { display: none; background: none; border: 0; color: var(--ink); padding: 11px; cursor: pointer; min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
 .mobile-menu { display: none; }
 
+/* ---------- preformatted blocks ----------------------------------------- */
+/* There was no `pre` rule here at all, so a long command set its own width and took the PAGE with
+   it: on 2026-11-21 the assurance page measured 840px wide inside a 375px phone. Two things broke,
+   and only one of them looked like this bug. The code ran off the right edge, which is visible —
+   and the mobile menu, which is `position: fixed; inset: 66px 0 0`, came out 841px wide with every
+   link running to x=825, so the one way to navigate on a phone was unusable and the brand link was
+   the only thing a thumb could reach. Found from a screenshot taken on a real phone arriving from
+   LinkedIn, which is the first impression this site gets most of the time.
+   The container scrolls; the page does not. */
+pre {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 /* ---------- hero --------------------------------------------------------- */
 /* Top gap reduced from a 148px cap to 126px, which is 0.85 of what it was. The sticky nav is
    67px tall, so the old value put the headline a full screen-third below it on a large display. */
