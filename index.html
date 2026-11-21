@@ -181,26 +181,26 @@
            it. Both figures rendered unqualified while this comment claimed they were qualified.
            The window now rides in the two stat labels themselves. A reason written in a comment
            is not a disclosure, and the file asserting otherwise is how it survived a week. -->
-      <div class="hero-proof">
-        <p class="hero-proof-head">From Anthropic&rsquo;s plugin marketplace and PyPI</p>
-        <ul class="hero-stats">
-          <li><b>962</b><span>plugin installs in 90 days, all surfaces</span></li>
-          <li><b>0%</b><span>error rate across 186,699 loads in 90 days</span></li>
-          <li><b>10</b><span>packages published on PyPI, across two projects</span></li>
-          <!-- REMOVED 2026-11-18, and the reason belongs here so it does not come back.
-               A download stat sat here for one day: "30,000+ downloads each for 7 of the 10".
-               Arithmetically true against pypistats' non-mirror series, and still wrong to show.
-               Between 12 and 18 November seven packages grew by 6,398 to 6,617 downloads each,
-               a spread of 3.4% across seven supposedly independent packages, or ~1,080 a day
-               every day. assurance-mcp, the only one nothing depends on, grew by 176 in the same
-               window. Seven numbers that tightly grouped are one automated process pulling the
-               whole dependency tree, not seven packages being chosen. pypistats' non-mirror
-               series does not filter it, because it only excludes known mirror user agents.
-               scripts/adoption.py already refuses to report downloads as adoption and says why;
-               the home page should not do what the project's own instrument will not. -->
-        </ul>
-        <p class="hero-proof-note">* as of 17 November 2026</p>
-      </div>
+      <!-- NO FIGURES HERE, deliberately, and this comment is the record so they do not come back.
+           A stat row sat here: 962 plugin installs in 90 days, 0% error rate across 186,699 loads,
+           10 packages on PyPI. All true, all sourced, each one qualified with its window after an
+           earlier pass found two of them stated with no window at all. Removed 2026-11-21 by
+           Ashwinth's call: the home page is the first impression, a row of small numbers reads as
+           a company arguing it is bigger than it is, and the three figures answered a question no
+           visitor had asked yet.
+           A download stat went before them, on 2026-11-18, and its reasoning is worth keeping
+           because it is the stronger argument: "30,000+ downloads each for 7 of the 10" was
+           arithmetically true against pypistats' non-mirror series and still wrong to show. Seven
+           packages grew by 6,398 to 6,617 downloads each in one week, a spread of 3.4% across
+           seven supposedly independent packages. assurance-mcp, the only one nothing depends on,
+           grew by 176 in the same window. Numbers that tightly grouped are one automated process
+           pulling a dependency tree, not seven choices, and pypistats does not filter it because
+           it only excludes known mirror user agents. scripts/adoption.py refuses to report
+           downloads as adoption and says why; the home page should not do what the project's own
+           instrument will not.
+           The figures that survive are on the pages where somebody has already asked: the error
+           rate on /open-source/assurance/, each with its window, and the follow-through number in
+           the walkthrough, labelled as one machine's. -->
 
       <!-- The one interactive thing on the page. It is the product in ten seconds. -->
       <div class="check" id="check">
