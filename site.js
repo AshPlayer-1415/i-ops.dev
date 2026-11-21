@@ -30,6 +30,31 @@
     });
   }
 
+  /* ---------- arriving at a section, from anywhere ---------------------
+     The browser's own jump to a fragment obeys `scroll-behavior`, and site.css sets `smooth` on
+     html — so arriving at /#problem ANIMATES, and an animation still running while the fonts land
+     and the hero resizes gets cancelled. The reader ends at the top of the page having clicked a
+     section. Measured on 2026-11-21, four loads each: smooth arrived 1 of 4, auto arrived 4 of 4.
+     Three earlier attempts missed it by treating the symptom — scrolling before the URL rewrite,
+     after it, and with an instant scrollIntoView of our own — because all three left the CSS in
+     charge of the browser's jump.
+     So: instant while landing, smooth restored immediately after, which keeps in-page clicks
+     animated and makes arrival reliable.
+     ------------------------------------------------------------------ */
+  if (location.hash) {
+    var root = document.documentElement;
+    root.style.scrollBehavior = "auto";
+    var land = function () {
+      var el = document.getElementById(location.hash.slice(1));
+      if (el) el.scrollIntoView();
+    };
+    land();
+    window.addEventListener("load", function () {
+      land();
+      window.setTimeout(function () { root.style.scrollBehavior = ""; }, 60);
+    });
+  }
+
   /* ---------- reveal on scroll --------------------------------------- */
   var reveals = [].slice.call(document.querySelectorAll(".reveal"));
   if (reduce || !("IntersectionObserver" in window)) {
@@ -357,8 +382,17 @@
     else if (hash === "#top") { try { history.replaceState(null, "", "/"); } catch (e) {} }
   }
 
-  // Arriving from /governance/, which bounced us to /#governance.
-  if (location.hash) window.setTimeout(function () { tidy(location.hash); }, 60);
+  // ARRIVING WITH A HASH IS LEFT ALONE, deliberately, and this replaced a block that tidied it.
+  //
+  // That block rewrote /#problem to /the-problem/ sixty milliseconds after load. It is cosmetic —
+  // the address bar reads better — and it was quietly eating the browser's jump to the section, so
+  // a reader clicking "The problem" from another page landed at the top of the home page instead.
+  // Measured on the live site, then four ways locally: scrolling before the rewrite (the rewrite
+  // undid it), after it, and with an instant jump instead of an animated one. The last of those
+  // still arrived 1 time in 4, which is what a race looks like when you are nudging it rather than
+  // removing it. So the cosmetic half goes and the navigation half stays: the browser's own
+  // fragment handling is untouched, and the address bar shows /#problem, which is honest and
+  // works. Clicking an in-page anchor still tidies, below, because no navigation is at stake there.
 
   document.addEventListener("click", function (e) {
     var link = e.target.closest ? e.target.closest('a[href^="#"]') : null;
