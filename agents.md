@@ -46,6 +46,6 @@ https://i-ops.dev/false-completion/
 - GitHub (company): https://github.com/i-ops-hq
 - LinkedIn (company): https://www.linkedin.com/company/i-ops-llc/
 - Email: hello@i-ops.dev
-- Founder: Ashwinth Kondapalli — https://github.com/AshPlayer-1415 — https://www.linkedin.com/in/ashwinth-reddy/ — ashwinth@i-ops.dev
+- Founder: Ashwinth Kondapalli — https://github.com/AshPlayer-1415 — https://www.linkedin.com/in/ashwinth-reddy/ — hello@i-ops.dev
 
 Human-readable version of this page: https://i-ops.dev/agents/
