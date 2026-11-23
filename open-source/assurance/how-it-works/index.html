@@ -104,8 +104,8 @@
 
       <div class="provenance">
         <p>
-          <strong>Every block below is real output, captured on 20 November 2026 from
-          <code>assurance 0.1.40</code> installed from PyPI.</strong> None of it is drawn, edited
+          <strong>Every block below is real output, captured on 23 November 2026 from
+          <code>assurance 0.1.41</code> installed from PyPI.</strong> None of it is drawn, edited
           or reconstructed. The first one runs against a sample session that ships with the tool, so
           you can reproduce it exactly; the rest came from real projects on one machine, and yours
           will name your files instead. Where a block is not a capture, the caption says so.
@@ -144,7 +144,7 @@ Claude Code session demo-8f2 — 13 min in /home/you/my-app
   Not read: 0 lines.
 
 (A sample session bundled with assurance. Run `assurance audit` inside a project where you have used Claude Code to audit your own.)</pre></div>
-        <p class="cap">Real output &middot; <code>uvx assurance audit --demo</code> on 0.1.40, captured 20 November 2026. Nothing here is drawn or edited. Run the command and you get this report.</p>
+        <p class="cap">Real output &middot; <code>uvx assurance audit --demo</code> on 0.1.41, captured 23 November 2026. Nothing here is drawn or edited. Run the command and you get this report.</p>
       </section>
       <section class="step" id="read-it">
         <p class="step-n">02</p>
@@ -162,7 +162,7 @@ Claude Code session 259e3749 — spanning 1 day 17h in /Users/ashwinthreddy/I-Op
 
   Latest commit (13:16): 2 edits since, unconfirmed
   Working tree (19:01): 2 edits since, unconfirmed</pre></div>
-        <p class="cap">Real output &middot; the first four lines of a sixteen-line report, from the session that wrote this page, 20 November 2026. Yours names your tools and your files, not ours.</p>
+        <p class="cap">Real output &middot; the first four lines of a sixteen-line report, from the session that wrote this page, 23 November 2026. Yours names your tools and your files, not ours.</p>
       </section>
       <section class="step" id="every-turn">
         <p class="step-n">04</p>
@@ -178,13 +178,13 @@ local settings: /home/you/my-app/.claude/settings.local.json
 +  "hooks": {
 +    "Stop": [
 +      { "hooks": [ { "type": "command",
-+          "command": "uvx --offline assurance@0.1.40 audit --hook --nudge" } ] }
++          "command": "uvx --offline assurance@0.1.41 audit --hook --nudge" } ] }
 +    ]
 +  }
 +}
 Not written. Rerun with --yes to write it (this is not an interactive terminal,
 so nothing was asked).</pre></div>
-        <p class="cap">Real output &middot; a fresh install into a throwaway project, 0.1.40. The last two lines are the point: in a non-interactive shell it refuses to write rather than install quietly.</p>
+        <p class="cap">Real output &middot; a fresh install into a throwaway project, 0.1.41. The last two lines are the point: in a non-interactive shell it refuses to write rather than install quietly.</p>
       </section>
       <section class="step" id="the-notice">
         <p class="step-n">05</p>
@@ -196,7 +196,7 @@ and whether a test or check passed after the last edit to scripts/gen_usecases.p
 for what you changed, without piping the test command into another (or with
 `set -o pipefail`) so its result is visible, or say plainly why they cannot be
 run here.</pre></div>
-        <p class="cap">Real notice &middot; from a real session on 20 November 2026, unedited. The hook always exits 0, so it never blocks the agent and never stops your work.</p>
+        <p class="cap">Real notice &middot; from a real session on 23 November 2026, unedited. The hook always exits 0, so it never blocks the agent and never stops your work.</p>
       </section>
       <section class="step" id="did-it-help">
         <p class="step-n">06</p>
@@ -205,21 +205,21 @@ run here.</pre></div>
         <div class="term"><pre>$ uvx assurance notices
 
 Assurance notices, last 30d, every project on this machine
-  46 findings in 6 sessions. What it asked for came next after 23 of them (50%).
+  49 findings in 6 sessions. What it asked for came next after 23 of them (47%).
     note: 7 of 12 followed
-    suggested review: 8 of 14 followed
-    stop and check: 8 of 20 followed
+    suggested review: 8 of 15 followed
+    stop and check: 8 of 22 followed
   Followed by, not caused by: an agent may have run the test anyway. Nothing here left this machine.
   The latest:
-    2026-11-18 11:28  xenodochial-bartik-82e515  suggested review  followed: python -m pytest packages -q --no-header -p no:cacheprovider passed at 11:30
-    2026-11-18 13:10  I-Ops  stop and check  followed: python -m pytest tests/ -q -x --timeout=300 ran at 13:10
-    2026-11-19 13:00  xenodochial-bartik-82e515  note  followed: python -m pytest packages/assurance/tests -q --no-header -p… passed at 13:28
     2026-11-19 13:11  xenodochial-bartik-82e515  stop and check  followed: python -m pytest packages/assurance/tests -q --no-header -p… passed at 13:28
     2026-11-19 18:44  xenodochial-bartik-82e515  suggested review  followed: python -m pytest packages/budget -q --no-header -p no:cache… passed at 18:45
     2026-11-19 19:03  I-Ops  note  not followed: no test or check of the project ran
     2026-11-19 23:24  I-Ops  stop and check  not followed: no test or check of the project ran
-    2026-11-20 00:36  I-Ops  suggested review  not followed: no test or check of the project ran</pre></div>
-        <p class="cap">Real output &middot; one machine, 30 days, 20 November 2026. Half. That number is ours and we are not claiming it is yours &mdash; run the same command and you get your own.</p>
+    2026-11-20 00:36  I-Ops  suggested review  not followed: no test or check of the project ran
+    2026-11-20 21:47  I-Ops  stop and check  not followed: no test or check of the project ran
+    2026-11-20 22:22  I-Ops  stop and check  not followed: no test or check of the project ran
+    2026-11-20 22:34  I-Ops  suggested review  not followed: no test or check of the project ran</pre></div>
+        <p class="cap">Real output &middot; one machine, 30 days, 23 November 2026. **And read it as a sample of what the command prints rather than as evidence about the product**: these are the sessions that build assurance, so some of those rows are its own hook telling its own author to run his own tests. The figure moved 50% to 47% in three days partly for that reason. Run the command on your work and you get a number that is actually about you.</p>
       </section>
       <section class="step" id="what-it-reaches">
         <p class="step-n">07</p>
@@ -235,7 +235,7 @@ change most, and what travels with them.
     packages/assurance/pyproject.toml              41 of its 46 commits  3.9x chance
     plugins/assurance/.claude-plugin/plugin.json   38 of its 46 commits  4.1x chance
     packages/budget/README.md                      42 of its 46 commits  3.5x chance</pre></div>
-        <p class="cap">Real output &middot; <code>uvx assurance coupling</code> on the assurance repository itself, 0.1.40.</p>
+        <p class="cap">Real output &middot; <code>uvx assurance coupling</code> on the assurance repository itself, 0.1.41.</p>
       </section>
       <section class="step" id="in-ci">
         <p class="step-n">08</p>
