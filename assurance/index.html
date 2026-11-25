@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>assurance — what your agent did not check</title>
+<meta name="description" content="One command, in a folder where you have used a coding agent. It reports what the run covered and what it skipped. Apache-2.0, and your code never leaves your machine." />
+<link rel="icon" href="/favicon.svg?v=300adfc9d7" type="image/svg+xml" />
+<link rel="alternate icon" href="/favicon.ico?v=445249498e" sizes="16x16 32x32 48x48" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=300adfc9d7" />
+<link rel="canonical" href="https://i-ops.dev/assurance/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="I-Ops" />
+<meta property="og:url" content="https://i-ops.dev/assurance/" />
+<meta property="og:title" content="assurance — what your agent did not check" />
+<meta property="og:description" content="One command, in a folder where you have used a coding agent. It reports what the run covered and what it skipped. Apache-2.0, and your code never leaves your machine." />
+<meta property="og:image" content="https://i-ops.dev/og-card.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="assurance — what your agent did not check" />
+<meta name="twitter:description" content="One command, in a folder where you have used a coding agent. It reports what the run covered and what it skipped. Apache-2.0, and your code never leaves your machine." />
+<meta name="twitter:image" content="https://i-ops.dev/og-card.png" />
+<link rel="stylesheet" href="/site.css?v=300adfc9d7" />
+<style>
+  /* Scoped to this page. The site's own tokens do all the colour and type work;
+     what is here is the two things site.css has no component for — the provider
+     buttons and the terminal-pairing panel. */
+  .providers { display:flex; flex-wrap:wrap; gap:12px; margin:28px 0 0; }
+  .provider {
+    display:inline-flex; align-items:center; gap:10px;
+    min-height:var(--tap); padding:0 22px;
+    border:1px solid var(--line-2); border-radius:var(--radius-btn);
+    background:var(--ground-2); color:var(--ink);
+    font:inherit; font-size:var(--step-0); text-decoration:none;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .provider:hover, .provider:focus-visible { border-color:var(--ink); background:#141414; }
+  .provider svg { flex:none; }
+
+  .pair {
+    border:1px solid var(--line); border-radius:var(--radius-field);
+    background:var(--ground-2); padding:22px 24px; margin:0 0 32px;
+  }
+  .pair-code {
+    font-family:var(--mono); font-size:var(--step-2); letter-spacing:.14em;
+    margin:10px 0 0; color:var(--ink);
+  }
+  .pair-note { color:var(--ink-2); font-size:var(--step--1); margin:14px 0 0; }
+
+  .store { border-top:1px solid var(--line); margin-top:56px; padding-top:32px; }
+  .store pre {
+    font-family:var(--mono); font-size:var(--step--1); line-height:1.7;
+    background:var(--ground-2); border:1px solid var(--line);
+    border-radius:var(--radius-field); padding:16px 18px; margin:16px 0 0;
+    overflow-x:auto; color:var(--ink-2);
+  }
+  .store pre b { color:var(--ink); font-weight:400; }
+  .signed {
+    display:flex; flex-wrap:wrap; align-items:center; gap:14px;
+    border:1px solid var(--line); border-radius:var(--radius-field);
+    background:var(--ground-2); padding:16px 18px; margin:28px 0 0;
+  }
+  .signed-dot { width:8px; height:8px; border-radius:50%; background:#4ade80; flex:none; }
+  .signed-text { margin:0; font-size:var(--step--1); color:var(--ink-2); }
+  .signed-text b { color:var(--ink); font-weight:500; }
+  .signed form { margin:0; }
+  .signed button {
+    font:inherit; font-size:var(--step--1); color:var(--ink-2);
+    background:none; border:0; padding:0; cursor:pointer; text-decoration:underline;
+  }
+  .signed button:hover { color:var(--ink); }
+  .narrow { max-width:62ch; }
+  [hidden] { display:none !important; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="/">I&#8209;Ops</a>
+    <nav class="nav-links">
+      <a href="/#problem">The problem</a>
+      <a href="/products/">Products</a>
+      <a href="/partner/">Partner</a>
+    </nav>
+    <a class="btn btn-ghost" href="/products/">Back</a>
+    <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<nav class="subnav" aria-label="assurance sections">
+  <div class="wrap subnav-inner">
+    <span class="subnav-label">assurance</span>
+      <a href="/assurance/" aria-current="page">Overview</a>
+      <a href="/assurance/how-it-works/">How it works</a>
+      <a href="/assurance/use-cases/">Use cases</a>
+      <a href="/assurance/docs/">Docs</a>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+    <a href="/#problem">The problem</a>
+    <a href="/products/">Products</a>
+    <a href="/partner/">Partner</a>
+    <a href="/early-access/">Early access</a>
+  </div>
+
+<main id="main">
+  <section class="hero">
+    <div class="wrap">
+
+      <!-- Terminal pairing. Shown only when the page is opened from `assurance login` (a command
+           that does not exist yet; it arrives with the CLI sign-in work),
+           which arrives with ?code=XXXX-XXXX. The code is displayed so the person can
+           check it against the one in their terminal before signing in: that comparison
+           is the only thing standing between this flow and someone else's device code. -->
+      <section class="pair" id="pair" hidden>
+        <span class="label">/ &nbsp; signing in a terminal</span>
+        <p class="pair-code" id="pairCode"></p>
+        <p class="pair-note">
+          This code should match the one printed in your terminal. <strong>If it does not, close this
+          page</strong> — someone else sent you the link.
+        </p>
+      </section>
+
+      <span class="label">/ &nbsp; assurance</span>
+      <h1>Your agent says it is done. This tells you what it did not check.</h1>
+
+      <p class="lede narrow">
+        One command, in a folder where you have used a coding agent. It reads that session and
+        reports what the run covered and what it quietly skipped. Nothing is sent anywhere.
+      </p>
+
+<pre><b>uvx assurance audit</b>
+</pre>
+
+      <p class="narrow" style="margin-top:14px;">
+        <a href="/assurance/how-it-works/">See what it prints, screen by screen
+        &rarr;</a> &mdash; eight real captures, nothing drawn.
+      </p>
+
+      <p class="narrow" style="margin-top:18px;">
+        One more, for when the question is what a change reaches rather than what it tested:
+        <code>uvx assurance coupling</code> reads your own git history and says what usually
+        travels with the files you touched, and how much more often than chance. No
+        configuration, and nothing leaves the machine.
+      </p>
+
+      <!-- Objection order, and the order is the point: everything below answers a reason to
+           leave, in the sequence a developer actually thinks of them. Works with my stack, is it
+           real, where does my code go, can I get out, what does it cost. The thing we WANT from
+           the reader is last, because an ask before those are settled is an ask nobody owes us. -->
+
+      <h2>Works with what you already run</h2>
+      <p class="narrow">
+        It reads the session your agent already writes. There is nothing to configure and no
+        integration to install.
+      </p>
+      <ul class="narrow">
+        <li><strong>Claude Code</strong> &mdash; reads <code>~/.claude/projects</code>. A hook can run the audit after every turn: <code>assurance hook install</code>.</li>
+        <li><strong>Codex</strong> &mdash; reads <code>~/.codex/sessions</code>.</li>
+        <li><strong>Any agent, via MCP</strong> &mdash; an MCP server on the official registry, read&#8209;only by construction.</li>
+        <li><strong>CI</strong> &mdash; a GitHub Action that fails the build when a check does not pass.</li>
+      </ul>
+
+      <h2>Is it reliable?</h2>
+      <p class="narrow">
+        <strong>0% error rate across 186,699 plugin loads. Zero failed installs, zero command
+        errors.</strong> That is Anthropic&rsquo;s figure from their plugin marketplace, over the
+        last 90&nbsp;days, not ours. For a tool that sells verification, the most useful number is
+        one somebody else recorded.
+      </p>
+      <p class="narrow dim">
+        Our own number, labelled as ours: 962 plugin installs in 90 days. We used to print a download count
+        here too and we have stopped, because our own measurement said it was machine traffic
+        rather than adoption &mdash; seven packages growing within 3.4% of each other is one
+        process pulling a dependency tree, not seven choices. We would rather show you one number
+        we trust than two we have to qualify.
+      </p>
+
+      <h2>Where does my code go?</h2>
+      <p class="narrow">
+        <strong>Nowhere.</strong> Every check is computed on your machine, against your files.
+        Your code, your prompts and the sessions your agent wrote are read where they already
+        are and are never uploaded &mdash; not when you run a check, and not if you sign in.
+        <strong>Signing in tells us who you are. It does not tell us what you are working on.</strong> If we
+        ever add something that sends data somewhere, it will be a command you choose to run and
+        it will say what it sends.
+      </p>
+      <p class="narrow">
+        Verify that rather than trusting it. There is no HTTP client anywhere in the install,
+        dependencies included:
+      </p>
+<pre><b>pip download assurance -d a &amp;&amp; cd a &amp;&amp; for w in *.whl; do unzip -oq "$w" -d src; done</b>
+<b>grep -rn "urlopen\|requests\.\|httpx\.\|aiohttp" src --include='*.py'</b>
+</pre>
+      <p class="pair-note narrow">
+        No output. The unzip step is the point &mdash; a wheel is a zip, so grepping the downloaded
+        files directly finds nothing whether or not there is anything to find.
+      </p>
+
+      <h2>Can you get out?</h2>
+      <p class="narrow">
+        Apache&#8209;2.0, and removing it is one step: <code>uvx</code> leaves nothing behind at
+        all, and an installed copy goes with <code>pip uninstall assurance</code>. The hook, if you
+        installed it, comes out with <code>assurance hook remove</code>. If you signed in, the welcome email carries a
+        one&#8209;click link that deletes your record and every sign&#8209;in event attached to it.
+      </p>
+      <p class="narrow dim">
+        Source at <a href="https://github.com/i-ops-hq/assurance">github.com/i&#8209;ops&#8209;hq/assurance</a>.
+        Read it, fork it, or copy the parts you want.
+      </p>
+
+      <h2>What it costs</h2>
+      <p class="narrow">
+        Nothing, and there is no paid tier to upgrade to today. If that changes, the checks that
+        run on your machine stay free &mdash; that is the part we are not willing to make
+        conditional.
+      </p>
+
+      <div class="store">
+        <h2>One thing we are asking for</h2>
+        <p class="narrow">
+          A batch job reports success while records are missing, truncated, or quietly replaced by
+          a retry under a new ID. The question worth answering is not <em>did the job succeed</em>
+          but <strong>did every record you sent actually come back.</strong>
+        </p>
+        <p class="narrow">
+          <strong>That check does not exist yet, and this is how it gets built.</strong> If you run
+          batch inference on Bedrock, OpenAI or Anthropic and have ever found out late that a run
+          was short, send us the shape of the failure. A research team did exactly that &mdash;
+          eight failures from one production run. The first of them are already checks you can run;
+          the rest are being built in the order they asked for.
+        </p>
+        <p class="narrow" id="callToAction">
+          <strong>Sign in, describe the failure, and we will tell you whether it is already covered
+          or build the check.</strong>
+        </p>
+
+        <!-- Shown INSTEAD of the sign-in buttons once there is a session. The buttons are what
+             the HTML ships with, so a failed or blocked session call leaves a page that still
+             works rather than one that claims to know who you are. -->
+        <div class="signed" id="signed" hidden>
+          <span class="signed-dot" aria-hidden="true"></span>
+          <p class="signed-text">Signed in as <b id="signedName">&mdash;</b> <span id="signedVia"></span></p>
+          <a class="btn" id="signedGo" href="/assurance/welcome/">Your commands</a>
+          <form id="signedOut"><button type="submit">Sign out</button></form>
+        </div>
+
+        <div class="providers">
+          <a class="provider" id="ghBtn" href="https://api.i-ops.dev/v1/auth/github/start" rel="nofollow">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.24 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
+            Continue with GitHub
+          </a>
+          <a class="provider" id="gBtn" href="https://api.i-ops.dev/v1/auth/google/start" rel="nofollow">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 11v3.2h5.3a4.6 4.6 0 0 1-1.97 3l3.18 2.47C20.37 17.9 21.4 15.2 21.4 12c0-.7-.06-1.37-.18-2.01H12Z"/><path fill="currentColor" d="M6.6 14.29 5.88 14.84 3.34 16.81A9.5 9.5 0 0 0 12 21.5c2.56 0 4.71-.85 6.28-2.3l-3.18-2.47a5.7 5.7 0 0 1-8.5-2.44Z"/><path fill="currentColor" d="M3.34 7.19A9.42 9.42 0 0 0 2.5 12c0 1.74.42 3.37 1.16 4.81l3.26-2.52A5.65 5.65 0 0 1 6.62 12c0-.8.15-1.57.4-2.29L3.34 7.19Z"/><path fill="currentColor" d="M12 6.4c1.45 0 2.74.5 3.77 1.47l2.81-2.81C16.87 3.45 14.72 2.5 12 2.5A9.5 9.5 0 0 0 3.34 7.19l3.68 2.52A5.68 5.68 0 0 1 12 6.4Z"/></svg>
+            Continue with Google
+          </a>
+        </div>
+
+        <p class="narrow dim" style="margin-top:28px;">
+          We store your email, your name, and which provider you use. That is the whole account.
+          One run on one machine cannot tell you whether a <em>fleet</em> of runs came back
+          complete; that is the next thing, and the people who sign in now are the ones we build
+          it with.
+        </p>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div>
+      <div class="brand">I&#8209;Ops</div>
+      <p class="dim" style="font-size:var(--step--1); margin-top:8px;">Operations Intelligence LLC</p>
+      <div class="social">
+        <a href="https://github.com/i-ops-hq" target="_blank" rel="noopener noreferrer" aria-label="I-Ops on GitHub" title="Open source">
+          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.24 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/company/i-ops-llc/" target="_blank" rel="noopener noreferrer" aria-label="I-Ops on LinkedIn" title="LinkedIn">
+          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05a3.74 3.74 0 0 1 3.37-1.85c3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13ZM7.12 20.45H3.55V9h3.57v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0Z"/></svg>
+        </a>
+        <a href="mailto:hello@i-ops.dev" aria-label="Email hello@i-ops.dev" title="hello@i-ops.dev">
+          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M3 5.75h18v12.5H3z"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="m3.4 6.4 8.6 6.6 8.6-6.6"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/partner/">Partner</a>
+      <a href="/legal/">Legal</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Terminal pairing, and nothing else.
+
+   `assurance login` (NOT SHIPPED YET - it lands with the CLI sign-in work) will open this
+   page with ?code=XXXX-XXXX. Two things happen:
+   the code is shown so the person can compare it with their terminal before
+   signing in, and it is carried on both provider links so the Worker can bind
+   the finished sign-in back to that waiting terminal.
+
+   The code is validated by SHAPE before it is used. It is written into the DOM
+   with textContent and into the links with encodeURIComponent, so a crafted
+   ?code= cannot become markup or escape the query string — but a reader should
+   not have to trust that, which is why it is rejected outright unless it is
+   four characters, a hyphen, and four characters. */
+(function () {
+  "use strict";
+  var CODE = /^[0-9A-Z]{4}-[0-9A-Z]{4}$/;
+
+  var raw = new URLSearchParams(window.location.search).get("code") || "";
+  var code = raw.toUpperCase();
+  if (!CODE.test(code)) return;
+
+  var panel = document.getElementById("pair");
+  document.getElementById("pairCode").textContent = code;
+  panel.hidden = false;
+
+  ["ghBtn", "gBtn"].forEach(function (id) {
+    var a = document.getElementById(id);
+    a.href = a.href + "?code=" + encodeURIComponent(code);
+  });
+})();
+
+/* Who is signed in.
+
+   This page had no idea. The session cookie was working the whole time and this page simply
+   never asked, so anyone who signed in, browsed away and came back was shown the sign-in
+   buttons again and reasonably concluded they had been forgotten. The welcome page asked and
+   remembered them correctly; the difference was never the cookie.
+
+   Shipped signed-OUT, as the buttons are correct for a stranger AND for the case where this
+   call fails. Only a positive, parsed answer swaps them. */
+(function () {
+  "use strict";
+  /* Local wrangler when opened from a local copy, so this is testable; api.i-ops.dev
+     otherwise. The branch can only be taken on localhost, so a deployed page cannot be
+     steered elsewhere. Same shape as the welcome page. */
+  var API = location.hostname === "localhost" || location.hostname === "127.0.0.1"
+    ? "http://localhost:8788"
+    : "https://api.i-ops.dev";
+  var providers = document.querySelector(".providers");
+  var signed = document.getElementById("signed");
+  if (!providers || !signed) return;
+
+  fetch(API + "/v1/auth/session", { credentials: "include", cache: "no-store" })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (d) {
+      if (!d || d.signed_in !== true) return;
+      document.getElementById("signedName").textContent = d.name || d.email || "your account";
+      document.getElementById("signedVia").textContent = d.provider ? "\u00b7 via " + d.provider : "";
+      providers.hidden = true;
+      signed.hidden = false;
+      // "Sign in, describe the failure" is a stale instruction once you have. Swapped rather
+      // than hidden, because the ask itself still stands.
+      var cta = document.getElementById("callToAction");
+      if (cta) {
+        cta.innerHTML = "<strong>Describe the failure and we will tell you whether it is already " +
+          "covered, or build the check.</strong>";
+      }
+    })
+    .catch(function () { /* leave the buttons, which are still the right thing to show */ });
+
+  document.getElementById("signedOut").addEventListener("submit", function (e) {
+    e.preventDefault();
+    fetch(API + "/v1/auth/logout", { method: "POST", credentials: "include" })
+      .then(function () { window.location.reload(); })
+      .catch(function () { window.location.reload(); });
+  });
+})();
+</script>
+<script src="/site.js?v=1ea4b045f5"></script>
+</body>
+</html>
