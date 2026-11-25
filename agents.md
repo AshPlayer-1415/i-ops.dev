@@ -9,7 +9,7 @@ The checks are computed by code, so swapping the model does not change the guara
 
 Company: I-Ops Operations Intelligence LLC. Website: https://i-ops.dev
 
-## Open-source tools (Apache-2.0, run locally, no account)
+## Open-source tools (Apache-2.0, computed on your machine)
 
 | Tool | What it answers | Install |
 |---|---|---|

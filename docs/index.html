@@ -182,9 +182,8 @@
 
 WHAT IT IS
 A Python CLI on PyPI called `assurance`. Run it with `uvx assurance audit`, or
-`pipx run assurance audit` if uv is not installed. It needs no account, no API key and
-no network. Do not add credentials, do not sign me in, and do not send any file from
-this project anywhere.
+`pipx run assurance audit` if uv is not installed. It needs no API key. Do not add credentials, do not sign me in, and do not send any
+file from this project anywhere.
 
 THE PART THAT MOST PEOPLE GET WRONG
 `assurance audit` reads the coding-agent session recorded FOR THE DIRECTORY IT IS RUN IN.
@@ -232,7 +231,7 @@ not a failure.</pre>
               <p class="muted">That needs <a href="https://docs.astral.sh/uv/" target="_blank" rel="noopener noreferrer">uv</a>.
               Without it, <code>pipx run assurance audit</code> does the same thing, and
               <code>pip install assurance</code> installs it properly if you would rather keep it.</p>
-              <p>No account, no API key and no network. Everything it reads is already on your
+              <p>No API key. Everything it reads is already on your
               machine and nothing leaves it.</p>
             </section>
 
@@ -293,11 +292,11 @@ not a failure.</pre>
 
             <section class="sec" id="signin">
               <h2>Signing in</h2>
-              <p>Optional, and it changes nothing about the checks. An account never gates a check
-              and never will: the CLI has no account, no API key and no network, and that is the
-              point of it rather than a limitation.</p>
-              <p>What an account does is give us a way to reach you when a check you asked for
-              ships. <a href="/open-source/assurance/">Sign in with Google or GitHub</a> if you want
+              <p>Signing in is about who you are, not about what you are working on. The checks are
+              computed on your machine either way: your code, your prompts and your agent&rsquo;s
+              sessions are read where they already are and are never uploaded.</p>
+              <p>What an account does is let us reach you &mdash; when a check you asked for
+              ships, and when something changes in a product you are relying on. <a href="/open-source/assurance/">Sign in with Google or GitHub</a> if you want
               that. The welcome email carries a link that deletes the record and every sign&#8209;in
               event attached to it, in one click, if you change your mind.</p>
             </section>

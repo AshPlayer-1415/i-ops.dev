@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>assurance — what your agent did not check</title>
-<meta name="description" content="One command, in a folder where you have used a coding agent. It reports what the run covered and what it skipped. Apache-2.0, no account, no network, nothing sent anywhere." />
+<meta name="description" content="One command, in a folder where you have used a coding agent. It reports what the run covered and what it skipped. Apache-2.0, and your code never leaves your machine." />
 <link rel="icon" href="/favicon.svg?v=1bfc8a8f85" type="image/svg+xml" />
 <link rel="alternate icon" href="/favicon.ico?v=445249498e" sizes="16x16 32x32 48x48" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=1bfc8a8f85" />
@@ -13,11 +13,11 @@
 <meta property="og:site_name" content="I-Ops" />
 <meta property="og:url" content="https://i-ops.dev/open-source/assurance/" />
 <meta property="og:title" content="assurance — what your agent did not check" />
-<meta property="og:description" content="One command, in a folder where you have used a coding agent. It reports what the run covered and what it skipped. Apache-2.0, no account, no network, nothing sent anywhere." />
+<meta property="og:description" content="One command, in a folder where you have used a coding agent. It reports what the run covered and what it skipped. Apache-2.0, and your code never leaves your machine." />
 <meta property="og:image" content="https://i-ops.dev/og-card.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="assurance — what your agent did not check" />
-<meta name="twitter:description" content="One command, in a folder where you have used a coding agent. It reports what the run covered and what it skipped. Apache-2.0, no account, no network, nothing sent anywhere." />
+<meta name="twitter:description" content="One command, in a folder where you have used a coding agent. It reports what the run covered and what it skipped. Apache-2.0, and your code never leaves your machine." />
 <meta name="twitter:image" content="https://i-ops.dev/og-card.png" />
 <link rel="stylesheet" href="/site.css?v=1bfc8a8f85" />
 <style>
@@ -172,9 +172,10 @@
 
       <h2>Where does my code go?</h2>
       <p class="narrow">
-        <strong>Nowhere.</strong> <code>assurance</code> makes no network request of any kind.
-        Every check runs on your machine, against your files, with no key and no login. That does
-        not change if you sign in &mdash; signing in is for the conversation, not the tool. If we
+        <strong>Nowhere.</strong> Every check is computed on your machine, against your files.
+        Your code, your prompts and the sessions your agent wrote are read where they already
+        are and are never uploaded &mdash; not when you run a check, and not if you sign in.
+        <strong>Signing in tells us who you are. It does not tell us what you are working on.</strong> If we
         ever add something that sends data somewhere, it will be a command you choose to run and
         it will say what it sends.
       </p>
@@ -194,8 +195,8 @@
       <p class="narrow">
         Apache&#8209;2.0, and removing it is one step: <code>uvx</code> leaves nothing behind at
         all, and an installed copy goes with <code>pip uninstall assurance</code>. The hook, if you
-        installed it, comes out with <code>assurance hook remove</code>. There is no account to
-        close, because you never needed one to run a check.
+        installed it, comes out with <code>assurance hook remove</code>. If you signed in, the welcome email carries a
+        one&#8209;click link that deletes your record and every sign&#8209;in event attached to it.
       </p>
       <p class="narrow dim">
         Source at <a href="https://github.com/i-ops-hq/assurance">github.com/i&#8209;ops&#8209;hq/assurance</a>.

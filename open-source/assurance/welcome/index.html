@@ -114,7 +114,7 @@
         <span class="label">/ &nbsp; assurance</span>
         <h1>You are not signed in.</h1>
         <p class="lede narrow">Signing in records your account so we can tell you when the check you
-        asked for exists. It is not needed to run anything.</p>
+        asked for exists, and reach you when something changes in a product you rely on.</p>
         <p style="margin-top:28px;"><a class="btn" href="/open-source/assurance/">Go to sign in</a></p>
       </div>
 
@@ -144,8 +144,8 @@
             <pre id="codeCmd">uvx assurance audit</pre>
             <button class="copy" type="button" data-for="codeCmd">Copy</button>
           </div>
-          <p style="margin-top:18px;">No account is needed for that command, and none is sent. It
-          reads the coding&#8209;agent session in the folder and tells you what it did not check.</p>
+          <p style="margin-top:18px;">It reads the coding&#8209;agent session in the folder, on your
+          machine, and tells you what it did not check.</p>
         </div>
 
         <div class="panel" id="panelAI" role="tabpanel" aria-labelledby="tabAI" hidden>
@@ -159,7 +159,7 @@
    If `uv` is missing, install it first (https://docs.astral.sh/uv/) or `pip install uv`.
 2. Run it from the project root. It reads the most recent Claude Code or Codex session
    in that folder and reports what the session did NOT check.
-3. It needs no account, no API key and no network. Do not add credentials. Do not send
+3. It needs no API key. Do not add credentials. Do not send
    any file from this project anywhere.
 4. Show me its findings verbatim. Do not summarise a finding away, and do not fix
    anything unless I ask you to.
