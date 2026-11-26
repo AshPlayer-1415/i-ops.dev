@@ -202,6 +202,21 @@ BANNED = {
     r"30,000": "the download stat removed on 2026-11-18, with its reason, from index.html",
     r"\bis sandboxed\b": 'unqualified; third-party tools run contained, the app is not sandboxed',
     r"fully sandboxed": 'unqualified; third-party tools run contained, the app is not sandboxed',
+    # --- removed 2026-11-25 when Ashwinth decided assurance gets a real sign-in. -----------------
+    # These are listed individually rather than as a pattern because "never will" appears on the
+    # home page on purpose, about our own model, and that promise is one he has chosen to keep.
+    # What is banned is the specific set of sentences the sign-in decision falsified, so they
+    # cannot drift back in the next copy pass the way "30,000" did.
+    #
+    # The reason this check exists at all: an OSS session wrote "an account never gates a check...
+    # permanently" into a plan TWO BULLETS ABOVE its own rule forbidding sentences that become
+    # lies, in the same sitting. Stating a rule makes a reader -- including its author -- assume
+    # it was applied. A grep does not assume.
+    r"never gates a check": "removed 2026-11-25; an account may gate a project surface now",
+    r"no account, no network": "the convenience claim; the boundary claim replaced it",
+    r"not needed to run anything": "removed 2026-11-25; say what is read and sent instead",
+    r"no account to close": "removed 2026-11-25; there is an account, and a link that deletes it",
+    r"no network request of any kind": "signing in is a network request",
 }
 bad, checked = [], 0
 for f in sorted(glob.glob("**/*.html", recursive=True)):
